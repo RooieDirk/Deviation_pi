@@ -139,8 +139,7 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
     FlexGridSizer1->SetSizeHints(this);
 	Layout();
     CopyMessObjToDlg();
-    
-    
+    GPS_UpdateTime = 5;
 
     Connect(ID_CHOICE,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&BearingDlg::OnClose);
@@ -168,10 +167,10 @@ void BearingDlg::OnTextCtrlEnter(wxCommandEvent& event)
     bool OK = false;
     double tvalue, bvalue, vvalue;
     if (Choice->GetSelection()==5) //SunBearing
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), 52.5, 5.3) ) ) );
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );
         
     if (Choice->GetSelection()==6) //SunBearing    {
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), 52.3, 5.2 )+180) ) ) );
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
     
     if( TrueBearingCtrl->GetValue().ToDouble(&tvalue)) 
         if( CompassBearingCtrl->GetValue().ToDouble(&bvalue))
@@ -210,6 +209,7 @@ void BearingDlg::SetDateTime(wxDateTime dt)
     DPickerCtrl->SetValue(DT_value);
     TPickerCtrl->SetValue(DT_value);
 }
+
 wxDateTime BearingDlg::GetDateTime()
 {
     wxDateTime returnval;
@@ -248,21 +248,28 @@ void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
         localMesData->lat = pfix.Lat;
         localMesData->lon = pfix.Lon;
     }
+    wxPuts(_("BearingDlg::SetPositionFix"));
     wxWindow *w = FindFocus(); // Remember wich control has focus
     if ( UpdateFlag)        
     {
         VariationCtrl->SetValue(wxString::Format(wxT("%f"), pfix.Var));
-        if (pfix.FixTime > 0) //valid gps time so we will use this
+        
+        if (GPS_UpdateTime < 0) 
         {
             wxDateTime *tempDT = new wxDateTime(pfix.FixTime);
             TPickerCtrl->SetValue(*tempDT);
+            GPS_UpdateTime = 0;
         }
         else
-        {
-            TPickerCtrl->SetValue(wxDateTime::Now());
-        }
+            GPS_UpdateTime -= 1;
+        
         w->SetFocus(); // restore focus
         UpdateFlag = TempFlag;    
-    }
-    
+    }    
+}
+void BearingDlg::SetNMEATimeFix(wxDateTime dt)
+{
+    TPickerCtrl->SetValue(dt);
+    GPS_UpdateTime = 5;
+    wxPuts(_("BearingDlg::SetNMEATimeFix"));
 }

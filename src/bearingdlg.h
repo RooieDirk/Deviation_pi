@@ -78,7 +78,7 @@ class BearingDlg: public wxDialog
         float LON_value;
         
         void SetPositionFix(PlugIn_Position_Fix_Ex &pfix);
-
+        void SetNMEATimeFix(wxDateTime dt);
 	protected:
 
 		//(*Identifiers(BearingDlg)
@@ -115,7 +115,8 @@ class BearingDlg: public wxDialog
         
         Meassurement* localMesData;
         bool UpdateFlag;
-        
+        int GPS_UpdateTime;
+
 		//(*Handlers(BearingDlg)
 		//*)
 

@@ -109,6 +109,7 @@ int deviation_pi::Init(void)
      LoadConfig();
 
      m_LastVal = wxEmptyString;
+     mPriDateTime = 99;
 // 
 //     pFontSmall = new wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
 //     m_shareLocn =*GetpSharedDataLocation() +
@@ -123,6 +124,7 @@ int deviation_pi::Init(void)
     int ret_flag =  (
     WANTS_CURSOR_LATLON     |
     WANTS_TOOLBAR_CALLBACK  |
+    WANTS_NMEA_SENTENCES    |
     WANTS_NMEA_EVENTS       |
     WANTS_PREFERENCES       |
     WANTS_CONFIG          |
@@ -295,6 +297,64 @@ void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 //     }
 }
 
+void deviation_pi::SetNMEASentence(wxString &sentence)
+{
+m_NMEA0183 << sentence;
+wxPuts(_("deviation_pi::SetNMEASentence"));
+    if( m_NMEA0183.PreParse() ) 
+    {
+        if( m_NMEA0183.LastSentenceIDReceived == _T("GGA") ) {
+            if( m_NMEA0183.Parse() ) {
+                if( m_NMEA0183.Gga.GPSQuality > 0 ) {
+                    if( mPriDateTime >= 4 ) {
+                        mPriDateTime = 4;                        
+                        if ( B_Dlg != NULL ){
+                            mUTCDateTime.ParseFormat( m_NMEA0183.Gga.UTCTime.c_str(), _T("%H%M%S") );
+                            mUTCDateTime = mUTCDateTime.ToUTC();
+                            B_Dlg->SetNMEATimeFix( mUTCDateTime );
+                        }
+                    }
+                }
+            }
+        }
+        else if( m_NMEA0183.LastSentenceIDReceived == _T("GLL") ) {
+            if( m_NMEA0183.Parse() ) {
+                if( m_NMEA0183.Gll.IsDataValid == NTrue ) {
+                    if( mPriDateTime >= 5 ) {
+                        mPriDateTime = 5;
+                        if ( B_Dlg != NULL ){
+                            mUTCDateTime.ParseFormat( m_NMEA0183.Gll.UTCTime.c_str(), _T("%H%M%S") );
+                            mUTCDateTime = mUTCDateTime.ToUTC();
+                            B_Dlg->SetNMEATimeFix( mUTCDateTime );
+                        }
+                    }
+                }
+            }
+        }
+        else if( m_NMEA0183.LastSentenceIDReceived == _T("HDG") ) {
+            if( m_NMEA0183.Parse() ) {
+                
+                if( mPriHeadingM >= 1 ) {
+                    mPriHeadingM = 1;
+                    mHdm = m_NMEA0183.Hdg.MagneticSensorHeadingDegrees;
+                }
+//                 if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
+//                        mHDx_Watchdog = gps_watchdog_timeout_ticks;
+// 
+//                 //      If Variation is available, no higher priority HDT is available,
+//                 //      then calculate and propagate calculated HDT
+//                 if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) ) {
+//                     if( !wxIsNaN( mVar )  && (mPriHeadingT > 3) ){
+//                         mPriHeadingT = 4;
+//                         SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, mHdm + mVar, _T("\u00B0"));
+//                         mHDT_Watchdog = gps_watchdog_timeout_ticks;
+//                     }
+//                 }
+            }
+        }
+
+    }
+}
 
 bool deviation_pi::LoadConfig(void)
 {

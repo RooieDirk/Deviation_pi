@@ -50,6 +50,7 @@
 #include "preferencedlg.h"
 #include "compass.h"
 #include "CompasDev1Main.h"
+#include "nmea0183/nmea0183.h"
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition
@@ -94,7 +95,7 @@ public:
 //    Optional plugin overrides
     void SetColorScheme(PI_ColorScheme cs);
     void SetPluginMessage(wxString &message_id, wxString &message_body);
-
+    void SetNMEASentence(wxString &sentence);
     
 
 //    Other public methods
@@ -121,6 +122,10 @@ private:
     wxString        m_LastVal;
 
     int           m_leftclick_tool_id;
+    NMEA0183      m_NMEA0183;                 // Used to parse NMEA Sentences
+    short         mPriHeadingM, mPriHeadingT, mPriVar, mPriDateTime;
+    wxDateTime    mUTCDateTime;
+    double               mHdm;
 };
 
 
