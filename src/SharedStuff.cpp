@@ -42,6 +42,8 @@ compass_data::compass_data(wxString sname, wxString cname)
 {
     shipsname = sname;
     compassname = cname;
+    SendNMEA = false;
+    ShowToolbarBtn = true;
     A=0.0;
     B=0.0;
     C=0.0;
@@ -51,6 +53,14 @@ compass_data::compass_data(wxString sname, wxString cname)
 
 compass_data::~compass_data()
 {}
+double compass_data::getDeviation( double heading)
+{
+    double RadCC, dRadCC , Dev;
+    RadCC =  heading / 57.2957795131;
+    dRadCC = 2*RadCC;
+    Dev = A + B*sin(RadCC) + C*cos(RadCC) + D*sin(dRadCC) +  E*cos(dRadCC);
+    return Dev;
+}
 
 ship_data::ship_data(wxString shipsname)
 {}

@@ -110,8 +110,9 @@ int deviation_pi::Init(void)
 
      m_LastVal = wxEmptyString;
      mPriDateTime = 99;
-// 
-//     pFontSmall = new wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
+     mPriHeadingM = 99;
+ 
+     pFontSmall = new wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
 //     m_shareLocn =*GetpSharedDataLocation() +
 //     _T("plugins") + wxFileName::GetPathSeparator() +
 //     _T("deviation_pi") + wxFileName::GetPathSeparator();
@@ -138,7 +139,7 @@ int deviation_pi::Init(void)
                                             _("Deviation"), _T(""), NULL, Deviation_TOOL_POSITION, 0, this);
         
         SetIconType();          // SVGs allowed if not showing live icon
-        
+        this->
         ret_flag |= INSTALLS_TOOLBAR_TOOL;
     }
 // 
@@ -155,7 +156,7 @@ bool deviation_pi::DeInit(void)
     if( m_CompasDevListDlg != NULL) delete m_CompasDevListDlg;
     RemovePlugInTool(m_leftclick_tool_id);
 
-//     delete pFontSmall;
+     delete pFontSmall;
     return true;
 }
 
@@ -266,7 +267,7 @@ void deviation_pi::SetPositionFixEx(PlugIn_Position_Fix_Ex &pfix)
 //     g_lat = pfix.Lat;
 //     g_lon = pfix.Lon; 
 //     g_fixtime = pfix.FixTime;
-//     g_var = pfix.Var;
+     g_var = pfix.Var;
 //     g_hdm = pfix.Hdm;
     if ( B_Dlg != NULL )
         B_Dlg->SetPositionFix(pfix);
@@ -300,7 +301,6 @@ void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 void deviation_pi::SetNMEASentence(wxString &sentence)
 {
 m_NMEA0183 << sentence;
-wxPuts(_("deviation_pi::SetNMEASentence"));
     if( m_NMEA0183.PreParse() ) 
     {
         if( m_NMEA0183.LastSentenceIDReceived == _T("GGA") ) {
@@ -310,7 +310,6 @@ wxPuts(_("deviation_pi::SetNMEASentence"));
                         mPriDateTime = 4;                        
                         if ( B_Dlg != NULL ){
                             mUTCDateTime.ParseFormat( m_NMEA0183.Gga.UTCTime.c_str(), _T("%H%M%S") );
-                            mUTCDateTime = mUTCDateTime.ToUTC();
                             B_Dlg->SetNMEATimeFix( mUTCDateTime );
                         }
                     }
@@ -324,7 +323,6 @@ wxPuts(_("deviation_pi::SetNMEASentence"));
                         mPriDateTime = 5;
                         if ( B_Dlg != NULL ){
                             mUTCDateTime.ParseFormat( m_NMEA0183.Gll.UTCTime.c_str(), _T("%H%M%S") );
-                            mUTCDateTime = mUTCDateTime.ToUTC();
                             B_Dlg->SetNMEATimeFix( mUTCDateTime );
                         }
                     }
@@ -337,23 +335,26 @@ wxPuts(_("deviation_pi::SetNMEASentence"));
                 if( mPriHeadingM >= 1 ) {
                     mPriHeadingM = 1;
                     mHdm = m_NMEA0183.Hdg.MagneticSensorHeadingDegrees;
+                    DrawToolbarIconNumber(mHdm);
+                    double mHdt = mHdm + g_var + aCompass->data->getDeviation( mHdm );
+                    if( sentence.Left(6) != _("$XXHDG")){
+                        SendNMEASentence( _("$XXHDT,") + wxString::Format( _("%1.1f"), mHdt));                        
+                        SendNMEASentence( _("$XXHDG,") + wxString::Format( _("%1.1f,%1.1f,E,%1.1f,E"), mHdm, g_var, aCompass->data->getDeviation( mHdm )));
+                    }
+                    if ( B_Dlg != NULL ){
+                        B_Dlg->SetNMEAHeading(mHdm);
+                    }
                 }
-//                 if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) )
-//                        mHDx_Watchdog = gps_watchdog_timeout_ticks;
-// 
-//                 //      If Variation is available, no higher priority HDT is available,
-//                 //      then calculate and propagate calculated HDT
-//                 if( !wxIsNaN(m_NMEA0183.Hdg.MagneticSensorHeadingDegrees) ) {
-//                     if( !wxIsNaN( mVar )  && (mPriHeadingT > 3) ){
-//                         mPriHeadingT = 4;
-//                         SendSentenceToAllInstruments(OCPN_DBP_STC_HDT, mHdm + mVar, _T("\u00B0"));
-//                         mHDT_Watchdog = gps_watchdog_timeout_ticks;
-//                     }
-//                 }
             }
         }
 
     }
+    
+}
+bool GetActiveRoutepointGPX( char *buffer, unsigned int buffer_length )
+{
+    //wxString::FromUTF8(chars);
+    return true;
 }
 
 bool deviation_pi::LoadConfig(void)
@@ -407,3 +408,112 @@ void deviation_pi::ShowPreferencesDialog( wxWindow* parent )
     delete PrefDlg;
 }
 
+void deviation_pi::DrawToolbarIconNumber( float dev )
+{
+    wxString NewVal = wxString::Format(_T("%.1f"), aCompass->data->getDeviation( dev ));
+wxPuts(NewVal);
+    double scale = GetOCPNGUIToolScaleFactor_PlugIn();
+    scale = wxRound(scale * 4.0) / 4.0;
+    scale = wxMax(1.0, scale);          // Let the upstream processing handle minification.
+    
+    if( m_bShowIcon && m_bShowLiveIcon && ((m_LastVal != NewVal) || (scale != m_scale)) )
+    {
+        m_scale = scale;
+        m_LastVal = NewVal;
+        int w = _img_deviation_live->GetWidth() * scale;
+        int h = _img_deviation_live->GetHeight() * scale;
+        wxMemoryDC dc;
+        wxBitmap icon;
+        
+        //  Is SVG available?
+        wxBitmap live = GetBitmapFromSVGFile(m_shareLocn + _T("deviation_live.svg"), w, h);
+        if( ! live.IsOk() ){
+            icon = wxBitmap(_img_deviation_live->GetWidth(), _img_deviation_live->GetHeight());
+            dc.SelectObject(icon);
+            dc.DrawBitmap(*_img_deviation_live, 0, 0, true);
+        }
+        else{
+            icon = wxBitmap(w, h);
+            dc.SelectObject(icon);
+            wxColour col;
+            dc.SetBackground( *wxTRANSPARENT_BRUSH );
+            dc.Clear();
+        
+            dc.DrawBitmap(live, 0, 0, true);
+        }
+wxPuts(_("after GetBitmapFromSVGFile"));
+        wxColour cf;
+        GetGlobalColor(_T("CHBLK"), &cf);
+        dc.SetTextForeground(cf);
+                                    wxPuts(_("before if(pFontSmall->IsOk()){"));
+        if(pFontSmall->IsOk()){
+                                    wxPuts(_("after if(pFontSmall->IsOk()){"));
+            if(live.IsOk()){
+                int point_size = wxMax(10, (int)10 * scale);
+                pFontSmall->SetPointSize(point_size);
+                                      wxPuts(_("after pFontSmall->SetPointSize(point_size);"));              
+                //  Validate and adjust the font size...
+                //   No smaller than 8 pt.
+                int w;
+                wxScreenDC sdc;
+                sdc.SetFont(*pFontSmall);
+                sdc.GetTextExtent(NewVal, &w, NULL);
+                while( (w > (icon.GetWidth() * 8 / 10) ) && (point_size >= 8) ){
+                    point_size--;
+                    pFontSmall->SetPointSize(point_size);
+                    sdc.SetFont(*pFontSmall);
+                    sdc.GetTextExtent(NewVal, &w, NULL);
+                }
+            }
+            dc.SetFont(*pFontSmall);
+ wxPuts( wxString::Format(_("fontsize= %i"), pFontSmall->GetPointSize() ));           
+        }
+        wxSize s = dc.GetTextExtent(NewVal);
+        dc.DrawText(NewVal, (icon.GetWidth() - s.GetWidth()) / 2, (icon.GetHeight() - s.GetHeight()) / 2);
+        dc.SelectObject(wxNullBitmap);
+  wxPuts(_("after SelectObject(wxNullBitmap);"));      
+        if(live.IsOk()){
+            //  By using a DC to modify the bitmap, we have lost the original bitmap's alpha channel
+            //  Recover it by copying from the original to the target, bit by bit
+            wxImage imo = live.ConvertToImage();
+            wxImage im = icon.ConvertToImage();
+            
+            if(!imo.HasAlpha())
+                imo.InitAlpha();
+            if(!im.HasAlpha())
+                im.InitAlpha();
+            
+            unsigned char *alive = imo.GetAlpha();
+            unsigned char *target = im.GetAlpha();
+                
+            for(int i=0 ; i < h ; i ++){
+                for(int j=0 ; j < w ; j++){
+                    int index = (i * w) + j;
+                    target[index] = alive[index];
+                }
+            }
+            icon = wxBitmap(im);
+        }
+        
+        SetToolbarToolBitmaps(m_leftclick_tool_id, &icon, &icon);
+    }
+
+}
+
+void deviation_pi::SendNMEASentence(wxString sentence)
+{
+    wxString Checksum = ComputeChecksum(sentence);
+    sentence = sentence.Append(wxT("*"));
+    sentence = sentence.Append(Checksum);
+    sentence = sentence.Append(wxT("\r\n"));
+    PushNMEABuffer(sentence);
+}
+
+wxString deviation_pi::ComputeChecksum( wxString sentence )
+{
+    unsigned char calculated_checksum = 0;
+    for(wxString::const_iterator i = sentence.begin()+1; i != sentence.end() && *i != '*'; ++i)
+        calculated_checksum ^= static_cast<unsigned char> (*i);
+
+   return( wxString::Format(_("%02X"), calculated_checksum) );
+}

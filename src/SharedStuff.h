@@ -62,6 +62,7 @@ class compass_data : public wxObject //typedef struct
 public:
     compass_data(wxString sname, wxString cname);
     ~compass_data();
+    double getDeviation( double heading);
     wxString filename;
     wxString shipsname;
     wxString compassname;
@@ -71,6 +72,8 @@ public:
     double D;
     double E;
     std::vector<Meassurement*> vec;
+    bool SendNMEA;
+    bool ShowToolbarBtn;
     bool needsaving;
 };// compass_data;
 

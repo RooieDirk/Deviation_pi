@@ -68,7 +68,6 @@ class PreferenceDlg: public wxDialog
 		//(*Handlers(PreferenceDlg)
 		void OnShipsnameBoxTextUpdated(wxCommandEvent& event);
         void OnCompassnameBoxTextUpdated(wxCommandEvent& event);
-		void OnRadioButton1Select(wxCommandEvent& event);
         void GetListOfAvailableShips();
         void GetListOfAvailableCompasses();
         void OnOKBtnClick(wxCommandEvent& event);

@@ -62,9 +62,9 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	Choice = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE"));
 	Choice->SetSelection( Choice->Append(wxT("Bearing")) );
 	Choice->Append(wxT("Relative bearing (Righthand bearing)"));
-	Choice->Append(wxT("Bearing using \'Navigate to\'"));
-    Choice->Append(wxT("Steaming into \'Navigate to\'"));
-	Choice->Append(wxT("Steaming into leading line"));
+	//Choice->Append(wxT("Bearing using \'Navigate to\'"));
+    //Choice->Append(wxT("Steaming into \'Navigate to\'"));
+	Choice->Append(wxT("Steaming into"));// leading line"));
 	Choice->Append(wxT("Sun bearing"));
 	Choice->Append(wxT("Sun bearing shadowline"));
 	StaticBoxSizer1->Add(Choice, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
@@ -139,7 +139,7 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
     FlexGridSizer1->SetSizeHints(this);
 	Layout();
     CopyMessObjToDlg();
-    GPS_UpdateTime = 5;
+    GPS_UpdateTime = 0;
 
     Connect(ID_CHOICE,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&BearingDlg::OnClose);
@@ -248,28 +248,54 @@ void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
         localMesData->lat = pfix.Lat;
         localMesData->lon = pfix.Lon;
     }
-    wxPuts(_("BearingDlg::SetPositionFix"));
-    wxWindow *w = FindFocus(); // Remember wich control has focus
+    wxPuts(_("BearingDlg::SetPositionFix") + wxString::Format( _("  GPS_UpdateTime= %i"), GPS_UpdateTime));
+    
     if ( UpdateFlag)        
     {
         VariationCtrl->SetValue(wxString::Format(wxT("%f"), pfix.Var));
         
-        if (GPS_UpdateTime < 0) 
+        if (GPS_UpdateTime <= 0) 
         {
+            wxWindow *w = FindFocus(); // Remember wich control has focus
             wxDateTime *tempDT = new wxDateTime(pfix.FixTime);
             TPickerCtrl->SetValue(*tempDT);
             GPS_UpdateTime = 0;
+            w->SetFocus(); // restore focus
         }
         else
             GPS_UpdateTime -= 1;
         
-        w->SetFocus(); // restore focus
+       
         UpdateFlag = TempFlag;    
     }    
 }
 void BearingDlg::SetNMEATimeFix(wxDateTime dt)
 {
-    TPickerCtrl->SetValue(dt);
-    GPS_UpdateTime = 5;
-    wxPuts(_("BearingDlg::SetNMEATimeFix"));
+    bool TempFlag = UpdateFlag;
+    if ( UpdateFlag){
+        wxWindow *w = FindFocus(); // Remember wich control has focus
+        wxTimeSpan timezone = dt - dt.ToUTC();
+        TPickerCtrl->SetValue(dt.Add( timezone) );
+        GPS_UpdateTime = 10;
+        w->SetFocus(); // restore focus
+        wxPuts(_("BearingDlg::SetNMEATimeFix ") + dt.FormatISOTime());
+    }
+    UpdateFlag = TempFlag;
+    
 }
+
+void BearingDlg::SetNMEAHeading(double hd)
+{
+    bool TempFlag = UpdateFlag;
+    
+    if ( UpdateFlag){
+        wxWindow *w = FindFocus();
+        CompassCourseCtrl->ChangeValue(wxString::Format(wxT("%f"), hd));
+        w->SetFocus(); // restore focus
+    }
+    UpdateFlag = TempFlag;
+    
+    
+    wxPuts(_("BearingDlg::SetNMEAHeading"));
+}
+

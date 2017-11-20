@@ -79,6 +79,7 @@ class BearingDlg: public wxDialog
         
         void SetPositionFix(PlugIn_Position_Fix_Ex &pfix);
         void SetNMEATimeFix(wxDateTime dt);
+        void SetNMEAHeading(double hd);
 	protected:
 
 		//(*Identifiers(BearingDlg)

@@ -37,14 +37,14 @@ PreferenceDlg::PreferenceDlg(wxWindow* parent,wxWindowID id, compass_data* Data 
 {
 	
     data = Data;
-    wxPuts( data->shipsname );
+
     GetListOfAvailableShips();
     GetListOfAvailableCompasses();
     //(*Initialize(PreferenceDlg)
 	wxGridBagSizer* GridBagSizer1;
 	wxStdDialogButtonSizer* StdDialogButtonSizer1;
 
-	Create(parent, id, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
+	Create(parent, id, _("Deviation Preference Dialog"), wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE, _T("id"));
 	SetClientSize(wxDefaultSize);
 	Move(wxDefaultPosition);
 	GridBagSizer1 = new wxGridBagSizer(0, 0);
@@ -72,6 +72,9 @@ PreferenceDlg::PreferenceDlg(wxWindow* parent,wxWindowID id, compass_data* Data 
 	SetSizer(GridBagSizer1);
 	GridBagSizer1->Fit(this);
 	GridBagSizer1->SetSizeHints(this);
+    
+    ShowToolbarCB->SetValue(data->ShowToolbarBtn);
+    SendNmeaCB->SetValue(data->SendNMEA);
 
 	Connect(ID_SHIPSNAMEB,wxEVT_COMMAND_COMBOBOX_SELECTED,(wxObjectEventFunction)&PreferenceDlg::OnShipsnameBoxTextUpdated);
 	//Connect(ID_SHIPSNAMEB,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&PreferenceDlg::OnShipsnameBoxTextUpdated);
@@ -80,6 +83,7 @@ PreferenceDlg::PreferenceDlg(wxWindow* parent,wxWindowID id, compass_data* Data 
 	//Connect(ID_COMPASSNAMEB,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&PreferenceDlg::OnCompassnameBoxTextUpdated);
 	Connect(ID_COMPASSNAMEB,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&PreferenceDlg::OnCompassnameBoxTextUpdated);
     Connect(wxID_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PreferenceDlg::OnOKBtnClick);
+    
 	//*)
 }
 
@@ -92,7 +96,6 @@ PreferenceDlg::~PreferenceDlg()
 
 void PreferenceDlg::OnShipsnameBoxTextUpdated(wxCommandEvent& event)
 {
-    wxPuts(_("OnShipsnameBoxTextUpdated"));
     data->shipsname = ShipsnameBox->GetValue();
     
     GetListOfAvailableCompasses();
@@ -105,13 +108,11 @@ void PreferenceDlg::OnShipsnameBoxTextUpdated(wxCommandEvent& event)
 }
 void PreferenceDlg::OnCompassnameBoxTextUpdated(wxCommandEvent& event)
 {
-    wxPuts(_("OnCompssnameBoxTextUpdated"));
     data->compassname = CompassnameBox->GetValue();
+    ShowToolbarCB->SetValue(data->ShowToolbarBtn);
+    SendNmeaCB->SetValue(data->SendNMEA);
 }
 
-void PreferenceDlg::OnRadioButton1Select(wxCommandEvent& event)
-{
-}
 
 void PreferenceDlg::GetListOfAvailableShips()
 {
@@ -123,16 +124,16 @@ void PreferenceDlg::GetListOfAvailableCompasses()
 {
     ReadWriteXML* a = new ReadWriteXML( data );
     CompasArrayStr.Clear();
-    CompasArrayStr = a->GetCompassList();
-    
+    CompasArrayStr = a->GetCompassList();    
     delete a;
 }
 void PreferenceDlg::OnOKBtnClick(wxCommandEvent& event)
 {
     data->shipsname = ShipsnameBox->GetValue();
     data->compassname = CompassnameBox->GetValue();
-    ReadWriteXML* a = new ReadWriteXML( data ); 
-    
+    data->ShowToolbarBtn = ShowToolbarCB->GetValue();
+    data->SendNMEA = SendNmeaCB->GetValue();
+    ReadWriteXML* a = new ReadWriteXML( data );     
     delete a;
     EndModal(wxID_OK);
 }

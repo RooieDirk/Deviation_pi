@@ -96,7 +96,7 @@ public:
     void SetColorScheme(PI_ColorScheme cs);
     void SetPluginMessage(wxString &message_id, wxString &message_body);
     void SetNMEASentence(wxString &sentence);
-    
+    bool GetActiveRoutepointGPX( char *buffer, unsigned int buffer_length );
 
 //    Other public methods
 //     void SetWmmDialogX    (int x){ m_deviation_dialog_x = x;};
@@ -104,7 +104,9 @@ public:
 
     void OnWmmDialogClose();
     void ShowPlotSettings();
-
+    void DrawToolbarIconNumber( float dev );
+    void SendNMEASentence(wxString sentence);
+    wxString ComputeChecksum( wxString sentence );
 //    Deviation Declarations
     
     wxString filename;
@@ -120,12 +122,15 @@ private:
     bool          m_bShowLiveIcon;
     bool          m_bShowIcon;
     wxString        m_LastVal;
-
+    double        g_var;
+    double        g_dev;
     int           m_leftclick_tool_id;
     NMEA0183      m_NMEA0183;                 // Used to parse NMEA Sentences
     short         mPriHeadingM, mPriHeadingT, mPriVar, mPriDateTime;
     wxDateTime    mUTCDateTime;
     double               mHdm;
+    double        m_scale;
+    wxFont        *pFontSmall;
 };
 
 

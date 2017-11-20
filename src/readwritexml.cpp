@@ -108,9 +108,7 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
         p_compassnode = temp->Clone();
         p_shipnode->LinkEndChild( p_compassnode );
         data->needsaving = true;
-    }
-
-      
+    }      
 }
 
 ReadWriteXML::~ReadWriteXML()
@@ -118,9 +116,16 @@ ReadWriteXML::~ReadWriteXML()
     wxPuts(_("delete ReadWriteXML"));
     if (data->needsaving) 	doc.SaveFile( data->filename.mb_str() );
 }
+
 void ReadWriteXML::WriteBearings(std::vector<Meassurement*> Ms)
 {
     DeleteAllBearingNodes();
+    
+    TiXmlElement* envS = new TiXmlElement( "EnvSettings" );
+    p_compassnode->LinkEndChild(envS);
+    envS->SetDoubleAttribute("SendNMEA", data->SendNMEA);
+    envS->SetDoubleAttribute("ShowTool", data->ShowToolbarBtn);
+    
     TiXmlElement* abcde = new TiXmlElement( "ABCDEvalues" );
     p_compassnode->LinkEndChild(abcde);
     abcde->SetDoubleAttribute("factorA", data->A);
@@ -163,7 +168,13 @@ void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
     
     if ( p_compassnode == NULL ) return;
     
-    TiXmlElement* N = p_compassnode->FirstChildElement("ABCDEvalues");
+    TiXmlElement* N = p_compassnode->FirstChildElement("EnvSettings");
+    if ( N != NULL ){
+        N->QueryBoolAttribute("SendNMEA", &data->SendNMEA);
+        N->QueryBoolAttribute("ShowTool", &data->ShowToolbarBtn);
+    }
+    
+    N = p_compassnode->FirstChildElement("ABCDEvalues");
     if ( N != NULL ){
         wxPuts(" ReadWriteXML::Read ABCDEvalues");
         N->QueryDoubleAttribute("factorA", &data->A);
