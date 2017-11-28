@@ -60,7 +60,7 @@ class PreferenceDlg: public wxDialog
 		static const long ID_STATICTEXT2;
 		static const long ID_COMPASSNAMEB;
 		static const long ID_SENDNMEACB;
-		static const long ID_CHECKBOX2;
+		static const long ID_TOOLBTNSHOWCB;
 		//*)
 
 	private:
@@ -70,6 +70,7 @@ class PreferenceDlg: public wxDialog
         void OnCompassnameBoxTextUpdated(wxCommandEvent& event);
         void GetListOfAvailableShips();
         void GetListOfAvailableCompasses();
+        void OnCheckBoxTextUpdated(wxCommandEvent& event);
         void OnOKBtnClick(wxCommandEvent& event);
 		//*)
 

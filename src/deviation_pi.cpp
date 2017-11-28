@@ -34,6 +34,7 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
+#include <wx/stdpaths.h>
 #ifndef __OCPN__ANDROID__
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -46,8 +47,9 @@
 #include "SharedStuff.h"
 
 extern BearingDlg* B_Dlg;
+//wxFont *pFont;
 
-void DeviationLogMessage1(wxString s) { wxLogMessage(_T("Deviation: ") + s); }
+void DeviationLogMessage1(wxString s) { wxLogMessage(_T("Deviation_pi: ") + s); }
 extern "C" void DeviationLogMessage(const char *s) { DeviationLogMessage1(wxString::FromAscii(s)); }
 
 #include "deviation_pi.h"
@@ -72,9 +74,6 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 
 #include "icons.h"
 
-
-
-
 //---------------------------------------------------------------------------------------------------------
 //
 //        PlugIn initialization and de-init
@@ -91,17 +90,11 @@ deviation_pi::deviation_pi(void *ppimgr)
 
 int deviation_pi::Init(void)
 {
-//     AddLocaleCatalog( _T("opencpn-deviation_pi") );
-// 
-//     // Set some default private member parameters
-//     m_deviation_dialog_x = 0;
-//     m_deviation_dialog_y = 0;
-// 
-//     ::wxDisplaySize(&m_display_width, &m_display_height);
-// 
-//     //    Get a pointer to the opencpn display canvas, to use as a parent for the POI Manager dialog
-    m_parent_window = GetOCPNCanvasWindow();
+    B_Dlg = NULL; 
     m_CompasDevListDlg = NULL;
+    //    Get a pointer to the opencpn display canvas, to use as a parent for the POI Manager dialog
+    m_parent_window = GetOCPNCanvasWindow();
+    
 //     //    Get a pointer to the opencpn configuration object
      m_pconfig = GetOCPNConfigObject();
 // 
@@ -113,14 +106,6 @@ int deviation_pi::Init(void)
      mPriHeadingM = 99;
  
      pFontSmall = new wxFont( 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTWEIGHT_NORMAL );
-//     m_shareLocn =*GetpSharedDataLocation() +
-//     _T("plugins") + wxFileName::GetPathSeparator() +
-//     _T("deviation_pi") + wxFileName::GetPathSeparator();
-//     
-//     //    Deviation initialization
-//     /* Memory allocation */
-//     int NumTerms = ( ( Deviation_MAX_MODEL_DEGREES + 1 ) * ( Deviation_MAX_MODEL_DEGREES + 2 ) / 2 );    /* Deviation_MAX_MODEL_DEGREES is defined in Deviation_Header.h */
-// 
 
     int ret_flag =  (
     WANTS_CURSOR_LATLON     |
@@ -129,17 +114,15 @@ int deviation_pi::Init(void)
     WANTS_NMEA_EVENTS       |
     WANTS_PREFERENCES       |
     WANTS_CONFIG          |
-    WANTS_PLUGIN_MESSAGING
- 
+    WANTS_PLUGIN_MESSAGING 
     );
-    m_bShowIcon = true;
-    if(m_bShowIcon){
+    b_ShowIcon = true;
+    if( aCompass->data->ShowToolbarBtn ){
     //    This PlugIn needs a toolbar icon, so request its insertion
-        m_leftclick_tool_id  = InsertPlugInTool(_T(""), _img_deviation, _img_deviation, wxITEM_NORMAL,
+        i_leftclick_tool_id  = InsertPlugInTool(_T(""), _img_deviation, _img_deviation, wxITEM_NORMAL,
                                             _("Deviation"), _T(""), NULL, Deviation_TOOL_POSITION, 0, this);
         
         SetIconType();          // SVGs allowed if not showing live icon
-        this->
         ret_flag |= INSTALLS_TOOLBAR_TOOL;
     }
 // 
@@ -150,13 +133,10 @@ int deviation_pi::Init(void)
 
 bool deviation_pi::DeInit(void)
 {
-
     SaveConfig();
-
     if( m_CompasDevListDlg != NULL) delete m_CompasDevListDlg;
-    RemovePlugInTool(m_leftclick_tool_id);
-
-     delete pFontSmall;
+    RemovePlugInTool(i_leftclick_tool_id);
+    delete pFontSmall;
     return true;
 }
 
@@ -217,16 +197,16 @@ int deviation_pi::GetToolbarToolCount(void)
 
 void deviation_pi::SetColorScheme(PI_ColorScheme cs)
 {
-//     if (NULL == m_pWmmDialog)
-//         return;
-//     DimeWindow(m_pWmmDialog);
+    if (NULL == m_CompasDevListDlg)
+        return;
+    DimeWindow(m_CompasDevListDlg);
 }
 
 void deviation_pi::SetIconType()
 {
-    if(m_bShowLiveIcon){
-        SetToolbarToolBitmaps(m_leftclick_tool_id, _img_deviation, _img_deviation);
-        SetToolbarToolBitmapsSVG(m_leftclick_tool_id, _T(""), _T(""), _T(""));
+    if(b_ShowLiveIcon){
+        SetToolbarToolBitmaps(i_leftclick_tool_id, _img_deviation, _img_deviation);
+        SetToolbarToolBitmapsSVG(i_leftclick_tool_id, _T(""), _T(""), _T(""));
         m_LastVal.Empty();
     }
     else{
@@ -234,9 +214,8 @@ void deviation_pi::SetIconType()
         wxString toggledIcon = m_shareLocn + _T("deviation_pi.svg");
         wxString rolloverIcon = m_shareLocn + _T("deviation_pi.svg");
         
-        SetToolbarToolBitmapsSVG(m_leftclick_tool_id, normalIcon, rolloverIcon, toggledIcon);
-    }
-    
+        SetToolbarToolBitmapsSVG(i_leftclick_tool_id, normalIcon, rolloverIcon, toggledIcon);
+    }    
 }
 
 
@@ -253,7 +232,7 @@ void deviation_pi::OnToolbarToolCallback(int id)
         m_CompasDevListDlg = new CompasDev1Dialog(m_parent_window, 
             aCompass->data->shipsname + _("  ") + aCompass->data->compassname,
             aCompass->data );
-        wxFont *pFont = OCPNGetFont(_T("Dialog"), 0);
+        //wxFont *pFont = OCPNGetFont(_T("Dialog"), 0);
     }
 
      m_CompasDevListDlg->Show(!m_CompasDevListDlg->IsShown());
@@ -351,22 +330,21 @@ m_NMEA0183 << sentence;
     }
     
 }
-bool GetActiveRoutepointGPX( char *buffer, unsigned int buffer_length )
-{
-    //wxString::FromUTF8(chars);
-    return true;
-}
 
 bool deviation_pi::LoadConfig(void)
 {
-    m_shareLocn =*GetpSharedDataLocation() +
-    _T("plugins") + wxFileName::GetPathSeparator() +
-    _T("deviation_pi");
+    m_shareLocn =  *GetpPrivateApplicationDataLocation();
+    // above function is not always give a path seperator on the end. So we have to check for this.
+    if ( m_shareLocn.Right(1) != wxFileName::GetPathSeparator())
+        m_shareLocn = m_shareLocn + wxFileName::GetPathSeparator();
+     m_shareLocn = m_shareLocn + wxT("plugins") + wxFileName::GetPathSeparator() + 
+            wxT("deviation_pi");
+    // Check if directory exsist, and if not make it
     if ( !wxFileName::DirExists(m_shareLocn) )
         wxFileName::Mkdir( m_shareLocn, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
     
     filename = m_shareLocn + wxFileName::GetPathSeparator() + _T("deviation_data.xml");
-    
+
     
     wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
     if(pConf)
@@ -381,6 +359,7 @@ bool deviation_pi::LoadConfig(void)
     }
         return false;
 }
+
 
 bool deviation_pi::SaveConfig(void)
 {
@@ -411,12 +390,11 @@ void deviation_pi::ShowPreferencesDialog( wxWindow* parent )
 void deviation_pi::DrawToolbarIconNumber( float dev )
 {
     wxString NewVal = wxString::Format(_T("%.1f"), aCompass->data->getDeviation( dev ));
-wxPuts(NewVal);
     double scale = GetOCPNGUIToolScaleFactor_PlugIn();
     scale = wxRound(scale * 4.0) / 4.0;
     scale = wxMax(1.0, scale);          // Let the upstream processing handle minification.
     
-    if( m_bShowIcon && m_bShowLiveIcon && ((m_LastVal != NewVal) || (scale != m_scale)) )
+    if( b_ShowIcon && b_ShowLiveIcon && ((m_LastVal != NewVal) || (scale != m_scale)) )
     {
         m_scale = scale;
         m_LastVal = NewVal;
@@ -441,17 +419,13 @@ wxPuts(NewVal);
         
             dc.DrawBitmap(live, 0, 0, true);
         }
-wxPuts(_("after GetBitmapFromSVGFile"));
         wxColour cf;
         GetGlobalColor(_T("CHBLK"), &cf);
         dc.SetTextForeground(cf);
-                                    wxPuts(_("before if(pFontSmall->IsOk()){"));
         if(pFontSmall->IsOk()){
-                                    wxPuts(_("after if(pFontSmall->IsOk()){"));
             if(live.IsOk()){
                 int point_size = wxMax(10, (int)10 * scale);
-                pFontSmall->SetPointSize(point_size);
-                                      wxPuts(_("after pFontSmall->SetPointSize(point_size);"));              
+                pFontSmall->SetPointSize(point_size);              
                 //  Validate and adjust the font size...
                 //   No smaller than 8 pt.
                 int w;
@@ -465,13 +439,11 @@ wxPuts(_("after GetBitmapFromSVGFile"));
                     sdc.GetTextExtent(NewVal, &w, NULL);
                 }
             }
-            dc.SetFont(*pFontSmall);
- wxPuts( wxString::Format(_("fontsize= %i"), pFontSmall->GetPointSize() ));           
+            dc.SetFont(*pFontSmall);           
         }
         wxSize s = dc.GetTextExtent(NewVal);
         dc.DrawText(NewVal, (icon.GetWidth() - s.GetWidth()) / 2, (icon.GetHeight() - s.GetHeight()) / 2);
         dc.SelectObject(wxNullBitmap);
-  wxPuts(_("after SelectObject(wxNullBitmap);"));      
         if(live.IsOk()){
             //  By using a DC to modify the bitmap, we have lost the original bitmap's alpha channel
             //  Recover it by copying from the original to the target, bit by bit
@@ -495,7 +467,7 @@ wxPuts(_("after GetBitmapFromSVGFile"));
             icon = wxBitmap(im);
         }
         
-        SetToolbarToolBitmaps(m_leftclick_tool_id, &icon, &icon);
+        SetToolbarToolBitmaps(i_leftclick_tool_id, &icon, &icon);
     }
 
 }

@@ -19,6 +19,8 @@
 
 #include "bearingdlg.h"
 
+BearingDlg* B_Dlg;
+
 BEGIN_EVENT_TABLE(BearingDlg,wxDialog)
 	//(*EventTable(BearingDlg)
 	//*)
@@ -58,27 +60,27 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	SetClientSize(wxSize(199,215));
 	Move(wxDefaultPosition);
 	FlexGridSizer1 = new wxFlexGridSizer(3, 1, 0, 0);
-	StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, this, wxT("Methode"));
+	StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, this, _("Methode"));
 	Choice = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE"));
-	Choice->SetSelection( Choice->Append(wxT("Bearing")) );
-	Choice->Append(wxT("Relative bearing (Righthand bearing)"));
-	//Choice->Append(wxT("Bearing using \'Navigate to\'"));
-    //Choice->Append(wxT("Steaming into \'Navigate to\'"));
-	Choice->Append(wxT("Steaming into"));// leading line"));
-	Choice->Append(wxT("Sun bearing"));
-	Choice->Append(wxT("Sun bearing shadowline"));
+	Choice->SetSelection( Choice->Append(_("Bearing")) );
+	Choice->Append(_("Relative bearing (Righthand bearing)"));
+	//Choice->Append(_("Bearing using \'Navigate to\'"));
+    //Choice->Append(_("Steaming into \'Navigate to\'"));
+	Choice->Append(_("Steaming into"));// leading line"));
+	Choice->Append(_("Sun bearing"));
+	Choice->Append(_("Sun bearing shadowline"));
 	StaticBoxSizer1->Add(Choice, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	FlexGridSizer1->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	GridBagSizer1 = new wxGridBagSizer(0, 0);
 	GridBagSizer1->AddGrowableCol(0);
 	GridBagSizer1->AddGrowableRow(5);
-	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, wxT("Date/Time"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
+	StaticText1 = new wxStaticText(this, ID_STATICTEXT1, _("Date/Time"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT1"));
 	GridBagSizer1->Add(StaticText1, wxGBPosition(0, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	DPickerCtrl = new wxDatePickerCtrl(this, ID_DATEPICKERCTRL, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT|wxDP_SHOWCENTURY, wxDefaultValidator, _T("ID_DATEPICKERCTRL"));
 	GridBagSizer1->Add(DPickerCtrl, wxGBPosition(0, 1), wxDefaultSpan, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	TPickerCtrl = new wxTimePickerCtrl(this, ID_TIMEPICKERCTRL, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxTP_DEFAULT, wxDefaultValidator, _T("ID_TIMEPICKERCTRL"));
 	GridBagSizer1->Add(TPickerCtrl, wxGBPosition(0, 2), wxDefaultSpan, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, wxT("Compass Course"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Compass Course"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	GridBagSizer1->Add(StaticText2, wxGBPosition(1, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
         // Allow floating point numbers from 0 to 360 with 1 decimal
         // digits only and handle empty string as 0 by default.
@@ -86,28 +88,28 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
         val_TB.SetRange(0, 360);
     wxFloatingPointValidator<float>  val_CC(1, &CC_value );
         val_CC.SetRange(0, 360);
-    CompassCourseCtrl = new wxTextCtrl(this, ID_CCCTRL, wxT("0"), wxDefaultPosition, wxDefaultSize, 0, val_CC, _T("ID_CCCTRL"));
+    CompassCourseCtrl = new wxTextCtrl(this, ID_CCCTRL, _("0"), wxDefaultPosition, wxDefaultSize, 0, val_CC, _T("ID_CCCTRL"));
     GridBagSizer1->Add(CompassCourseCtrl, wxGBPosition(1, 1), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
-	TrueBearingCtrl = new wxTextCtrl(this, ID_TBCTRL, wxT("0"), wxDefaultPosition, wxDefaultSize, 0, val_TB, _T("ID_TBCTRL"));
+	TrueBearingCtrl = new wxTextCtrl(this, ID_TBCTRL, _("0"), wxDefaultPosition, wxDefaultSize, 0, val_TB, _T("ID_TBCTRL"));
 	GridBagSizer1->Add(TrueBearingCtrl, wxGBPosition(3, 1), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     wxFloatingPointValidator<float>  val_CB(1, &CB_value );
         val_CB.SetRange(0, 360);
-	CompassBearingCtrl = new wxTextCtrl(this, ID_CBCTRL, wxT("0"), wxDefaultPosition, wxDefaultSize, 0, val_CB, _T("ID_CBCTRL"));
+	CompassBearingCtrl = new wxTextCtrl(this, ID_CBCTRL, _("0"), wxDefaultPosition, wxDefaultSize, 0, val_CB, _T("ID_CBCTRL"));
 	GridBagSizer1->Add(CompassBearingCtrl, wxGBPosition(2, 1), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     
 	
     
-    StaticText9 = new wxStaticText(this, ID_STATICTEXT9, wxT("Variation"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT9"));
+    StaticText9 = new wxStaticText(this, ID_STATICTEXT9, _("Variation"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT9"));
 	GridBagSizer1->Add(StaticText9, wxGBPosition(4, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     wxFloatingPointValidator<float>  val_VAR(1, &VAR_value );
         val_VAR.SetRange(-180, 180);
-	VariationCtrl = new wxTextCtrl(this, ID_VARCTRL, wxT("0"), wxDefaultPosition, wxDefaultSize, 0, val_VAR, _T("ID_VARCTRL"));
+	VariationCtrl = new wxTextCtrl(this, ID_VARCTRL, _("0"), wxDefaultPosition, wxDefaultSize, 0, val_VAR, _T("ID_VARCTRL"));
     GridBagSizer1->Add(VariationCtrl, wxGBPosition(4, 1), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
-    StaticText9 = new wxStaticText(this, ID_STATICTEXT8, wxT("°"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT8"));
+    StaticText9 = new wxStaticText(this, ID_STATICTEXT8, _("\u00B0"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT8"));
 	GridBagSizer1->Add(StaticText9, wxGBPosition(4, 2), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    StaticText10= new wxStaticText(this, ID_STATICTEXT10, wxT("Deviation"), wxDefaultPosition,wxDefaultSize, 0, _T("ID_STATICTEXT10"));
+    StaticText10= new wxStaticText(this, ID_STATICTEXT10, _("Deviation"), wxDefaultPosition,wxDefaultSize, 0, _T("ID_STATICTEXT10"));
 	GridBagSizer1->Add(StaticText10, wxGBPosition(5, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText11= new wxStaticText(this, ID_STATICTEXT11, wxT("0.0"), wxDefaultPosition,wxDefaultSize, 0, _T("ID_STATICTEXT11"));
+	StaticText11= new wxStaticText(this, ID_STATICTEXT11, _("0.0"), wxDefaultPosition,wxDefaultSize, 0, _T("ID_STATICTEXT11"));
 	GridBagSizer1->Add(StaticText11, wxGBPosition(5, 1), wxGBSpan(1, 2), wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     
     wxFont StaticText11Font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
@@ -116,15 +118,15 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
     StaticText11Font.SetWeight(wxBOLD);
     StaticText11->SetFont(StaticText11Font);
     
-	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, wxT("°"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT7"));
+	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _("\u00B0"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT7"));
 	GridBagSizer1->Add(StaticText7, wxGBPosition(3, 2), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, wxT("°"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
+	StaticText5 = new wxStaticText(this, ID_STATICTEXT5, _("\u00B0"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT5"));
 	GridBagSizer1->Add(StaticText5, wxGBPosition(2, 2), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, wxT("°"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT3"));
+	StaticText3 = new wxStaticText(this, ID_STATICTEXT3, _("\u00B0"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT3"));
 	GridBagSizer1->Add(StaticText3, wxGBPosition(1, 2), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, wxT("True Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _("True Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	GridBagSizer1->Add(StaticText6, wxGBPosition(3, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, wxT("Compass Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Compass Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
 	GridBagSizer1->Add(StaticText4, wxGBPosition(2, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StdDialogButtonSizer1 = new wxStdDialogButtonSizer();
 	StdDialogButtonSizer1->AddButton(new wxButton(this, wxID_OK, wxEmptyString));
@@ -141,17 +143,19 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
     CopyMessObjToDlg();
     GPS_UpdateTime = 0;
 
-    Connect(ID_CHOICE,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
-    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&BearingDlg::OnClose);
+    Connect(ID_CHOICE,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&BearingDlg::ChoiseSelect);
+    //Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&BearingDlg::OnClose);
     Connect(wxID_ANY,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
     Connect(wxID_ANY,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
     Connect(wxID_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&BearingDlg::OnOKBtnClick);
+    Connect(ID_TIMEPICKERCTRL,wxEVT_TIME_CHANGED,(wxObjectEventFunction)&BearingDlg::OnTimeSelect);
 	//*)
 }
 
 BearingDlg::~BearingDlg()
 {
-	//(*Destroy(BearingDlg)
+	
+    //(*Destroy(BearingDlg)
 	//*)
 }
 
@@ -162,31 +166,37 @@ bool BearingDlg::Show(bool show)
     return temp;
 }
 
+void BearingDlg::ChoiseSelect(wxCommandEvent& event)
+{
+    SetSunBearing(GetDateTime());
+}
+void BearingDlg::OnTimeSelect(wxCommandEvent& event)
+{
+    SetSunBearing(GetDateTime());
+}
 void BearingDlg::OnTextCtrlEnter(wxCommandEvent& event)
 {
     bool OK = false;
     double tvalue, bvalue, vvalue;
-    if (Choice->GetSelection()==5) //SunBearing
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );
-        
-    if (Choice->GetSelection()==6) //SunBearing    {
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
-    
+
     if( TrueBearingCtrl->GetValue().ToDouble(&tvalue)) 
         if( CompassBearingCtrl->GetValue().ToDouble(&bvalue))
             if( VariationCtrl->GetValue().ToDouble(&vvalue))
                 {
                     DEV_value = tvalue - bvalue - vvalue;
-                    StaticText11->SetLabel(  wxString::Format(wxT("%0.1f"), DEV_value));
+                    while ( DEV_value < -180 ) DEV_value += 360;
+                    while ( DEV_value > 180 ) DEV_value -= 360;
+                    StaticText11->SetLabel(  wxString::Format(_("%0.1f"), DEV_value));
                     OK = true;
                 }
-     if ( !OK )  StaticText11->SetLabel( wxT("nan"));
+     if ( !OK )  StaticText11->SetLabel( _("nan"));
      UpdateFlag = false; //Stop auto updating values from nmea after first edit 
 }
 void BearingDlg::OnClose(wxCloseEvent& event)
 {
     
 }
+
 void BearingDlg::OnOKBtnClick(wxCommandEvent& event)
 {
     if ( Validate() && TransferDataFromWindow() )
@@ -194,20 +204,22 @@ void BearingDlg::OnOKBtnClick(wxCommandEvent& event)
         CopyDlgToMessObj();
         if ( IsModal() )
             EndModal(wxID_OK);
-        else
-        {
-            SetReturnCode(wxID_OK);
-            this->Show(false);
-        }
     }
-    
-    
+    else
+        wxMessageBox(_("Error Values entered are not valid"));
 }
+
 void BearingDlg::SetDateTime(wxDateTime dt)
 {
     DT_value = dt;
     DPickerCtrl->SetValue(DT_value);
     TPickerCtrl->SetValue(DT_value);
+        if (Choice->GetSelection()==3) //SunBearing
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );
+        
+    if (Choice->GetSelection()==4) //SunBearing shadow   {
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
+    
 }
 
 wxDateTime BearingDlg::GetDateTime()
@@ -248,17 +260,16 @@ void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
         localMesData->lat = pfix.Lat;
         localMesData->lon = pfix.Lon;
     }
-    wxPuts(_("BearingDlg::SetPositionFix") + wxString::Format( _("  GPS_UpdateTime= %i"), GPS_UpdateTime));
-    
+   
     if ( UpdateFlag)        
     {
-        VariationCtrl->SetValue(wxString::Format(wxT("%f"), pfix.Var));
+        VariationCtrl->SetValue(wxString::Format(_("%f"), pfix.Var));
         
         if (GPS_UpdateTime <= 0) 
         {
             wxWindow *w = FindFocus(); // Remember wich control has focus
-            wxDateTime *tempDT = new wxDateTime(pfix.FixTime);
-            TPickerCtrl->SetValue(*tempDT);
+            
+            SetDateTime(wxDateTime::Now());
             GPS_UpdateTime = 0;
             w->SetFocus(); // restore focus
         }
@@ -277,20 +288,36 @@ void BearingDlg::SetNMEATimeFix(wxDateTime dt)
         wxTimeSpan timezone = dt - dt.ToUTC();
         TPickerCtrl->SetValue(dt.Add( timezone) );
         GPS_UpdateTime = 10;
+        SetSunBearing(GetDateTime());
+            
         w->SetFocus(); // restore focus
         wxPuts(_("BearingDlg::SetNMEATimeFix ") + dt.FormatISOTime());
     }
     UpdateFlag = TempFlag;
     
 }
+void BearingDlg::SetSunBearing(wxDateTime t)
+{
+    bool TempFlag = UpdateFlag;
+    wxWindow *w = FindFocus();
+    if (Choice->GetSelection()==3) //SunBearing
+            TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );        
+    if (Choice->GetSelection()==4) //SunBearing shadow   
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
+    w->SetFocus(); // restore focus
+    UpdateFlag = TempFlag;
+}
 
 void BearingDlg::SetNMEAHeading(double hd)
 {
     bool TempFlag = UpdateFlag;
     
-    if ( UpdateFlag){
+    if ( UpdateFlag){        
         wxWindow *w = FindFocus();
-        CompassCourseCtrl->ChangeValue(wxString::Format(wxT("%f"), hd));
+        CompassCourseCtrl->ChangeValue(wxString::Format(_("%f"), hd));
+        if((Choice->GetSelection() == 2)){ //if heading into ... compassbearing is same as compass course
+            CompassBearingCtrl->ChangeValue(wxString::Format(_("%f"), hd));
+        }
         w->SetFocus(); // restore focus
     }
     UpdateFlag = TempFlag;
@@ -298,4 +325,9 @@ void BearingDlg::SetNMEAHeading(double hd)
     
     wxPuts(_("BearingDlg::SetNMEAHeading"));
 }
+
+// void BearingDlg::UpdateContrs()
+// {
+//     
+// }
 

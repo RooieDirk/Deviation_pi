@@ -48,7 +48,7 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
     if(p_rootnode == NULL)
     {
         //No root node available, so we do make one
-        wxMessageBox(wxT("Failed to load file: No root element."));        
+        //wxMessageBox(wxT("Failed to load file: No root element."));        
         p_rootnode = new TiXmlElement( "root" );  
         doc.LinkEndChild( p_rootnode );
         TiXmlComment * comment = new TiXmlComment();
@@ -69,7 +69,6 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
     while ( p_shipnode )
     {
         TiXmlElement* temp = p_shipnode->ToElement();
-        wxPuts( wxString::Format( wxT("shipsname_value %s, Shipsname %s"), temp->Attribute("shipsname"), data->shipsname.mb_str()));
         if ( strcmp (temp->Attribute("shipsname"),data->shipsname.mb_str()) == 0)
             break;
         p_shipnode = p_shipnode->NextSibling("aship");
@@ -95,7 +94,6 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
     while ( p_compassnode )
     {
         TiXmlElement* temp = p_compassnode->ToElement();
-       wxPuts( wxString::Format( wxT("compassnamevalue %s, compassname %s"), temp->Attribute("compassname"), data->compassname.mb_str()));
         if ( strcmp (temp->Attribute("compassname"),data->compassname.mb_str()) == 0)
             break;
         p_compassnode = p_compassnode->NextSibling("acompass");
@@ -113,8 +111,8 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
 
 ReadWriteXML::~ReadWriteXML()
 {
-    wxPuts(_("delete ReadWriteXML"));
-    if (data->needsaving) 	doc.SaveFile( data->filename.mb_str() );
+    
+    //if (data->needsaving) 	doc.SaveFile( data->filename.mb_str() );
 }
 
 void ReadWriteXML::WriteBearings(std::vector<Meassurement*> Ms)
@@ -138,7 +136,9 @@ void ReadWriteXML::WriteBearings(std::vector<Meassurement*> Ms)
     {
         WriteBearing( Ms[i]);
     }
-    data->needsaving = true;
+    
+    doc.SaveFile( data->filename.mb_str() );
+    data->needsaving = false;    
 }
 
 void ReadWriteXML::WriteBearing(Meassurement* M)
@@ -158,14 +158,10 @@ void ReadWriteXML::WriteBearing(Meassurement* M)
     pBearings->SetAttribute("DateTime", M->datetime.FormatISOCombined().mb_str() );
     pBearings->SetAttribute("Methode", M->methode);
     pBearings->SetAttribute("Enabled", (int)M->enabled);
-    
-     data->needsaving = true;
 }
 
 void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
-{
-    wxPuts(" ReadWriteXML::ReadBearings");
-    
+{    
     if ( p_compassnode == NULL ) return;
     
     TiXmlElement* N = p_compassnode->FirstChildElement("EnvSettings");
@@ -176,7 +172,6 @@ void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
     
     N = p_compassnode->FirstChildElement("ABCDEvalues");
     if ( N != NULL ){
-        wxPuts(" ReadWriteXML::Read ABCDEvalues");
         N->QueryDoubleAttribute("factorA", &data->A);
         N->QueryDoubleAttribute("factorB", &data->B);
         N->QueryDoubleAttribute("factorC", &data->C);
@@ -200,7 +195,6 @@ void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
 }
  void ReadWriteXML::ReadBearing(Meassurement* &M, TiXmlElement* pNode)
 {
-    double tempd;
     pNode->QueryDoubleAttribute("CompassBearing", &M->compassbearing);
     pNode->QueryDoubleAttribute("CompassCourse", &M->compasscourse);
     pNode->QueryDoubleAttribute("TrueBearing", &M->truebearing);
@@ -215,11 +209,6 @@ void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
     int i;
     pNode->QueryIntAttribute("Enabled", &i);
     M->enabled =  (bool)i;
-}
-
-bool ReadWriteXML::SaveXML()
-{
-     //xmlDoc.Save(data->filenamebuffer);
 }
 
 void ReadWriteXML::DeleteAllBearingNodes()
@@ -250,7 +239,6 @@ wxArrayString ReadWriteXML::GetShipsList()
         if ( temp != NULL )
             Ships.Add(  wxString::FromUTF8( temp->Attribute("shipsname")) );
         p_Ship = p_Ship->NextSibling();
-        wxPuts(  wxString::FromUTF8( temp->Attribute("shipsname")) );
     }
     return Ships;
 }
@@ -266,7 +254,6 @@ wxArrayString ReadWriteXML::GetCompassList()
         if ( temp != NULL )
             CompassL.Add(  wxString::FromUTF8( temp->Attribute("compassname")) );
         p_Compas = p_Compas->NextSibling();
-        wxPuts(  wxString::FromUTF8( temp->Attribute("compassname")) );
     }
     return CompassL;
 }
@@ -283,10 +270,12 @@ void ReadObjectsFromXML(compass_data* Data)
 
 void WriteObjectsToXML(compass_data* Data )
 {
-    if (( Data->shipsname != wxEmptyString ) && ( Data->compassname != wxEmptyString ))        
+    if (( Data->shipsname != wxEmptyString ) && ( Data->compassname != wxEmptyString ) && ( Data->needsaving ))        
     {
         ReadWriteXML* a = new ReadWriteXML(Data);
-        a->WriteBearings(Data->vec);        
+        a->WriteBearings(Data->vec);
+        Data->needsaving = false;
         delete a;
+        //wxPuts(_("WriteObjectsToXML"));
     }    
 }

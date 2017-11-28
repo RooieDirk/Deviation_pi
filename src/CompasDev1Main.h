@@ -76,7 +76,8 @@ class CompasDev1Dialog: public wxFrame
         void FillSourceList(void) ;
         void UpdateWindows(void);
         compass_data* data;
-        DevTableDialog* DT_Dlg;
+        //DevTableDialog* DT_Dlg;
+        //BearingDlg* B_Dlg;
 
 	protected:
 

@@ -7,7 +7,7 @@
 # define minimum cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 
-PROJECT(wmm_pi)
+PROJECT(deviation_pi_pi)
 
 SET(PACKAGE_NAME deviation_pi)
 SET(VERBOSE_NAME deviation)
@@ -83,7 +83,28 @@ SET(SRC_JSON
         )
 ENDIF(WIN32)
 
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON})
+IF(UNIX)
+ INCLUDE("src/cmake/FindTinyXML.cmake")
+ FIND_PACKAGE(TinyXML QUIET)
+ENDIF(UNIX)
+
+IF(TINYXML_FOUND)
+ message (STATUS "Deviation_pi building with system tinyxml")
+ INCLUDE_DIRECTORIES(${TINYXML_INCLUDE_DIR})
+ ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON})
+ TARGET_LINK_LIBRARIES(${PACKAGE_NAME} ${TINYXML_LIBRARIES})
+ELSE(TINYXML_FOUND)
+ message (STATUS "Deviation_pi building with embedded tinyxml")
+ INCLUDE_DIRECTORIES(src/tinyxml/)
+ SET(SRC_LTINYXML
+            src/tinyxml/tinyxml.cpp
+            src/tinyxml/tinyxmlparser.cpp
+            src/tinyxml/tinyxmlerror.cpp
+ )
+ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
+ENDIF(TINYXML_FOUND)
+
+#ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
 
 TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} )
 

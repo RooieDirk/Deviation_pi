@@ -28,7 +28,7 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "SharedStuff.h"
 #include <vector> 
 
@@ -45,7 +45,6 @@ public:
     void ReadBearings(std::vector<Meassurement*> &Ms);
     void ReadBearing(Meassurement* &M, TiXmlElement* pNode);
 
-    bool SaveXML();
     void DeleteAllBearingNodes();
     
     wxArrayString GetShipsList();

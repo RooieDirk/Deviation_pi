@@ -1,5 +1,8 @@
-src/wmm_pi.cpp
-src/wmm_pi.h
-src/WmmUIDialog.cpp
-src/WmmUIDialog.h
-src/MagneticPlotMap.cpp
+src/bearingdlg.cpp
+src/CompasDev1Main.cpp
+src/compass.cpp
+src/deviation_pi.cpp
+src/preferencedlg.cpp
+src/printing.cpp
+src/readwritexml.cpp
+src/SharedStuff.cpp

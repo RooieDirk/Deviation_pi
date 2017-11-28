@@ -38,6 +38,8 @@
 #include "SharedStuff.h"
 #include "ocpn_plugin.h"
 
+// class BearingDlg;
+// BearingDlg* B_Dlg;
 
 class BearingDlg: public wxDialog
 {
@@ -80,6 +82,7 @@ class BearingDlg: public wxDialog
         void SetPositionFix(PlugIn_Position_Fix_Ex &pfix);
         void SetNMEATimeFix(wxDateTime dt);
         void SetNMEAHeading(double hd);
+        void SetSunBearing(wxDateTime t);
 	protected:
 
 		//(*Identifiers(BearingDlg)
@@ -106,6 +109,8 @@ class BearingDlg: public wxDialog
 
 	private:
         void OnClose(wxCloseEvent& event);
+        void ChoiseSelect(wxCommandEvent& event);
+        void OnTimeSelect(wxCommandEvent& event);
         void OnTextCtrlEnter(wxCommandEvent& event);
         //void OnChoiceCtrlEnter(wxCommandEvent& event);
         void OnOKBtnClick(wxCommandEvent& event);

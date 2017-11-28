@@ -1,0 +1,12 @@
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/edit_cache.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/package_source.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/deviation-i18n.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/rebuild_cache.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/deviation-po-update.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/deviation-pot-update.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/install.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/list_install_components.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/install/strip.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/deviation_pi.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/install/local.dir
+/home/dirk/Development/OpenCPN_Dirk/OpenCPN/plugins/compass_dev_pi/build/CMakeFiles/package.dir

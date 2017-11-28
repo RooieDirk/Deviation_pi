@@ -15,6 +15,7 @@ ENDIF (COMMAND cmake_policy)
 
 MESSAGE (STATUS "*** Staging to build ${PACKAGE_NAME} ***")
 
+#configure_file(src/wxWTranslateCatalog.h.in ${PROJECT_SOURCE_DIR}/wxWTranslateCatalog.h)
 #configure_file(cmake/version.h.in ${PROJECT_SOURCE_DIR}/src/version.h)
 #  Do the version.h configuration into the build output directory,
 #  thereby allowing building from a read-only source tree.

@@ -107,7 +107,7 @@ public:
 
 
 void DoRender(wxDC &dc, compass_data* Data );
-double CalcSqueredDev( compass_data* Data);
+void CalcSqueredDev( compass_data* Data);
 double GetDeviation(double CompassCourse, compass_data* Data);
 double SolarAzimuth( wxDateTime dt, double latitude, double longitude);
 

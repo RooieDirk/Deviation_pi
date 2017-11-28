@@ -29,6 +29,8 @@
 
 using namespace std;
 
+//extern wxFont *pFont;
+
 //helper functions
 enum wxbuildinfoformat {
     short_f, long_f };
@@ -59,7 +61,9 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 //wxPrintData *g_printData = NULL;
 extern wxPrintData *g_printData;
 extern wxPageSetupDialogData* g_pageSetupData;
-BearingDlg* B_Dlg;
+extern BearingDlg* B_Dlg;
+DevTableDialog* DT_Dlg;
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -84,32 +88,37 @@ CompasDev1Dialog::CompasDev1Dialog( wxWindow *parent,
 {
     data = Data;
     DT_Dlg = NULL;
-    wxPuts(_("CompasDev1Dialog") + data->shipsname);
+//     if ( B_Dlg != NULL)
+//     {
+//         delete B_Dlg;
+//         B_Dlg = NULL;
+//     }
     //(*Initialize(CompasDev1Dialog)
     wxFlexGridSizer* FlexGridSizer;
     wxBoxSizer* BoxSizerButons;
 
     Create(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
+    
     FlexGridSizer = new wxFlexGridSizer(0, 1, 0, 0);
     DevListCtrl = new wxListCtrl(this, ID_LISTCTRLDEV, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTCTRLDEV"));
     //DevListCtrl->SetMinSize(wxSize(0,150));
     FlexGridSizer->Add(DevListCtrl, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizerButons = new wxBoxSizer(wxHORIZONTAL);
-    AddBtn = new wxButton(this, ID_ADDBUTTON, wxT("&Add"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_ADDBUTTON"));
+    AddBtn = new wxButton(this, ID_ADDBUTTON, _("Add"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_ADDBUTTON"));
     BoxSizerButons->Add(AddBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    DeleteBtn = new wxButton(this, ID_DELBUTTON, wxT("&Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_DELBUTTON"));
+    DeleteBtn = new wxButton(this, ID_DELBUTTON, _("Delete"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_DELBUTTON"));
     DeleteBtn->Disable();
     BoxSizerButons->Add(DeleteBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    EditBtn = new wxButton(this, ID_EDITBUTTON, wxT("&Edit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_EDITBUTTON"));
+    EditBtn = new wxButton(this, ID_EDITBUTTON, _("Edit"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_EDITBUTTON"));
     EditBtn->Disable();
     BoxSizerButons->Add(EditBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    ShowBtn = new wxButton(this, ID_BUTTONSHOW, wxT("Show"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONSHOW"));    
+    ShowBtn = new wxButton(this, ID_BUTTONSHOW, _("Show"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONSHOW"));    
     BoxSizerButons->Add(ShowBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     
-    CancelBtn = new wxButton(this, ID_BUTTONCANCEL, wxT("Cancel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONCANCEL"));
+    CancelBtn = new wxButton(this, ID_BUTTONCANCEL, _("Cancel"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONCANCEL"));
     BoxSizerButons->Add(CancelBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     
-    CloseBtn = new wxButton(this, ID_BUTTONCLOSE, wxT("OK"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONCLOSE"));
+    CloseBtn = new wxButton(this, ID_BUTTONCLOSE, _("OK"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTONCLOSE"));
     BoxSizerButons->Add(CloseBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     FlexGridSizer->Add(BoxSizerButons, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     SetSizer(FlexGridSizer);
@@ -130,7 +139,7 @@ CompasDev1Dialog::CompasDev1Dialog( wxWindow *parent,
     Connect(wxEVT_RIGHT_DOWN,(wxObjectEventFunction)&CompasDev1Dialog::OnRightDown);
     Connect(wxEVT_SIZE,(wxObjectEventFunction)&CompasDev1Dialog::OnResize);
     
-     wxString columns[] = {wxT("Do\nuse"),   wxT("Date/Time"), wxT("Compass\nCourse"),   wxT("Compass\nBearing"), wxT("True\nBearing"), wxT("Var."), wxT("Dev."), wxT("")};
+     wxString columns[] = {_("Do\nuse"),   _("Date/Time"), _("Compass\nCourse"),   _("Compass\nBearing"), _("True\nBearing"), _("Var."), _("Dev."), _("")};
     for (int i = 0; i < 8; ++i) {
         wxListItem col;
         col.SetId(i);
@@ -171,8 +180,7 @@ CompasDev1Dialog::CompasDev1Dialog( wxWindow *parent,
 
 CompasDev1Dialog::~CompasDev1Dialog()
 {
-    //(*Destroy(CompasDev1Dialog)
-    //*)
+    
 }
 // void CompasDev1Dialog::OnPreviewFrameModalityKind(wxCommandEvent& event)
 // {
@@ -184,60 +192,94 @@ CompasDev1Dialog::~CompasDev1Dialog()
 void CompasDev1Dialog::OnAddBtnClick(wxCommandEvent& event)
 {    
     Meassurement* NewMess = new Meassurement();
-    B_Dlg =  new BearingDlg(this, NewMess, wxID_ANY, wxDefaultPosition, wxDefaultSize, false);
+    if ( B_Dlg == NULL ){
+        B_Dlg =  new BearingDlg(this, NewMess, wxID_ANY, wxDefaultPosition, wxDefaultSize, false);
+        wxPuts(_("B_Dlg == NULL"));
+    }
+    else
+        wxPuts(_("B_Dlg != NULL"));
     if ( B_Dlg->ShowModal() == wxID_OK )
     {        
+        data->needsaving = true;
         data->vec.push_back( NewMess );
         CalcSqueredDev(data);
         FillSourceList();
         UpdateWindows();
-    };
-    delete B_Dlg; 
-    B_Dlg = NULL;
+        delete B_Dlg; 
+        B_Dlg = NULL;
+    }
+    else if ( B_Dlg != NULL )
+    {
+        delete B_Dlg; 
+        B_Dlg = NULL;
+    }
 }
 
 void CompasDev1Dialog::OnDeleteBtnClick(wxCommandEvent& event)
 {
-    delete data->vec[listselindex];
-    data->vec.erase( data->vec.begin() + listselindex );
+    delete data->vec[listselindex]; //delete object
+    data->vec.erase( data->vec.begin() + listselindex ); // and remove pointer to object from vector list
+    CalcSqueredDev(data);
     FillSourceList();
+    UpdateWindows();
 }
 
 void CompasDev1Dialog::OnEditBtnClick(wxCommandEvent& event)
 {
-    B_Dlg =  new BearingDlg(this, data->vec[listselindex], wxID_ANY,  wxDefaultPosition, wxDefaultSize, false);
+    if ( B_Dlg != NULL )
+        B_Dlg =  new BearingDlg(this, data->vec[listselindex], wxID_ANY,  wxDefaultPosition, wxDefaultSize, false);
     //CopyMessObjToDlg(data->vec[listselindex], B_Dlg);
     if ( B_Dlg->ShowModal() == wxID_OK )
-    {
-        
-
+    {        
+        data->needsaving = true;
+        wxPuts(_("data->needsaving = true;"));
         CalcSqueredDev(data);
         FillSourceList();
         UpdateWindows();
-    }; 
-    delete B_Dlg;
-    B_Dlg = NULL;
+    } 
+    else if ( B_Dlg != NULL )
+    {
+        delete B_Dlg; 
+        B_Dlg = NULL;
+    }   
 }
 
 void CompasDev1Dialog::OnShowBtnClick(wxCommandEvent& event)
 {
     if ( DT_Dlg == NULL ){
+        wxPuts(_("DT_Dlg == NULL"));
         DT_Dlg = new DevTableDialog(this, wxNewId(), data ) ;
         DT_Dlg->Show(true);
     }
     else
-         DT_Dlg->Show( !DT_Dlg->IsShown() );
+         {
+             wxPuts(_("DT_Dlg != NULL"));
+             DT_Dlg->Show( !DT_Dlg->IsShown() );
+wxPuts(_("DT_Dlg != NULL 2"));             
+        }
 
 }
 
 void CompasDev1Dialog::OnCancelBtnClick(wxCommandEvent& event)
 {
+    if ( DT_Dlg != NULL ){
+        DT_Dlg->Show(false);
+        delete DT_Dlg;
+        DT_Dlg = NULL;        
+    }
     Show(false);
 }
 
 void CompasDev1Dialog::OnOKBtnClick(wxCommandEvent& event)
 {
+    data->needsaving = true;
     WriteObjectsToXML(data);
+    
+    if ( DT_Dlg != NULL ){
+        DT_Dlg->Show(false);
+        delete DT_Dlg;
+        DT_Dlg = NULL;        
+    }
     Show(false);
 }
 
@@ -281,62 +323,57 @@ void CompasDev1Dialog::OnRightDown(wxMouseEvent& event)
 }
 void CompasDev1Dialog::OnResize(wxSizeEvent& event)
 {
-    Layout();
+    //Layout();
     //FlexGridSizer->SetSizeHints(this);
 }
 
 
 void CompasDev1Dialog::EnableItem(const long index) {
-  if (index == wxNOT_FOUND) {
-//     ClearNMEAForm();
-//     m_buttonRemove->Disable();
-  } else {
-    Meassurement* Mess = data->vec[index];
-    if (!Mess) return;
-    Mess->enabled = !Mess->enabled;
-    
-    //m_connection_enabled = conn->bEnabled;
-    // Mark as changed
-    //conn->b_IsSetup = FALSE;
-    DevListCtrl->SetItemImage(index, Mess->enabled);
-    UpdateWindows();
-  }
+    if (index != wxNOT_FOUND) {
+        Meassurement* Mess = data->vec[index];
+        if (!Mess) return;
+        Mess->enabled = !Mess->enabled;
+
+        DevListCtrl->SetItemImage(index, Mess->enabled);
+        UpdateWindows();
+    }
 }
 
 
-void CompasDev1Dialog::FillSourceList(void) {
-//  m_buttonRemove->Enable(FALSE);
-  DevListCtrl->DeleteAllItems();
+void CompasDev1Dialog::FillSourceList(void) 
+{
+    DevListCtrl->DeleteAllItems();
 
-  for (size_t i = 0; i < data->vec.size(); i++) {
-    wxListItem li;
-    li.SetId(i);
-    li.SetImage( data->vec[i]->enabled);
-    li.SetData(i);
-    li.SetText(wxEmptyString);
-    long itemIndex = DevListCtrl->InsertItem(li);
+    for (size_t i = 0; i < data->vec.size(); i++) {
+        wxListItem li;
+        li.SetId(i);
+        li.SetImage( data->vec[i]->enabled);
+        li.SetData(i);
+        li.SetText(wxEmptyString);
+        long itemIndex = DevListCtrl->InsertItem(li);
 
-    DevListCtrl->SetItem(itemIndex, 1,  data->vec[i]->datetime.Format(wxT("%x %H:%M") ));//, wxDateTime::UTC).c_str());
-    wxString tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->compasscourse );
-    DevListCtrl->SetItem(itemIndex, 2, tmp);
-    tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->compassbearing );
-    DevListCtrl->SetItem(itemIndex, 3, tmp);
-    tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->truebearing );
-    DevListCtrl->SetItem(itemIndex, 4, tmp);
-    tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->variation );
-    DevListCtrl->SetItem(itemIndex, 5, tmp);
-    tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->deviation );
-    DevListCtrl->SetItem(itemIndex, 6, tmp);
+        DevListCtrl->SetItem(itemIndex, 1,  data->vec[i]->datetime.Format(_("%x %H:%M") ));//, wxDateTime::UTC).c_str());
+        wxString tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->compasscourse );
+        DevListCtrl->SetItem(itemIndex, 2, tmp);
+        tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->compassbearing );
+        DevListCtrl->SetItem(itemIndex, 3, tmp);
+        tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->truebearing );
+        DevListCtrl->SetItem(itemIndex, 4, tmp);
+        tmp =  wxString::Format(_T( "%0.1f" ), data->vec[i]->variation );
+        DevListCtrl->SetItem(itemIndex, 5, tmp);
+        tmp =  wxString::Format(_T( "%0.1f" ), data->vec[i]->deviation );
+        DevListCtrl->SetItem(itemIndex, 6, tmp);
 
-  DevListCtrl->SetColumnWidth(0, wxLIST_AUTOSIZE);
-  DevListCtrl->SetColumnWidth(1, wxLIST_AUTOSIZE);
-  DevListCtrl->SetColumnWidth(2, wxLIST_AUTOSIZE);
-  DevListCtrl->SetColumnWidth(3, wxLIST_AUTOSIZE);
-  DevListCtrl->SetColumnWidth(4, wxLIST_AUTOSIZE);
-  DevListCtrl->SetColumnWidth(5, wxLIST_AUTOSIZE);
-  DevListCtrl->SetColumnWidth(6, wxLIST_AUTOSIZE);
-  }
+        DevListCtrl->SetColumnWidth(0, wxLIST_AUTOSIZE);
+        DevListCtrl->SetColumnWidth(1, wxLIST_AUTOSIZE);
+        DevListCtrl->SetColumnWidth(2, wxLIST_AUTOSIZE);
+        DevListCtrl->SetColumnWidth(3, wxLIST_AUTOSIZE);
+        DevListCtrl->SetColumnWidth(4, wxLIST_AUTOSIZE);
+        DevListCtrl->SetColumnWidth(5, wxLIST_AUTOSIZE);
+        DevListCtrl->SetColumnWidth(6, wxLIST_AUTOSIZE);
+    }
 }
+
 void CompasDev1Dialog::UpdateWindows(void)
 {
     CalcSqueredDev(data);
@@ -369,8 +406,6 @@ BasicDrawPane::BasicDrawPane(DevTableDialog* parent, wxWindowID winid, const wxP
     parentdlg = parent;
     
     data = Data;
-    wxPuts(_("BasicDrawPane::BasicDrawPane") );
-    wxPuts(data->shipsname );
 }
 BasicDrawPane::~BasicDrawPane()
 {
@@ -415,6 +450,7 @@ DevTableDialog::DevTableDialog(wxWindow* parent,wxWindowID id, compass_data* Dat
     
     wxBoxSizer* BoxSizerButons;
     Create(parent, wxID_ANY, _("Deviation Table"), wxDefaultPosition, wxSize(848, 600), wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
+  
     FlexGridSizer1 = new wxFlexGridSizer(2, 1, 0, 0);
     Panel1 = new BasicDrawPane(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"), data);
     
@@ -422,9 +458,9 @@ DevTableDialog::DevTableDialog(wxWindow* parent,wxWindowID id, compass_data* Dat
     FlexGridSizer1->Add(Panel1, 1, wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
 
     BoxSizerButons = new wxBoxSizer(wxHORIZONTAL);
-    CloseBtn = new wxButton(this, ID_CLOSE, wxT("Close"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CLOSE"));
-    PrintBtn = new wxButton(this, ID_PRINT, wxT("Print"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_PRINT"));
-    PrintPrevBtn = new wxButton(this, ID_PRINTPREV, wxT("Print Preview"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_PRINTPREV"));
+    CloseBtn = new wxButton(this, ID_CLOSE, _("Close"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CLOSE"));
+    PrintBtn = new wxButton(this, ID_PRINT, _("Print"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_PRINT"));
+    PrintPrevBtn = new wxButton(this, ID_PRINTPREV, _("Print Preview"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_PRINTPREV"));
     BoxSizerButons->Add(PrintPrevBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     BoxSizerButons->Add(PrintBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);    
     BoxSizerButons->Add(CloseBtn, 1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
@@ -435,9 +471,7 @@ DevTableDialog::DevTableDialog(wxWindow* parent,wxWindowID id, compass_data* Dat
     FlexGridSizer1->SetSizeHints(this);
     Connect(ID_PRINTPREV,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnPrintPreviewBtnClick);
     Connect(ID_PRINT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnPrintBtnClick);
-    Connect(ID_CLOSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnCloseBtnClick);
-    
-wxPuts(_("end init DevTableDialog"));
+    Connect(ID_CLOSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnCloseBtnClick);    
 }
 
 DevTableDialog::~DevTableDialog()
@@ -453,16 +487,16 @@ void DevTableDialog::OnPrintBtnClick(wxCommandEvent& event)
      wxPrintDialogData printDialogData(* g_printData);
 
     wxPrinter printer(&printDialogData);
-    MyPrintout printout(data);//this, wxT("My printout"));
+    MyPrintout printout(data);//this, _("My printout"));
     if (!printer.Print(this, &printout, true /*prompt*/))
     {
         if (wxPrinter::GetLastError() == wxPRINTER_ERROR)
         {
-            wxLogError(wxT("There was a problem printing. Perhaps your current printer is not set correctly?"));
+            wxLogError(_("There was a problem printing. Perhaps your current printer is not set correctly?"));
         }
         else
         {
-            wxLogMessage(wxT("You canceled printing"));
+            wxLogMessage(_("You canceled printing"));
         }
     }
     else
@@ -472,7 +506,7 @@ void DevTableDialog::OnPrintBtnClick(wxCommandEvent& event)
 }
 void DevTableDialog::OnCloseBtnClick(wxCommandEvent& event)
 {
-    Close();    
+    Show(false);    
 }
 
 void DevTableDialog::OnPrintPreviewBtnClick(wxCommandEvent& event)
@@ -482,7 +516,7 @@ void DevTableDialog::OnPrintPreviewBtnClick(wxCommandEvent& event)
     wxPrintDialogData printDialogData(* g_printData);
     wxPrintPreview *preview = new wxPrintPreview(new MyPrintout(data), new MyPrintout(data), &printDialogData);
     wxPreviewFrame *frame =
-        new wxPreviewFrame(preview, this, wxT("Compass Deviation Table Print Preview"), wxPoint(100, 100), wxSize(600, 650));
+        new wxPreviewFrame(preview, this, _("Compass Deviation Table Print Preview"), wxPoint(100, 100), wxSize(600, 650));
     frame->Centre(wxBOTH);
     frame->Initialize();
     frame->Show();

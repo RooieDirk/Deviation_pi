@@ -25,7 +25,7 @@ const long PreferenceDlg::ID_SHIPSNAMEB = wxNewId();
 const long PreferenceDlg::ID_STATICTEXT2 = wxNewId();
 const long PreferenceDlg::ID_COMPASSNAMEB = wxNewId();
 const long PreferenceDlg::ID_SENDNMEACB = wxNewId();
-const long PreferenceDlg::ID_CHECKBOX2 = wxNewId();
+const long PreferenceDlg::ID_TOOLBTNSHOWCB = wxNewId();
 //*)
 
 BEGIN_EVENT_TABLE(PreferenceDlg,wxDialog)
@@ -66,7 +66,7 @@ PreferenceDlg::PreferenceDlg(wxWindow* parent,wxWindowID id, compass_data* Data 
 	SendNmeaCB = new wxCheckBox(this, ID_SENDNMEACB, wxT("Use to send NMEA true north"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_SENDNMEACB"));
 	SendNmeaCB->SetValue(false);
 	GridBagSizer1->Add(SendNmeaCB, wxGBPosition(2, 0), wxGBSpan(1, 2), wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	ShowToolbarCB = new wxCheckBox(this, ID_CHECKBOX2, wxT("Show in toolbar"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_CHECKBOX2"));
+	ShowToolbarCB = new wxCheckBox(this, ID_TOOLBTNSHOWCB, wxT("Show in toolbar"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_TOOLBTNSHOWCB"));
 	ShowToolbarCB->SetValue(true);
 	GridBagSizer1->Add(ShowToolbarCB, wxGBPosition(3, 0), wxGBSpan(1, 2), wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(GridBagSizer1);
@@ -82,6 +82,8 @@ PreferenceDlg::PreferenceDlg(wxWindow* parent,wxWindowID id, compass_data* Data 
 	Connect(ID_COMPASSNAMEB,wxEVT_COMMAND_COMBOBOX_SELECTED,(wxObjectEventFunction)&PreferenceDlg::OnCompassnameBoxTextUpdated);
 	//Connect(ID_COMPASSNAMEB,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&PreferenceDlg::OnCompassnameBoxTextUpdated);
 	Connect(ID_COMPASSNAMEB,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&PreferenceDlg::OnCompassnameBoxTextUpdated);
+    Connect(ID_SENDNMEACB,wxEVT_CHECKBOX,(wxObjectEventFunction)&PreferenceDlg::OnCheckBoxTextUpdated);
+    Connect(ID_TOOLBTNSHOWCB,wxEVT_CHECKBOX,(wxObjectEventFunction)&PreferenceDlg::OnCheckBoxTextUpdated);
     Connect(wxID_OK,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&PreferenceDlg::OnOKBtnClick);
     
 	//*)
@@ -105,12 +107,14 @@ void PreferenceDlg::OnShipsnameBoxTextUpdated(wxCommandEvent& event)
         CompassnameBox->SetValue(_("-----"));
     else
         CompassnameBox->SetSelection(0);
+    data->needsaving = true;
 }
 void PreferenceDlg::OnCompassnameBoxTextUpdated(wxCommandEvent& event)
 {
     data->compassname = CompassnameBox->GetValue();
     ShowToolbarCB->SetValue(data->ShowToolbarBtn);
     SendNmeaCB->SetValue(data->SendNMEA);
+    data->needsaving = true;
 }
 
 
@@ -127,13 +131,19 @@ void PreferenceDlg::GetListOfAvailableCompasses()
     CompasArrayStr = a->GetCompassList();    
     delete a;
 }
+void PreferenceDlg::OnCheckBoxTextUpdated(wxCommandEvent& event)
+{
+    data->needsaving = true;
+}
 void PreferenceDlg::OnOKBtnClick(wxCommandEvent& event)
 {
     data->shipsname = ShipsnameBox->GetValue();
     data->compassname = CompassnameBox->GetValue();
     data->ShowToolbarBtn = ShowToolbarCB->GetValue();
     data->SendNMEA = SendNmeaCB->GetValue();
-    ReadWriteXML* a = new ReadWriteXML( data );     
-    delete a;
+    if (data->needsaving)
+    {
+        WriteObjectsToXML( data );      
+    }
     EndModal(wxID_OK);
 }

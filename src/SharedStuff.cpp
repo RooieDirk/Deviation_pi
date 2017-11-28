@@ -18,6 +18,7 @@
  */
 
 #include "SharedStuff.h"
+#include "readwritexml.h"
 #include "icons.h"
 
 Meassurement::Meassurement ()
@@ -75,7 +76,7 @@ double SolarAzimuth( wxDateTime dt, double latitude, double longitude)
 {
     spa_data spa;  //declare the SPA structure
     int result;
-    float min, sec;
+    //float min, sec;
 
     //enter required input values into SPA structure
 
@@ -115,9 +116,8 @@ double SolarAzimuth( wxDateTime dt, double latitude, double longitude)
 
 void DrawTextCenterCenter(wxDC &dc, wxString text, wxPoint pos)
 {
-    int width, height;
-    dc.GetTextExtent(text, &width, &height);
-    dc.DrawText(text, pos.x- (int) width/2, pos.y - (int) height/2 );
+    wxSize sz = dc.GetMultiLineTextExtent(text);
+    dc.DrawText(text, pos.x- (int)sz.x/2, pos.y - (int)sz.y/2 );
 }
 
 double least(double a, double b)
@@ -130,11 +130,7 @@ double least(double a, double b)
 
 void DoRender(wxDC &dc, compass_data* Data )
 {
-   compass_data* data = Data;
-//     wxBitmap* LogoBitmap = new wxBitmap(100,100,8);
-//     LogoBitmap->LoadFile(_("logoOpenCPN.bmp"));
-    //some SetDefaults 
-    
+    compass_data* data = Data;   
     int j;
     wxCoord w, h;
     dc.GetSize(&w, &h);
@@ -150,6 +146,9 @@ void DoRender(wxDC &dc, compass_data* Data )
     int LeftPageWidth = RightLeftPage - LeftLeftPage;
     dc.SetFont(*wxNORMAL_FONT);
     wxFont stdFont= dc.GetFont();
+    while ( stdFont.GetPixelSize().y > 15 )
+        stdFont.SetPointSize( stdFont.GetPointSize() - 1 );
+    
     wxFont stdFontSm= stdFont;
     stdFontSm.MakeSmaller();
     wxFont ShipFont = stdFont;
@@ -175,9 +174,9 @@ void DoRender(wxDC &dc, compass_data* Data )
             dc.SetFont(stdFontSm.Italic());
        
         DrawTextCenterCenter(dc,        
-            wxString::Format(wxT("%03i°"),i*10), wxPoint(52, 40+15*i));
+            wxString::Format(wxT("%03i\u00B0"),i*10), wxPoint(52, 40+15*i));
         Dev =  GetDeviation(i*10.0, data);
-        DrawTextCenterCenter( dc, wxString::Format(wxT("%0.1f°"), Dev), wxPoint(137, 40+15*i) );
+        DrawTextCenterCenter( dc, wxString::Format(wxT("%0.1f\u00B0"), Dev), wxPoint(137, 40+15*i) );
         dc.SetFont(stdFontSm);
         if ( Dev < DevMin ) DevMin = Dev; //Keep min/max value for graph scaling
         if ( Dev > DevMax ) DevMax = Dev;
@@ -187,8 +186,8 @@ void DoRender(wxDC &dc, compass_data* Data )
     dc.DrawLine(wxPoint(95,35), wxPoint(95,50+15*j));    
 //draw graph
 
-    int pixel_zero;
-    double  pixel_Deg;
+    int pixel_zero=0;
+    double  pixel_Deg=0.0;
     double ScaleSteps[] = {0.02, 0.05, 0.1, 0.2, 0.5, 1.0, 2.0, 5.0, 10.0, 20.0, 50.0, 100, 200};
     double bestScaleStep;
     if (( DevMax != DevMin )|| (Data->vec.size() < 2)) //is there some data available to draw
@@ -202,7 +201,7 @@ void DoRender(wxDC &dc, compass_data* Data )
         int ScaleStepPix = (int)(pixel_Deg / bestScaleStep);      
         
         pixel_zero = 200 - (int)( DevMin*pixel_Deg );    
-        dc.DrawLine(wxPoint(200,95), wxPoint(400,95)); //Top;ine
+        dc.DrawLine(wxPoint(200,95), wxPoint(400,95)); //Topline
         dc.DrawLine(wxPoint(200,95+360), wxPoint(400,95+360)); //Bottomline
         dc.DrawLine(wxPoint(pixel_zero,95), wxPoint(pixel_zero,95+360)); //zero axis
         //draw messure points
@@ -221,9 +220,9 @@ void DoRender(wxDC &dc, compass_data* Data )
             if ( c % 2 == 0)
             {
                 if ( bestScaleStep >= 1.0 )
-                    DrawTextCenterCenter( dc, wxString::Format(wxT("%3.0f°"), c*bestScaleStep ), wxPoint(c * bestScaleStep * pixel_Deg +pixel_zero, 85) );
+                    DrawTextCenterCenter( dc, wxString::Format(wxT("%3.0f\u00B0"), c*bestScaleStep ), wxPoint(c * bestScaleStep * pixel_Deg +pixel_zero, 85) );
                 else
-                    DrawTextCenterCenter( dc, wxString::Format(wxT("%4.1f°"), c*bestScaleStep ), wxPoint(c * bestScaleStep * pixel_Deg +pixel_zero, 85) );
+                    DrawTextCenterCenter( dc, wxString::Format(wxT("%4.1f\u00B0"), c*bestScaleStep ), wxPoint(c * bestScaleStep * pixel_Deg +pixel_zero, 85) );
             }
             for ( int cc =30; cc < 360;cc=cc + 30 )
             {
@@ -232,7 +231,7 @@ void DoRender(wxDC &dc, compass_data* Data )
                 dc.DrawLine(wxPoint(c * bestScaleStep * pixel_Deg +pixel_zero-1, cc+95), 
                             wxPoint(c * bestScaleStep * pixel_Deg +pixel_zero+1, cc+95));
                 if (c == 0)
-                    DrawTextCenterCenter( dc, wxString::Format(wxT("%03i°"), cc), wxPoint(pixel_zero+15, cc+95 ));
+                    DrawTextCenterCenter( dc, wxString::Format(wxT("%03i\u00B0"), cc), wxPoint(pixel_zero+15, cc+95 ));
             }     
             
         }
@@ -266,7 +265,7 @@ void DoRender(wxDC &dc, compass_data* Data )
     dc.DrawText(wxString::Format(wxT("D = %3f (abeam induced magnetic error)"), Data->D), 500, 180);
     dc.DrawText(wxString::Format(wxT("E = %3f (fore and aft induced magnetic error)"), Data->E), 500, 200);
     
-    dc.DrawText(wxT("©R.D.teE."), 470, 565);
+    dc.DrawText(wxT("\u00A9R.D.teE."), 470, 565);
     // draw some text
 
 
@@ -282,10 +281,10 @@ if ( Data->vec.size() < 6 )
    
 }
 
-double CalcSqueredDev(compass_data* Data)
+void CalcSqueredDev(compass_data* Data)
 {//a simple brute force curve fitting as we don't have to many data points (least squares)
     double val=100;
-    double A=0, B=0, C=0, D=0, E=0;
+    double A=360, B=0, C=0, D=0, E=0;
     double minA=0, minB=0, minC=0, minD=0, minE=0;
     double Answ, minAnsw;
     double RadCC, dRadCC , Dev;
@@ -303,13 +302,14 @@ double CalcSqueredDev(compass_data* Data)
                     {
                         for (int m_E=-1; m_E<2; m_E++)
                         {
-                            for(int i=0; i < Data->vec.size(); i++)
+                            for(int i=0; i < (int)Data->vec.size(); i++)
                             {                        
                                 if (Data->vec[i]->enabled)
                                 {
                                     RadCC = Data->vec[i]->compasscourse / 57.2957795131;
                                     dRadCC = 2*RadCC;
-                                    Dev= Data->vec[i]->deviation;
+                                    Dev= Data->vec[i]->deviation + 360; // Deviation can go from -180 to +180 where both extents are the same.
+                                    // for calc the least squares we add  now 360, and substract it later again.
                                     Answ = Answ + pow(Dev - ((m_A*val+A) + (m_B*val+B)*sin(RadCC) + (m_C*val+C)*cos(RadCC) + (m_D*val+D)*sin(dRadCC) + (m_E*val+E)*cos(dRadCC)), 2);                                
                                 }
                             }
@@ -331,7 +331,7 @@ double CalcSqueredDev(compass_data* Data)
         minAnsw = 1.7e308;
         Answ=0;
     }
-    Data->A=A;
+    Data->A=A-360;
     Data->B=B;
     Data->C=C;
     Data->D=D;
@@ -341,6 +341,10 @@ double CalcSqueredDev(compass_data* Data)
 double GetDeviation(double CompassCourse,compass_data* Data)
 {
     double RadCC, dRadCC , Dev;
+//     if ( Data->needsaving ){
+//         CalcSqueredDev(Data);
+//         WriteObjectsToXML(Data);
+//     }
     RadCC =  CompassCourse / 57.2957795131;
     dRadCC = 2*RadCC;
     Dev = Data->A + Data->B*sin(RadCC) + Data->C*cos(RadCC) + Data->D*sin(dRadCC) +  Data->E*cos(dRadCC);

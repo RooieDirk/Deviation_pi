@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+9412d1e2f2ecea98a58f797996f78fc5 CMakeFiles/deviation-po-update
+9412d1e2f2ecea98a58f797996f78fc5 CMakeFiles/deviation-pot-update
+e23b408561171089a11ab3e5a4b667d0 po/deviation_pi.pot.dummy
