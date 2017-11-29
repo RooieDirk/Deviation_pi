@@ -165,8 +165,8 @@ void DoRender(wxDC &dc, compass_data* Data )
 
 //draw table
     dc.DrawLine(wxPoint(20,35), wxPoint(170,35));
-    double DevMin = 0;
-    double DevMax = 0;
+    double DevMin = 0.0;
+    double DevMax = 0.0;
     double Dev;
     for (int i=0; i<37; i++)
     {

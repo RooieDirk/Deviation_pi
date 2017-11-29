@@ -34,8 +34,6 @@ SET(SRC_DEV
             src/preferencedlg.cpp
             src/compass.h
             src/compass.cpp
-            src/CompasDev1Main.h
-            src/CompasDev1Main.cpp
             src/printing.h
             src/printing.cpp
             src/bearingdlg.h

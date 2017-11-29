@@ -19,10 +19,11 @@
  */
 
 #include "compass.h"
-#include "CompasDev1Main.h"
+#include "deviation_pi.h"
 Compass::Compass(wxString FName, wxString SName, wxString CName)
 {
     data = new compass_data(SName, CName );
+    
     data->filename = FName;
     ReadObjectsFromXML(data);
 }

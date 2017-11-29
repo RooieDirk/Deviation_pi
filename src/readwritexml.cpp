@@ -35,7 +35,7 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
 	if (!doc.LoadFile(data->filename.mb_str() ) )
     {
         //Something going wrong with opening the file. We make a backup copy and make a fresh file without any info.
-        wxMessageBox(wxString::Format("Error loading file.... %s",  data->filename ));
+        //wxMessageBox(wxString::Format("Error loading file.... %s",  data->filename ));
         wxCopyFile(data->filename, data->filename + wxT(".bck"));
         wxRemoveFile(data->filename);
         doc.Clear();
