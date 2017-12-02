@@ -114,6 +114,9 @@ public:
 //    Optional plugin overrides
     void SetColorScheme(PI_ColorScheme cs);
     void SetPluginMessage(wxString &message_id, wxString &message_body);
+    void SendTrueCourse(double CompasCourse);
+    void SendDeviation();
+    void SendDeviationAt(double CompasCourse);
     void SetNMEASentence(wxString &sentence);
 
 //    Other public methods
@@ -137,7 +140,7 @@ private:
     wxString      m_shareLocn;
     wxString      ShipsName;
     wxString        CompassName;
-    bool          b_ShowLiveIcon;
+    int          i_ShowLiveIcon;
     bool          b_ShowIcon;
     wxString        m_LastVal;
     double        g_var;

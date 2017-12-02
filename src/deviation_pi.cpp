@@ -47,7 +47,7 @@
 #endif
 #include <wx/filename.h>
 #include "bearingdlg.h"
-#include "SharedStuff.h"
+//#include "SharedStuff.h"
 #include "deviation_pi.h"
 
 //#include "CompasDev1Main.h"
@@ -182,8 +182,6 @@ int deviation_pi::Init(void)
         SetIconType();          // SVGs allowed if not showing live icon
         ret_flag |= INSTALLS_TOOLBAR_TOOL;
     }
-// 
-     m_CompasDevListDlg = NULL;
 
     return ret_flag;
 }
@@ -261,7 +259,7 @@ void deviation_pi::SetColorScheme(PI_ColorScheme cs)
 
 void deviation_pi::SetIconType()
 {
-    if(b_ShowLiveIcon){
+    if(i_ShowLiveIcon){
         SetToolbarToolBitmaps(i_leftclick_tool_id, _img_deviation, _img_deviation);
         SetToolbarToolBitmapsSVG(i_leftclick_tool_id, _T(""), _T(""), _T(""));
         m_LastVal.Empty();
@@ -303,32 +301,61 @@ void deviation_pi::SetPositionFixEx(PlugIn_Position_Fix_Ex &pfix)
     g_var = pfix.Var;
     if ( B_Dlg != NULL )
         B_Dlg->SetPositionFix(pfix);
+    if (i_ShowLiveIcon)
+        i_ShowLiveIcon --;
 }
 
 //Demo implementation of response mechanism
 void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
-//     if(message_id == _T("Deviation_VARIATION_REQUEST"))
-//     {
-//         wxJSONReader r;
-//         wxJSONValue v;
-//         r.Parse(message_body, &v);
-//         double lat = v[_T("Lat")].AsDouble();
-//         double lon = v[_T("Lon")].AsDouble();
-//         int year = v[_T("Year")].AsInt();
-//         int month = v[_T("Month")].AsInt();
-//         int day = v[_T("Day")].AsInt();
-//         SendVariationAt(lat, lon, year, month, day);
-//     }
-//     else if(message_id == _T("Deviation_VARIATION_BOAT_REQUEST"))
-//     {
-//         SendBoatVariation();
-//     }
-//     else if(message_id == _T("Deviation_VARIATION_CURSOR_REQUEST"))
-//     {
-//         SendCursorVariation();
-//     }
+    if(message_id == _T("TRUEHEADING_REQUEST"))
+    {
+        wxJSONReader r;
+        wxJSONValue v;
+        r.Parse(message_body, &v);
+        double CompasCourse = v[_T("HdgC")].AsDouble();
+        SendTrueCourse(CompasCourse);
+    }
+    else if(message_id == _T("CURRENT_DEVIATION_REQUEST"))
+    {
+        SendDeviation();
+    }
+    else if(message_id == _T("DEVIATION_AT_CC_REQUEST"))
+    {
+        SendDeviationAt(0.0);
+    }
 }
+void deviation_pi::SendTrueCourse(double CompasCourse)
+{
+    wxJSONValue v;
+    double x = aCompass->data->getDeviation(CompasCourse);
+    v[_T("Decl")] = aCompass->data->getDeviation(CompasCourse);
+    //v[_T("Decldot")] = x - abs(x);    
+//     v[_T("Decl")] = m_boatVariation.Decl;
+//     v[_T("Decldot")] = m_boatVariation.Decldot;
+//     v[_T("F")] = m_boatVariation.F;
+//     v[_T("Fdot")] = m_boatVariation.Fdot;
+//     v[_T("GV")] = m_boatVariation.GV;
+//     v[_T("GVdot")] = m_boatVariation.GVdot;
+//     v[_T("H")] = m_boatVariation.H;
+//     v[_T("Hdot")] = m_boatVariation.Hdot;
+//     v[_T("Incl")] = m_boatVariation.Incl;
+//     v[_T("Incldot")] = m_boatVariation.Incldot;
+//     v[_T("X")] = m_boatVariation.X;
+//     v[_T("Xdot")] = m_boatVariation.Xdot;
+//     v[_T("Y")] = m_boatVariation.Y;
+//     v[_T("Ydot")] = m_boatVariation.Ydot;
+//     v[_T("Z")] = m_boatVariation.Z;
+//     v[_T("Zdot")] = m_boatVariation.Zdot;
+    wxJSONWriter w;
+    wxString out;
+    w.Write(v, out);
+    SendPluginMessage(wxString(_T("WMM_VARIATION_BOAT")), out);
+}
+void deviation_pi::SendDeviation()
+{}
+void deviation_pi::SendDeviationAt(double CompasCourse)
+{}
 
 void deviation_pi::SetNMEASentence(wxString &sentence)
 {
@@ -367,21 +394,20 @@ m_NMEA0183 << sentence;
                 if( mPriHeadingM >= 1 ) {
                     mPriHeadingM = 1;
                     mHdm = m_NMEA0183.Hdg.MagneticSensorHeadingDegrees;
+                    i_ShowLiveIcon = 3;
                     DrawToolbarIconNumber(mHdm);
                     double mHdt = mHdm + g_var + aCompass->data->getDeviation( mHdm );
                     if( sentence.Left(6) != _("$XXHDG")){
                         SendNMEASentence( _("$XXHDT,") + wxString::Format( _("%1.1f"), mHdt));                        
-                        SendNMEASentence( _("$XXHDG,") + wxString::Format( _("%1.1f,%1.1f,E,%1.1f,E"), mHdm, g_var, aCompass->data->getDeviation( mHdm )));
-                    }
-                    if ( B_Dlg != NULL ){
-                        B_Dlg->SetNMEAHeading(mHdm);
-                    }
+                        //SendNMEASentence( _("$XXHDG,") + wxString::Format( _("%1.1f,%1.1f,E,%1.1f,E"), mHdm, g_var, aCompass->data->getDeviation( mHdm )));
+                        if ( B_Dlg != NULL ){
+                            B_Dlg->SetNMEAHeading(mHdm);
+                        }
+                    }                    
                 }
             }
         }
-
-    }
-    
+    }    
 }
 
 bool deviation_pi::LoadConfig(void)
@@ -447,7 +473,7 @@ void deviation_pi::DrawToolbarIconNumber( float dev )
     scale = wxRound(scale * 4.0) / 4.0;
     scale = wxMax(1.0, scale);          // Let the upstream processing handle minification.
     
-    if( b_ShowIcon && b_ShowLiveIcon && ((m_LastVal != NewVal) || (scale != m_scale)) )
+    if( b_ShowIcon && i_ShowLiveIcon && ((m_LastVal != NewVal) || (scale != m_scale)) )
     {
         m_scale = scale;
         m_LastVal = NewVal;
@@ -576,7 +602,7 @@ CompasDev1Dialog::CompasDev1Dialog( wxWindow *parent,
     wxFlexGridSizer* FlexGridSizer;
     wxBoxSizer* BoxSizerButons;
 
-    Create(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxDEFAULT_DIALOG_STYLE|wxCLOSE_BOX, _T("id"));
+    Create(parent, wxID_ANY, title, wxDefaultPosition, wxDefaultSize, wxSTAY_ON_TOP|wxCAPTION|wxFRAME_TOOL_WINDOW, _T("id"));
     
     FlexGridSizer = new wxFlexGridSizer(0, 1, 0, 0);
     DevListCtrl = new wxListCtrl(this, ID_LISTCTRLDEV, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTCTRLDEV"));
@@ -665,6 +691,11 @@ CompasDev1Dialog::~CompasDev1Dialog()
 void CompasDev1Dialog::OnCloseWindow(wxCloseEvent &event)
 {
     Show(false);
+    if ( DT_Dlg != NULL ){
+        DT_Dlg->Show(false);
+        DT_Dlg->Destroy();
+        DT_Dlg = NULL;        
+    }
     m_CompasDevListDlg = NULL;
     Destroy();
 }
@@ -675,7 +706,6 @@ void CompasDev1Dialog::OnAddBtnClick(wxCommandEvent& event)
     if ( B_Dlg == NULL ){
         B_Dlg =  new BearingDlg(this, NewMess, wxID_ANY, wxDefaultPosition, wxDefaultSize, false);
     }
-    else
     if ( B_Dlg->ShowModal() == wxID_OK )
     {        
         data->needsaving = true;
@@ -688,7 +718,7 @@ void CompasDev1Dialog::OnAddBtnClick(wxCommandEvent& event)
     }
     else if ( B_Dlg != NULL )
     {
-        delete B_Dlg; 
+        B_Dlg->Destroy(); 
         B_Dlg = NULL;
     }
 }
@@ -924,7 +954,7 @@ DevTableDialog::DevTableDialog(wxWindow* parent,wxWindowID id, compass_data* Dat
     wxFlexGridSizer* FlexGridSizer1;
     
     wxBoxSizer* BoxSizerButons;
-    Create(parent, wxID_ANY, _("Deviation Table"), wxDefaultPosition, wxSize(848, 600), wxDEFAULT_DIALOG_STYLE, _T("wxID_ANY"));
+    Create(parent, wxID_ANY, _("Deviation Table"), wxDefaultPosition, wxSize(848, 600), wxSTAY_ON_TOP|wxCAPTION|wxFRAME_TOOL_WINDOW, _T("wxID_ANY"));
   
     FlexGridSizer1 = new wxFlexGridSizer(2, 1, 0, 0);
     Panel1 = new BasicDrawPane(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"), data);
