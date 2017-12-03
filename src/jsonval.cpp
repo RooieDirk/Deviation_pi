@@ -29,7 +29,7 @@
 #include <wx/log.h>
 #include <wx/arrimpl.cpp>
 
-#include <wx/jsonval.h>
+#include "jsonval.h"
 
 
 WX_DEFINE_OBJARRAY( wxJSONInternalArray );
