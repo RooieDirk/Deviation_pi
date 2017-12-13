@@ -40,7 +40,7 @@
 #include "version.h"
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    8
+#define     MY_API_VERSION_MINOR    14
 
 #include "ocpn_plugin.h"
 
@@ -81,7 +81,7 @@ class DevTableDialog;
 class BasicDrawPane;
 class CompasDev1Dialog;
 
-class deviation_pi : public opencpn_plugin_18
+class deviation_pi : public opencpn_plugin_114
 {
 public:
     deviation_pi(void *ppimgr);
