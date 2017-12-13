@@ -1,5 +1,4 @@
 src/bearingdlg.cpp
-src/CompasDev1Main.cpp
 src/compass.cpp
 src/deviation_pi.cpp
 src/preferencedlg.cpp
