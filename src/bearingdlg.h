@@ -50,6 +50,7 @@ class BearingDlg: public wxDialog
 
 		//(*Declarations(BearingDlg)
 		wxChoice* Choice;
+        wxChoice* BearingChoice;
 		wxTimePickerCtrl* TPickerCtrl;
 		wxTextCtrl* CompassCourseCtrl;
 		wxStaticText* StaticText1;
@@ -83,8 +84,9 @@ class BearingDlg: public wxDialog
         void SetNMEATimeFix(wxDateTime dt);
         void SetNMEAHeading(double hd);
         void SetSunBearing(wxDateTime t);
+        void SetMessageVariation(wxString &message_id, wxString &message_body);
+        
 	protected:
-
 		//(*Identifiers(BearingDlg)
 		static const long ID_CHOICE;
 		static const long ID_STATICTEXT1;
@@ -104,7 +106,7 @@ class BearingDlg: public wxDialog
         static const long ID_STATICTEXT10;
         static const long ID_STATICTEXT11;
         static const long ID_VARCTRL;
-
+        
 		//*)
 
 	private:
@@ -122,6 +124,8 @@ class BearingDlg: public wxDialog
         Meassurement* localMesData;
         bool UpdateFlag;
         int GPS_UpdateTime;
+        
+        void GetMessageVariation(double lat, double lon);
 
 		//(*Handlers(BearingDlg)
 		//*)

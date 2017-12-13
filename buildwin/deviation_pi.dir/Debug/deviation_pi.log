@@ -1,0 +1,161 @@
+﻿Build started 12/3/2017 10:38:57 AM.
+     1>Project "C:\Users\dirk\deviation\Deviation_pi\buildwin\deviation_pi.vcxproj" on node 2 (Rebuild target(s)).
+     1>CustomBuild:
+         Building Custom Rule C:/Users/dirk/deviation/Deviation_pi/CMakeLists.txt
+         CMake does not need to re-run because C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/generate.stamp is up-to-date.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /IC:\Users\dirk\deviation\Deviation_pi\buildwin\CMakeFiles\include /IC:\Users\dirk\deviation\Deviation_pi\include /IC:\Users\dirk\deviation\Deviation_pi\src /I"C:\wxWidgets-3.0.3\lib\vc_dll\mswu" /I"C:\wxWidgets-3.0.3\include" /IC:\Users\dirk\deviation\Deviation_pi\nmea0183 /IC:\Users\dirk\deviation\Deviation_pi\src\tinyxml /Zi /nologo /W3 /WX- /Od /Ob0 /Oy- /D WIN32 /D _WINDOWS /D __MSVC__ /D _CRT_NONSTDC_NO_DEPRECATE /D _CRT_SECURE_NO_DEPRECATE /D WXUSINGDLL /D UNICODE /D _UNICODE /D ocpnUSE_GL /D TIXML_USE_STL /D _DEBUG /D __WXDEBUG__ /D "CMAKE_INTDIR=\"Debug\"" /D deviation_pi_EXPORTS /D _USING_V110_SDK71_ /D _WINDLL /D _UNICODE /D UNICODE /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo"deviation_pi.dir\Debug\\" /Fd"deviation_pi.dir\Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt C:\Users\dirk\deviation\Deviation_pi\src\deviation_pi.cpp C:\Users\dirk\deviation\Deviation_pi\src\spa.cpp C:\Users\dirk\deviation\Deviation_pi\src\SharedStuff.cpp C:\Users\dirk\deviation\Deviation_pi\src\readwritexml.cpp C:\Users\dirk\deviation\Deviation_pi\src\preferencedlg.cpp C:\Users\dirk\deviation\Deviation_pi\src\compass.cpp C:\Users\dirk\deviation\Deviation_pi\src\printing.cpp C:\Users\dirk\deviation\Deviation_pi\src\bearingdlg.cpp C:\Users\dirk\deviation\Deviation_pi\src\icons.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\latlong.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\long.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\nmea0183.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\response.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\sentence.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\talkerid.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\hexvalue.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\lat.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\expid.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\hdt.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\hdg.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\hdm.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\gll.cpp C:\Users\dirk\deviation\Deviation_pi\src\nmea0183\gga.cpp C:\Users\dirk\deviation\Deviation_pi\src\jsonreader.cpp C:\Users\dirk\deviation\Deviation_pi\src\jsonval.cpp C:\Users\dirk\deviation\Deviation_pi\src\jsonwriter.cpp C:\Users\dirk\deviation\Deviation_pi\src\tinyxml\tinyxml.cpp C:\Users\dirk\deviation\Deviation_pi\src\tinyxml\tinyxmlparser.cpp C:\Users\dirk\deviation\Deviation_pi\src\tinyxml\tinyxmlerror.cpp
+         deviation_pi.cpp
+         spa.cpp
+         SharedStuff.cpp
+         readwritexml.cpp
+     1>C:\Users\dirk\deviation\Deviation_pi\src\readwritexml.cpp(211): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
+         preferencedlg.cpp
+         compass.cpp
+         printing.cpp
+         bearingdlg.cpp
+         icons.cpp
+         latlong.cpp
+         long.cpp
+         nmea0183.cpp
+         response.cpp
+         sentence.cpp
+         talkerid.cpp
+         hexvalue.cpp
+         lat.cpp
+         expid.cpp
+         hdt.cpp
+         hdg.cpp
+         Generating Code...
+         Compiling...
+         hdm.cpp
+         gll.cpp
+         gga.cpp
+         jsonreader.cpp
+         jsonval.cpp
+         jsonwriter.cpp
+         tinyxml.cpp
+         tinyxmlparser.cpp
+         tinyxmlerror.cpp
+         Generating Code...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\dirk\deviation\Deviation_pi\buildwin\Debug\deviation_pi.dll" /INCREMENTAL /NOLOGO /LIBPATH:"C:/wxWidgets-3.0.3/lib/vc_dll" /LIBPATH:"C:/wxWidgets-3.0.3/lib/vc_dll/Debug" "C:\wxWidgets-3.0.3\lib\vc_dll\wxbase30ud.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxmsw30ud_core.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxbase30ud_net.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxbase30ud_xml.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxmsw30ud_html.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxmsw30ud_adv.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxpngd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxtiffd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxjpegd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxzlibd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxregexud.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxexpatd.lib" winmm.lib comctl32.lib oleacc.lib rpcrt4.lib shlwapi.lib version.lib wsock32.lib "C:\wxWidgets-3.0.3\lib\vc_dll\wxbase30ud.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxmsw30ud_core.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxbase30ud_net.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxbase30ud_xml.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxmsw30ud_html.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxmsw30ud_adv.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxpngd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxtiffd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxjpegd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxzlibd.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxregexud.lib" "C:\wxWidgets-3.0.3\lib\vc_dll\wxexpatd.lib" winmm.lib comctl32.lib oleacc.lib rpcrt4.lib shlwapi.lib version.lib wsock32.lib opengl32.lib glu32.lib opencpn.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/dirk/deviation/Deviation_pi/buildwin/Debug/deviation_pi.pdb" /SUBSYSTEM:CONSOLE,"5.01" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/dirk/deviation/Deviation_pi/buildwin/Debug/deviation_pi.lib" /MACHINE:X86 /SAFESEH  /machine:X86 /DLL deviation_pi.dir\Debug\deviation_pi.obj
+         deviation_pi.dir\Debug\spa.obj
+         deviation_pi.dir\Debug\SharedStuff.obj
+         deviation_pi.dir\Debug\readwritexml.obj
+         deviation_pi.dir\Debug\preferencedlg.obj
+         deviation_pi.dir\Debug\compass.obj
+         deviation_pi.dir\Debug\printing.obj
+         deviation_pi.dir\Debug\bearingdlg.obj
+         deviation_pi.dir\Debug\icons.obj
+         deviation_pi.dir\Debug\latlong.obj
+         deviation_pi.dir\Debug\long.obj
+         deviation_pi.dir\Debug\nmea0183.obj
+         deviation_pi.dir\Debug\response.obj
+         deviation_pi.dir\Debug\sentence.obj
+         deviation_pi.dir\Debug\talkerid.obj
+         deviation_pi.dir\Debug\hexvalue.obj
+         deviation_pi.dir\Debug\lat.obj
+         deviation_pi.dir\Debug\expid.obj
+         deviation_pi.dir\Debug\hdt.obj
+         deviation_pi.dir\Debug\hdg.obj
+         deviation_pi.dir\Debug\hdm.obj
+         deviation_pi.dir\Debug\gll.obj
+         deviation_pi.dir\Debug\gga.obj
+         deviation_pi.dir\Debug\jsonreader.obj
+         deviation_pi.dir\Debug\jsonval.obj
+         deviation_pi.dir\Debug\jsonwriter.obj
+         deviation_pi.dir\Debug\tinyxml.obj
+         deviation_pi.dir\Debug\tinyxmlparser.obj
+         deviation_pi.dir\Debug\tinyxmlerror.obj
+            Creating library C:/Users/dirk/deviation/Deviation_pi/buildwin/Debug/deviation_pi.lib and object C:/Users/dirk/deviation/Deviation_pi/buildwin/Debug/deviation_pi.exp
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall opencpn_plugin_114::~opencpn_plugin_114(void)" (??1opencpn_plugin_114@@UAE@XZ)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall opencpn_plugin_114::~opencpn_plugin_114(void)" (??1opencpn_plugin_114@@UAE@XZ)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall opencpn_plugin_114::~opencpn_plugin_114(void)" (??1opencpn_plugin_114@@UAE@XZ)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall opencpn_plugin_114::~opencpn_plugin_114(void)" (??1opencpn_plugin_114@@UAE@XZ)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall opencpn_plugin_114::~opencpn_plugin_114(void)" (??1opencpn_plugin_114@@UAE@XZ)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall opencpn_plugin_114::~opencpn_plugin_114(void)" (??1opencpn_plugin_114@@UAE@XZ)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall PlugInChartBaseExtended::~PlugInChartBaseExtended(void)" (??1PlugInChartBaseExtended@@UAE@XZ)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall PlugInChartBaseExtended::~PlugInChartBaseExtended(void)" (??1PlugInChartBaseExtended@@UAE@XZ)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall PlugInChartBaseExtended::~PlugInChartBaseExtended(void)" (??1PlugInChartBaseExtended@@UAE@XZ)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall PlugInChartBaseExtended::~PlugInChartBaseExtended(void)" (??1PlugInChartBaseExtended@@UAE@XZ)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall PlugInChartBaseExtended::~PlugInChartBaseExtended(void)" (??1PlugInChartBaseExtended@@UAE@XZ)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual __thiscall PlugInChartBaseExtended::~PlugInChartBaseExtended(void)" (??1PlugInChartBaseExtended@@UAE@XZ)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGL(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGL@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGL(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGL@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGL(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGL@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGL(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGL@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGL(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGL@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGL(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGL@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual class wxBitmap & __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCNoText(class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCNoText@PlugInChartBaseExtended@@UAEAAVwxBitmap@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual class wxBitmap & __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCNoText(class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCNoText@PlugInChartBaseExtended@@UAEAAVwxBitmap@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual class wxBitmap & __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCNoText(class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCNoText@PlugInChartBaseExtended@@UAEAAVwxBitmap@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual class wxBitmap & __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCNoText(class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCNoText@PlugInChartBaseExtended@@UAEAAVwxBitmap@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual class wxBitmap & __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCNoText(class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCNoText@PlugInChartBaseExtended@@UAEAAVwxBitmap@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual class wxBitmap & __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCNoText(class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCNoText@PlugInChartBaseExtended@@UAEAAVwxBitmap@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCTextOnly(class wxMemoryDC &,class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCTextOnly@PlugInChartBaseExtended@@UAE_NAAVwxMemoryDC@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCTextOnly(class wxMemoryDC &,class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCTextOnly@PlugInChartBaseExtended@@UAE_NAAVwxMemoryDC@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCTextOnly(class wxMemoryDC &,class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCTextOnly@PlugInChartBaseExtended@@UAE_NAAVwxMemoryDC@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCTextOnly(class wxMemoryDC &,class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCTextOnly@PlugInChartBaseExtended@@UAE_NAAVwxMemoryDC@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCTextOnly(class wxMemoryDC &,class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCTextOnly@PlugInChartBaseExtended@@UAE_NAAVwxMemoryDC@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual bool __thiscall PlugInChartBaseExtended::RenderRegionViewOnDCTextOnly(class wxMemoryDC &,class PlugIn_ViewPort const &,class wxRegion const &)" (?RenderRegionViewOnDCTextOnly@PlugInChartBaseExtended@@UAE_NAAVwxMemoryDC@@ABVPlugIn_ViewPort@@ABVwxRegion@@@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLNoText(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLNoText@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLNoText(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLNoText@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLNoText(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLNoText@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLNoText(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLNoText@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLNoText(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLNoText@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLNoText(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLNoText@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLTextOnly(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLTextOnly@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLTextOnly(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLTextOnly@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLTextOnly(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLTextOnly@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLTextOnly(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLTextOnly@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLTextOnly(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLTextOnly@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::RenderRegionViewOnGLTextOnly(class wxGLContext const &,class PlugIn_ViewPort const &,class wxRegion const &,bool)" (?RenderRegionViewOnGLTextOnly@PlugInChartBaseExtended@@UAEHABVwxGLContext@@ABVPlugIn_ViewPort@@ABVwxRegion@@_N@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual class ListOfPI_S57Obj * __thiscall PlugInChartBaseExtended::GetObjRuleListAtLatLon(float,float,float,class PlugIn_ViewPort *)" (?GetObjRuleListAtLatLon@PlugInChartBaseExtended@@UAEPAVListOfPI_S57Obj@@MMMPAVPlugIn_ViewPort@@@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual class ListOfPI_S57Obj * __thiscall PlugInChartBaseExtended::GetObjRuleListAtLatLon(float,float,float,class PlugIn_ViewPort *)" (?GetObjRuleListAtLatLon@PlugInChartBaseExtended@@UAEPAVListOfPI_S57Obj@@MMMPAVPlugIn_ViewPort@@@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual class ListOfPI_S57Obj * __thiscall PlugInChartBaseExtended::GetObjRuleListAtLatLon(float,float,float,class PlugIn_ViewPort *)" (?GetObjRuleListAtLatLon@PlugInChartBaseExtended@@UAEPAVListOfPI_S57Obj@@MMMPAVPlugIn_ViewPort@@@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual class ListOfPI_S57Obj * __thiscall PlugInChartBaseExtended::GetObjRuleListAtLatLon(float,float,float,class PlugIn_ViewPort *)" (?GetObjRuleListAtLatLon@PlugInChartBaseExtended@@UAEPAVListOfPI_S57Obj@@MMMPAVPlugIn_ViewPort@@@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual class ListOfPI_S57Obj * __thiscall PlugInChartBaseExtended::GetObjRuleListAtLatLon(float,float,float,class PlugIn_ViewPort *)" (?GetObjRuleListAtLatLon@PlugInChartBaseExtended@@UAEPAVListOfPI_S57Obj@@MMMPAVPlugIn_ViewPort@@@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual class ListOfPI_S57Obj * __thiscall PlugInChartBaseExtended::GetObjRuleListAtLatLon(float,float,float,class PlugIn_ViewPort *)" (?GetObjRuleListAtLatLon@PlugInChartBaseExtended@@UAEPAVListOfPI_S57Obj@@MMMPAVPlugIn_ViewPort@@@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual class wxString __thiscall PlugInChartBaseExtended::CreateObjDescriptions(class ListOfPI_S57Obj *)" (?CreateObjDescriptions@PlugInChartBaseExtended@@UAE?AVwxString@@PAVListOfPI_S57Obj@@@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual class wxString __thiscall PlugInChartBaseExtended::CreateObjDescriptions(class ListOfPI_S57Obj *)" (?CreateObjDescriptions@PlugInChartBaseExtended@@UAE?AVwxString@@PAVListOfPI_S57Obj@@@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual class wxString __thiscall PlugInChartBaseExtended::CreateObjDescriptions(class ListOfPI_S57Obj *)" (?CreateObjDescriptions@PlugInChartBaseExtended@@UAE?AVwxString@@PAVListOfPI_S57Obj@@@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual class wxString __thiscall PlugInChartBaseExtended::CreateObjDescriptions(class ListOfPI_S57Obj *)" (?CreateObjDescriptions@PlugInChartBaseExtended@@UAE?AVwxString@@PAVListOfPI_S57Obj@@@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual class wxString __thiscall PlugInChartBaseExtended::CreateObjDescriptions(class ListOfPI_S57Obj *)" (?CreateObjDescriptions@PlugInChartBaseExtended@@UAE?AVwxString@@PAVListOfPI_S57Obj@@@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual class wxString __thiscall PlugInChartBaseExtended::CreateObjDescriptions(class ListOfPI_S57Obj *)" (?CreateObjDescriptions@PlugInChartBaseExtended@@UAE?AVwxString@@PAVListOfPI_S57Obj@@@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVREntries(void)" (?GetNoCOVREntries@PlugInChartBaseExtended@@UAEHXZ)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVREntries(void)" (?GetNoCOVREntries@PlugInChartBaseExtended@@UAEHXZ)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVREntries(void)" (?GetNoCOVREntries@PlugInChartBaseExtended@@UAEHXZ)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVREntries(void)" (?GetNoCOVREntries@PlugInChartBaseExtended@@UAEHXZ)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVREntries(void)" (?GetNoCOVREntries@PlugInChartBaseExtended@@UAEHXZ)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVREntries(void)" (?GetNoCOVREntries@PlugInChartBaseExtended@@UAEHXZ)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablePoints(int)" (?GetNoCOVRTablePoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablePoints(int)" (?GetNoCOVRTablePoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablePoints(int)" (?GetNoCOVRTablePoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablePoints(int)" (?GetNoCOVRTablePoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablePoints(int)" (?GetNoCOVRTablePoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablePoints(int)" (?GetNoCOVRTablePoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablenPoints(int)" (?GetNoCOVRTablenPoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablenPoints(int)" (?GetNoCOVRTablenPoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablenPoints(int)" (?GetNoCOVRTablenPoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablenPoints(int)" (?GetNoCOVRTablenPoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablenPoints(int)" (?GetNoCOVRTablenPoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual int __thiscall PlugInChartBaseExtended::GetNoCOVRTablenPoints(int)" (?GetNoCOVRTablenPoints@PlugInChartBaseExtended@@UAEHH@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual float * __thiscall PlugInChartBaseExtended::GetNoCOVRTableHead(int)" (?GetNoCOVRTableHead@PlugInChartBaseExtended@@UAEPAMH@Z)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual float * __thiscall PlugInChartBaseExtended::GetNoCOVRTableHead(int)" (?GetNoCOVRTableHead@PlugInChartBaseExtended@@UAEPAMH@Z)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual float * __thiscall PlugInChartBaseExtended::GetNoCOVRTableHead(int)" (?GetNoCOVRTableHead@PlugInChartBaseExtended@@UAEPAMH@Z)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual float * __thiscall PlugInChartBaseExtended::GetNoCOVRTableHead(int)" (?GetNoCOVRTableHead@PlugInChartBaseExtended@@UAEPAMH@Z)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual float * __thiscall PlugInChartBaseExtended::GetNoCOVRTableHead(int)" (?GetNoCOVRTableHead@PlugInChartBaseExtended@@UAEPAMH@Z)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual float * __thiscall PlugInChartBaseExtended::GetNoCOVRTableHead(int)" (?GetNoCOVRTableHead@PlugInChartBaseExtended@@UAEPAMH@Z)
+     1>printing.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall PlugInChartBaseExtended::ClearPLIBTextList(void)" (?ClearPLIBTextList@PlugInChartBaseExtended@@UAEXXZ)
+     1>bearingdlg.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall PlugInChartBaseExtended::ClearPLIBTextList(void)" (?ClearPLIBTextList@PlugInChartBaseExtended@@UAEXXZ)
+     1>deviation_pi.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall PlugInChartBaseExtended::ClearPLIBTextList(void)" (?ClearPLIBTextList@PlugInChartBaseExtended@@UAEXXZ)
+     1>SharedStuff.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall PlugInChartBaseExtended::ClearPLIBTextList(void)" (?ClearPLIBTextList@PlugInChartBaseExtended@@UAEXXZ)
+     1>preferencedlg.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall PlugInChartBaseExtended::ClearPLIBTextList(void)" (?ClearPLIBTextList@PlugInChartBaseExtended@@UAEXXZ)
+     1>compass.obj : error LNK2001: unresolved external symbol "public: virtual void __thiscall PlugInChartBaseExtended::ClearPLIBTextList(void)" (?ClearPLIBTextList@PlugInChartBaseExtended@@UAEXXZ)
+     1>C:\Users\dirk\deviation\Deviation_pi\buildwin\Debug\deviation_pi.dll : fatal error LNK1120: 14 unresolved externals
+     1>Done Building Project "C:\Users\dirk\deviation\Deviation_pi\buildwin\deviation_pi.vcxproj" (Rebuild target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:06:59.01

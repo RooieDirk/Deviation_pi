@@ -127,6 +127,7 @@ public:
     void ShowPlotSettings();
     void DrawToolbarIconNumber( float dev );
     void SendNMEASentence(wxString sentence);
+    void RequestPliginMessage(wxString MessageID, wxJSONValue message);
     wxString ComputeChecksum( wxString sentence );
 //    Deviation Declarations
     

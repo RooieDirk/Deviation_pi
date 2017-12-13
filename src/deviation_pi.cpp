@@ -1,6 +1,4 @@
 #include "deviation_pi.h"
-#include "deviation_pi.h"
-#include "deviation_pi.h"
 #include "bearingdlg.h"
 /******************************************************************************
  * $Id: deviation_pi.cpp,v 1.0 2011/02/26 01:54:37 nohal Exp $
@@ -72,6 +70,7 @@
 
 using namespace std;
 
+deviation_pi* Dev_PI;
 extern BearingDlg* B_Dlg;
 DevTableDialog* DT_Dlg;
 CompasDev1Dialog* m_CompasDevListDlg;
@@ -147,6 +146,7 @@ deviation_pi::deviation_pi(void *ppimgr)
 
 int deviation_pi::Init(void)
 {
+    Dev_PI = this;
     B_Dlg = NULL; 
     m_CompasDevListDlg = NULL;
     //    Get a pointer to the opencpn display canvas, to use as a parent for the POI Manager dialog
@@ -308,11 +308,13 @@ void deviation_pi::SetPositionFixEx(PlugIn_Position_Fix_Ex &pfix)
 //Demo implementation of response mechanism
 void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
+    wxJSONReader r;
+    wxJSONValue v;
+    wxPuts(message_id );
+    r.Parse(message_body, &v);
     if(message_id == _T("TRUEHEADING_REQUEST"))
     {
-        wxJSONReader r;
-        wxJSONValue v;
-        r.Parse(message_body, &v);
+        
         double CompasCourse = v[_T("HdgC")].AsDouble();
         SendTrueCourse(CompasCourse);
     }
@@ -324,6 +326,14 @@ void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body
     {
         SendDeviationAt(0.0);
     }
+    else if(message_id == _T("WMM_VARIATION"))
+    {
+        //Forward to BearingDlg
+        if( B_Dlg != NULL )
+            B_Dlg->SetMessageVariation( message_id, message_body );
+
+    }
+    
 }
 void deviation_pi::SendTrueCourse(double CompasCourse)
 {
@@ -351,6 +361,13 @@ void deviation_pi::SendTrueCourse(double CompasCourse)
     wxString out;
     w.Write(v, out);
     SendPluginMessage(wxString(_T("WMM_VARIATION_BOAT")), out);
+}
+void deviation_pi::RequestPliginMessage(wxString MessageID, wxJSONValue message)
+{
+    wxJSONWriter w;
+    wxString out;
+    w.Write(message, out);
+    SendPluginMessage(wxString(MessageID), out);    
 }
 void deviation_pi::SendDeviation()
 {}

@@ -18,8 +18,12 @@
  */
 
 #include "bearingdlg.h"
+#include "deviation_pi.h"
+#include "jsonreader.h"
+#include "jsonwriter.h"
 
 BearingDlg* B_Dlg;
+extern deviation_pi* Dev_PI;
 
 BEGIN_EVENT_TABLE(BearingDlg,wxDialog)
 	//(*EventTable(BearingDlg)
@@ -63,8 +67,8 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, this, _("Methode"));
 	Choice = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE"));
 	Choice->SetSelection( Choice->Append(_("Bearing")) );
-	Choice->Append(_("Relative bearing (Righthand bearing)"));
-	//Choice->Append(_("Bearing using \'Navigate to\'"));
+	//Choice->Append(_("Relative bearing (Righthand bearing)"));
+	Choice->Append(_("Bearing using \'Navigate to\'"));
     //Choice->Append(_("Steaming into \'Navigate to\'"));
 	Choice->Append(_("Steaming into"));// leading line"));
 	Choice->Append(_("Sun bearing"));
@@ -80,7 +84,11 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	GridBagSizer1->Add(DPickerCtrl, wxGBPosition(0, 1), wxDefaultSpan, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	TPickerCtrl = new wxTimePickerCtrl(this, ID_TIMEPICKERCTRL, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxTP_DEFAULT, wxDefaultValidator, _T("ID_TIMEPICKERCTRL"));
 	GridBagSizer1->Add(TPickerCtrl, wxGBPosition(0, 2), wxDefaultSpan, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Compass Course"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
+	
+    BearingChoice = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_STATICTEXT2"));
+    BearingChoice->Append(_("Compass bearing"));    
+    BearingChoice->Append(_("Righthand bearing"));
+    StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Compass Course"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	GridBagSizer1->Add(StaticText2, wxGBPosition(1, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
         // Allow floating point numbers from 0 to 360 with 1 decimal
         // digits only and handle empty string as 0 by default.
@@ -126,8 +134,14 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	GridBagSizer1->Add(StaticText3, wxGBPosition(1, 2), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _("True Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	GridBagSizer1->Add(StaticText6, wxGBPosition(3, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Compass Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-	GridBagSizer1->Add(StaticText4, wxGBPosition(2, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    
+    BearingChoice = new wxChoice(this, ID_STATICTEXT4, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_STATICTEXT4"));
+    BearingChoice->Append(_("Compass bearing"));    
+    BearingChoice->Append(_("Righthand bearing"));
+    BearingChoice->SetSelection( 0);
+    
+	//StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Compass Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
+	GridBagSizer1->Add(BearingChoice, wxGBPosition(2, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	StdDialogButtonSizer1 = new wxStdDialogButtonSizer();
 	StdDialogButtonSizer1->AddButton(new wxButton(this, wxID_OK, wxEmptyString));
 	StdDialogButtonSizer1->AddButton(new wxButton(this, wxID_CANCEL, wxEmptyString));
@@ -263,6 +277,7 @@ void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
    
     if ( UpdateFlag)        
     {
+        GetMessageVariation(localMesData->lat, localMesData->lon);
         VariationCtrl->SetValue(wxString::Format(_("%f"), pfix.Var));
         
         if (GPS_UpdateTime <= 0) 
@@ -326,6 +341,32 @@ void BearingDlg::SetNMEAHeading(double hd)
     wxPuts(_("BearingDlg::SetNMEAHeading"));
 }
 
+void BearingDlg::SetMessageVariation(wxString &message_id, wxString &message_body)
+{
+    if ( UpdateFlag){
+        wxJSONReader r;
+        wxJSONValue v;
+        r.Parse(message_body, &v);
+        
+        //TODO check lat/lon to make sure it is our requested message and not  an otherone.
+        // get the DECL value from the JSON message
+        VariationCtrl->ChangeValue( v[_T("Decl")].AsString() );
+        wxPuts(_("VariationCtrl->ChangeValue Variation changed from messgae"));
+    }
+}
+void BearingDlg::GetMessageVariation(double lat, double lon)
+{
+    if ( (abs(lat) < 90.0) && (abs(lon) < 180.0)  ) //valid position
+    {        
+        wxJSONValue v;
+        v[_T("Lat")] = lat;
+        v[_T("Lon")] = lon;
+        v[_T("Year")] = GetDateTime().GetYear();
+        v[_T("Month")] = GetDateTime().GetMonth();
+        v[_T("Day")] = GetDateTime().GetDay();
+        Dev_PI->RequestPliginMessage( _T("WMM_VARIATION_REQUEST"), v);   
+    }
+}
 // void BearingDlg::UpdateContrs()
 // {
 //     
