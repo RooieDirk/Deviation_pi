@@ -158,7 +158,7 @@ int deviation_pi::Init(void)
 //     //    And load the configuration items
      LoadConfig();
 
-     m_LastVal = wxEmptyString;
+     m_LastValue = wxEmptyString;
      mPriDateTime = 99;
      mPriHeadingM = 99;
  
@@ -176,7 +176,7 @@ int deviation_pi::Init(void)
     b_ShowIcon = true;
     if( aCompass->data->ShowToolbarBtn ){
     //    This PlugIn needs a toolbar icon, so request its insertion
-        i_leftclick_tool_id  = InsertPlugInTool(_T(""), _img_deviation, _img_deviation, wxITEM_NORMAL,
+        i_leftclick_dev_tool_id  = InsertPlugInTool(_T(""), _img_deviation, _img_deviation, wxITEM_NORMAL,
                                             _("Deviation"), _T(""), NULL, Deviation_TOOL_POSITION, 0, this);
         
         SetIconType();          // SVGs allowed if not showing live icon
@@ -190,7 +190,7 @@ bool deviation_pi::DeInit(void)
 {
     SaveConfig();
     if( m_CompasDevListDlg != NULL) delete m_CompasDevListDlg;
-    RemovePlugInTool(i_leftclick_tool_id);
+    RemovePlugInTool(i_leftclick_dev_tool_id);
     delete pFontSmall;
     return true;
 }
@@ -260,16 +260,16 @@ void deviation_pi::SetColorScheme(PI_ColorScheme cs)
 void deviation_pi::SetIconType()
 {
     if(i_ShowLiveIcon){
-        SetToolbarToolBitmaps(i_leftclick_tool_id, _img_deviation, _img_deviation);
-        SetToolbarToolBitmapsSVG(i_leftclick_tool_id, _T(""), _T(""), _T(""));
-        m_LastVal.Empty();
+        SetToolbarToolBitmaps(i_leftclick_dev_tool_id, _img_deviation, _img_deviation);
+        SetToolbarToolBitmapsSVG(i_leftclick_dev_tool_id, _T(""), _T(""), _T(""));
+        m_LastValue.Empty();
     }
     else{
-        wxString normalIcon = m_shareLocn + _T("deviation_pi.svg");
-        wxString toggledIcon = m_shareLocn + _T("deviation_pi.svg");
-        wxString rolloverIcon = m_shareLocn + _T("deviation_pi.svg");
+        wxString normalDevIcon = m_shareLocation + _T("deviation_pi.svg");
+        wxString toggledDevIcon = m_shareLocation + _T("deviation_pi.svg");
+        wxString rolloverDevIcon = m_shareLocation + _T("deviation_pi.svg");
         
-        SetToolbarToolBitmapsSVG(i_leftclick_tool_id, normalIcon, rolloverIcon, toggledIcon);
+        SetToolbarToolBitmapsSVG(i_leftclick_dev_tool_id, normalDevIcon, rolloverDevIcon, toggledDevIcon);
     }    
 }
 
@@ -429,17 +429,17 @@ m_NMEA0183 << sentence;
 
 bool deviation_pi::LoadConfig(void)
 {
-    m_shareLocn =  *GetpPrivateApplicationDataLocation();
+    m_shareLocation =  *GetpPrivateApplicationDataLocation();
     // above function is not always give a path seperator on the end. So we have to check for this.
-    if ( m_shareLocn.Right(1) != wxFileName::GetPathSeparator())
-        m_shareLocn = m_shareLocn + wxFileName::GetPathSeparator();
-     m_shareLocn = m_shareLocn + wxT("plugins") + wxFileName::GetPathSeparator() + 
+    if ( m_shareLocation.Right(1) != wxFileName::GetPathSeparator())
+        m_shareLocation = m_shareLocation + wxFileName::GetPathSeparator();
+     m_shareLocation = m_shareLocation + wxT("plugins") + wxFileName::GetPathSeparator() + 
             wxT("deviation_pi");
     // Check if directory exsist, and if not make it
-    if ( !wxFileName::DirExists(m_shareLocn) )
-        wxFileName::Mkdir( m_shareLocn, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
+    if ( !wxFileName::DirExists(m_shareLocation) )
+        wxFileName::Mkdir( m_shareLocation, wxS_DIR_DEFAULT, wxPATH_MKDIR_FULL);
     
-    filename = m_shareLocn + wxFileName::GetPathSeparator() + _T("deviation_data.xml");
+    filename = m_shareLocation + wxFileName::GetPathSeparator() + _T("deviation_data.xml");
 
     
     wxFileConfig *pConf = (wxFileConfig *)m_pconfig;
@@ -490,17 +490,17 @@ void deviation_pi::DrawToolbarIconNumber( float dev )
     scale = wxRound(scale * 4.0) / 4.0;
     scale = wxMax(1.0, scale);          // Let the upstream processing handle minification.
     
-    if( b_ShowIcon && i_ShowLiveIcon && ((m_LastVal != NewVal) || (scale != m_scale)) )
+    if( b_ShowIcon && i_ShowLiveIcon && ((m_LastValue != NewVal) || (scale != m_scale)) )
     {
         m_scale = scale;
-        m_LastVal = NewVal;
+        m_LastValue = NewVal;
         int w = _img_deviation_live->GetWidth() * scale;
         int h = _img_deviation_live->GetHeight() * scale;
         wxMemoryDC dc;
         wxBitmap icon;
         
         //  Is SVG available?
-        wxBitmap live = GetBitmapFromSVGFile(m_shareLocn + _T("deviation_live.svg"), w, h);
+        wxBitmap live = GetBitmapFromSVGFile(m_shareLocation + _T("deviation_live.svg"), w, h);
         if( ! live.IsOk() ){
             icon = wxBitmap(_img_deviation_live->GetWidth(), _img_deviation_live->GetHeight());
             dc.SelectObject(icon);
@@ -562,7 +562,7 @@ void deviation_pi::DrawToolbarIconNumber( float dev )
             }
             icon = wxBitmap(im);
         }        
-        SetToolbarToolBitmaps(i_leftclick_tool_id, &icon, &icon);
+        SetToolbarToolBitmaps(i_leftclick_dev_tool_id, &icon, &icon);
     }
 }
 

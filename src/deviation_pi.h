@@ -138,15 +138,15 @@ public:
 
 private:
     wxFileConfig     *m_pconfig;
-    wxString      m_shareLocn;
+    wxString      m_shareLocation;
     wxString      ShipsName;
     wxString        CompassName;
     int          i_ShowLiveIcon;
     bool          b_ShowIcon;
-    wxString        m_LastVal;
+    wxString        m_LastValue;
     double        g_var;
     double        g_dev;
-    int           i_leftclick_tool_id;
+    int           i_leftclick_dev_tool_id;
     NMEA0183      m_NMEA0183;                 // Used to parse NMEA Sentences
     short         mPriHeadingM, mPriHeadingT, mPriVar, mPriDateTime;
     wxDateTime    mUTCDateTime;
