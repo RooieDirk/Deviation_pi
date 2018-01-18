@@ -158,6 +158,7 @@ void ReadWriteXML::WriteBearing(Meassurement* M)
     pBearings->SetAttribute("DateTime", M->datetime.FormatISOCombined().mb_str() );
     pBearings->SetAttribute("Methode", M->methode);
     pBearings->SetAttribute("Enabled", (int)M->enabled);
+    pBearings->SetAttribute("Remarks", M->MeassurementRemarks.mb_str());
 }
 
 void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
@@ -209,6 +210,13 @@ void ReadWriteXML::ReadBearings(std::vector<Meassurement*> &Ms)
     int i;
     pNode->QueryIntAttribute("Enabled", &i);
     M->enabled =  (bool)i;
+    std::string _value;
+    pNode->QueryStringAttribute("Remarks", &_value);
+        wxString temp(_value);
+        M->MeassurementRemarks= temp;
+
+    //(_value);//.c_str(), wxConvUTF8);
+    //wxString mystring(stlstring.c_str(), wxConvUTF8);
 }
 
 void ReadWriteXML::DeleteAllBearingNodes()

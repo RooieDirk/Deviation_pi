@@ -37,23 +37,13 @@
 
 #include <wx/stdpaths.h>
 #ifndef __OCPN__ANDROID__
-#include <GL/gl.h>
-#include <GL/glu.h>
+    #include <GL/gl.h>
+    #include <GL/glu.h>
 #else
-#include "qopengl.h"                  // this gives us the qt runtime gles2.h
-#include "GL/gl_private.h"
+    #include "qopengl.h"                  // this gives us the qt runtime gles2.h
+    #include "GL/gl_private.h"
 #endif
 #include <wx/filename.h>
-#include "bearingdlg.h"
-//#include "SharedStuff.h"
-#include "deviation_pi.h"
-
-//#include "CompasDev1Main.h"
-//#include "DevDialog.h"
-//#include <wx/msgdlg.h>
-
-//(*InternalHeaders(CompasDev1Dialog)
-//#include <wx/string.h>
 #include <wx/intl.h>
 #include <wx/imaglist.h>
 #include <wx/renderer.h>
@@ -62,6 +52,8 @@
 #include <stdio.h>      /* printf */
 #include <vector>
 
+#include "deviation_pi.h"
+#include "bearingdlg.h"
 #include "readwritexml.h"
 #include "SharedStuff.h"
 #include "spa.h"
@@ -176,8 +168,9 @@ int deviation_pi::Init(void)
     b_ShowIcon = true;
     if( aCompass->data->ShowToolbarBtn ){
     //    This PlugIn needs a toolbar icon, so request its insertion
-        i_leftclick_dev_tool_id  = InsertPlugInTool(_T(""), _img_deviation, _img_deviation, wxITEM_NORMAL,
-                                            _("Deviation"), _T(""), NULL, Deviation_TOOL_POSITION, 0, this);
+        i_leftclick_dev_tool_id  = InsertPlugInTool(_T(""), _img_deviation,
+            _img_deviation, wxITEM_NORMAL,
+            _("Deviation"), _T(""), NULL, Deviation_TOOL_POSITION, 0, this);
         
         SetIconType();          // SVGs allowed if not showing live icon
         ret_flag |= INSTALLS_TOOLBAR_TOOL;
@@ -310,7 +303,6 @@ void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body
 {
     wxJSONReader r;
     wxJSONValue v;
-    wxPuts(message_id );
     r.Parse(message_body, &v);
     if(message_id == _T("TRUEHEADING_REQUEST"))
     {
@@ -331,10 +323,25 @@ void deviation_pi::SetPluginMessage(wxString &message_id, wxString &message_body
         //Forward to BearingDlg
         if( B_Dlg != NULL )
             B_Dlg->SetMessageVariation( message_id, message_body );
+    }
+    else if(message_id == _T("OCPN_ACTIVE_ROUTELEG_RESPONSE"))
+    {
+        //Forward to BearingDlg
+        if( B_Dlg != NULL )
+            B_Dlg->SetMessageRouteActiveLeg( message_id, message_body );
+
 
     }
     
 }
+
+void deviation_pi::DoRouteLegRequest()
+{
+    wxJSONValue v;
+    v[_T("Test")] = _("test");
+        RequestPluginMessage( _T("OCPN_ACTIVE_ROUTELEG_REQUEST"), v);  
+}
+
 void deviation_pi::SendTrueCourse(double CompasCourse)
 {
     wxJSONValue v;
@@ -361,8 +368,9 @@ void deviation_pi::SendTrueCourse(double CompasCourse)
     wxString out;
     w.Write(v, out);
     SendPluginMessage(wxString(_T("WMM_VARIATION_BOAT")), out);
+
 }
-void deviation_pi::RequestPliginMessage(wxString MessageID, wxJSONValue message)
+void deviation_pi::RequestPluginMessage(wxString MessageID, wxJSONValue message)
 {
     wxJSONWriter w;
     wxString out;
@@ -412,7 +420,7 @@ m_NMEA0183 << sentence;
                     mPriHeadingM = 1;
                     mHdm = m_NMEA0183.Hdg.MagneticSensorHeadingDegrees;
                     i_ShowLiveIcon = 3;
-                    DrawToolbarIconNumber(mHdm);
+                    DrawToolbarBtnNumber(mHdm);
                     double mHdt = mHdm + g_var + aCompass->data->getDeviation( mHdm );
                     if( sentence.Left(6) != _("$XXHDG")){
                         SendNMEASentence( _("$XXHDT,") + wxString::Format( _("%1.1f"), mHdt));                        
@@ -483,7 +491,7 @@ void deviation_pi::ShowPreferencesDialog( wxWindow* parent )
     delete PrefDlg;
 }
 
-void deviation_pi::DrawToolbarIconNumber( float dev )
+void deviation_pi::DrawToolbarBtnNumber( float dev )
 {
     wxString NewVal = wxString::Format(_T("%.1f"), aCompass->data->getDeviation( dev ));
     double scale = GetOCPNGUIToolScaleFactor_PlugIn();
@@ -660,6 +668,7 @@ CompasDev1Dialog::CompasDev1Dialog( wxWindow *parent,
     Connect(ID_BUTTONCLOSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&CompasDev1Dialog::OnOKBtnClick);
     Connect(wxEVT_RIGHT_DOWN,(wxObjectEventFunction)&CompasDev1Dialog::OnRightDown);
     Connect(wxEVT_SIZE,(wxObjectEventFunction)&CompasDev1Dialog::OnResize);
+    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&CompasDev1Dialog::OnClose);
     
      wxString columns[] = {_("Do\nuse"),   _("Date/Time"), _("Compass\nCourse"),   _("Compass\nBearing"), _("True\nBearing"), _("Var."), _("Dev."), _("")};
     for (int i = 0; i < 8; ++i) {
@@ -705,7 +714,7 @@ CompasDev1Dialog::~CompasDev1Dialog()
     
 }
 
-void CompasDev1Dialog::OnCloseWindow(wxCloseEvent &event)
+void CompasDev1Dialog::OnClose(wxCloseEvent &event)
 {
     Show(false);
     if ( DT_Dlg != NULL ){
@@ -751,7 +760,7 @@ void CompasDev1Dialog::OnDeleteBtnClick(wxCommandEvent& event)
 
 void CompasDev1Dialog::OnEditBtnClick(wxCommandEvent& event)
 {
-    if ( B_Dlg != NULL )
+    if ( B_Dlg == NULL )
         B_Dlg =  new BearingDlg(this, data->vec[listselindex], wxID_ANY,  wxDefaultPosition, wxDefaultSize, false);
     //CopyMessObjToDlg(data->vec[listselindex], B_Dlg);
     if ( B_Dlg->ShowModal() == wxID_OK )
@@ -785,7 +794,7 @@ void CompasDev1Dialog::OnCancelBtnClick(wxCommandEvent& event)
 {
     if ( DT_Dlg != NULL ){
         DT_Dlg->Show(false);
-        delete DT_Dlg;
+        DT_Dlg->Destroy();
         DT_Dlg = NULL;        
     }
     Close();
@@ -994,7 +1003,7 @@ DevTableDialog::DevTableDialog(wxWindow* parent,wxWindowID id, compass_data* Dat
     Connect(ID_PRINTPREV,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnPrintPreviewBtnClick);
     Connect(ID_PRINT,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnPrintBtnClick);
     Connect(ID_CLOSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnCloseBtnClick); 
-    Connect(ID_CLOSE,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&DevTableDialog::OnCloseBtnClick); 
+    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&DevTableDialog::OnClose);
 }
 
 DevTableDialog::~DevTableDialog()
@@ -1044,7 +1053,7 @@ void DevTableDialog::OnPrintPreviewBtnClick(wxCommandEvent& event)
     frame->Initialize();
     frame->Show();
 }
-void DevTableDialog::OnCloseWindow(wxCloseEvent &event)
+void DevTableDialog::OnClose(wxCloseEvent &event)
 {
     parentdlg->DT_Dlg = NULL;
     Destroy();

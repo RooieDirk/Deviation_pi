@@ -41,6 +41,17 @@
 // class BearingDlg;
 // BearingDlg* B_Dlg;
 
+enum {
+    devBEARING = 0,    
+    devSUN_BEARING = 1,
+    devSUN_SHADOW = 2,
+    devBEARING_FROM_ROUTE = 3
+};
+enum{
+    devCOMPASBEARING = 0,
+    devRIGHTHANDBEARING = 1    
+};
+
 class BearingDlg: public wxDialog
 {
 	public:
@@ -65,9 +76,11 @@ class BearingDlg: public wxDialog
         wxStaticText* StaticText9;
         wxStaticText* StaticText10;
         wxStaticText* StaticText11;
+        wxStaticText* StaticText12;
 		wxTextCtrl* TrueBearingCtrl;
 		wxTextCtrl* CompassBearingCtrl;
         wxTextCtrl* VariationCtrl;
+        wxTextCtrl* RemarksCtr;
         void SetDateTime(wxDateTime dt);
         wxDateTime GetDateTime();
         
@@ -79,12 +92,13 @@ class BearingDlg: public wxDialog
         wxDateTime DT_value;
         float LAT_value;
         float LON_value;
-        
+        wxString Remarks_value;
         void SetPositionFix(PlugIn_Position_Fix_Ex &pfix);
         void SetNMEATimeFix(wxDateTime dt);
         void SetNMEAHeading(double hd);
         void SetSunBearing(wxDateTime t);
         void SetMessageVariation(wxString &message_id, wxString &message_body);
+        void SetMessageRouteActiveLeg(wxString &message_id, wxString &message_body);
         
 	protected:
 		//(*Identifiers(BearingDlg)
@@ -106,12 +120,13 @@ class BearingDlg: public wxDialog
         static const long ID_STATICTEXT10;
         static const long ID_STATICTEXT11;
         static const long ID_VARCTRL;
+        static const long ID_REMARKSCTRL;
         
 		//*)
 
 	private:
         void OnClose(wxCloseEvent& event);
-        void ChoiseSelect(wxCommandEvent& event);
+        void OnChoiseSelect(wxCommandEvent& event);
         void OnTimeSelect(wxCommandEvent& event);
         void OnTextCtrlEnter(wxCommandEvent& event);
         //void OnChoiceCtrlEnter(wxCommandEvent& event);

@@ -33,6 +33,7 @@ Meassurement::Meassurement ()
     lon=181.0;
     methode=0;
     enabled=true;
+    MeassurementRemarks=wxEmptyString;
 }
 
 Meassurement::~Meassurement ()
@@ -74,14 +75,15 @@ ship_data::~ship_data()
 
 double SolarAzimuth( wxDateTime dt, double latitude, double longitude)
 {
+    //dt.MakeUTC();
     spa_data spa;  //declare the SPA structure
     int result;
     //float min, sec;
 
     //enter required input values into SPA structure
 
-    spa.year          = dt.GetHour(0);
-    spa.month         = dt.GetMonth(0);
+    spa.year          = dt.GetYear();
+    spa.month         = dt.GetMonth(0)+1; //GetMonth returns 0-11
     spa.day           = dt.GetDay(0);
     spa.hour          = dt.GetHour(0);
     spa.minute        = dt.GetMinute(0);
@@ -100,15 +102,12 @@ double SolarAzimuth( wxDateTime dt, double latitude, double longitude)
     spa.function      = SPA_ZA;  //calculate zenith and azimuth
 
     //call the SPA calculate function and pass the SPA structure
-
     result = spa_calculate(&spa);
 
     if (result == 0)  //check for SPA errors
     {
         return spa.azimuth;
-        //display the results inside the SPA structure
-    
-
+        //display the results inside the SPA structure  
     } else printf("SPA Error Code: %d\n", result);
 
     return 0;

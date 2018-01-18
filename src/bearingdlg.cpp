@@ -48,13 +48,14 @@ const long BearingDlg::ID_STATICTEXT9 = wxNewId();
 const long BearingDlg::ID_STATICTEXT10 = wxNewId();
 const long BearingDlg::ID_STATICTEXT11 = wxNewId();
 const long BearingDlg::ID_VARCTRL =  wxNewId();
+const long BearingDlg::ID_REMARKSCTRL =  wxNewId();
 //*)
 
 BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const wxPoint& pos,const wxSize& size, bool fullsize )
 {
     //(*Initialize(BearingDlg)
     localMesData = Mess;
-
+    Remarks_value = wxEmptyString;
 	wxFlexGridSizer* FlexGridSizer1;
 	wxGridBagSizer* GridBagSizer1;
 	wxStdDialogButtonSizer* StdDialogButtonSizer1;
@@ -65,14 +66,14 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	Move(wxDefaultPosition);
 	FlexGridSizer1 = new wxFlexGridSizer(3, 1, 0, 0);
 	StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, this, _("Methode"));
-	Choice = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_CHOICE"));
-	Choice->SetSelection( Choice->Append(_("Bearing")) );
-	//Choice->Append(_("Relative bearing (Righthand bearing)"));
-	Choice->Append(_("Bearing using \'Navigate to\'"));
-    //Choice->Append(_("Steaming into \'Navigate to\'"));
-	Choice->Append(_("Steaming into"));// leading line"));
-	Choice->Append(_("Sun bearing"));
-	Choice->Append(_("Sun bearing shadowline"));
+    wxArrayString aS;
+    aS.Insert(_("Bearing"), devBEARING);
+    aS.Insert(_("Sun bearing"), devSUN_BEARING);
+    aS.Insert(_("Sun bearing shadowline"), devSUN_SHADOW);
+    //aS.Insert(_("Bearing from Route"), devBEARING_FROM_ROUTE);
+    
+    Choice = new wxChoice (this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, aS, 0, wxDefaultValidator, _T("ID_CHOICE"));
+ 	Choice->SetSelection( devBEARING );
 	StaticBoxSizer1->Add(Choice, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	FlexGridSizer1->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	GridBagSizer1 = new wxGridBagSizer(0, 0);
@@ -84,10 +85,13 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	GridBagSizer1->Add(DPickerCtrl, wxGBPosition(0, 1), wxDefaultSpan, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	TPickerCtrl = new wxTimePickerCtrl(this, ID_TIMEPICKERCTRL, wxDefaultDateTime, wxDefaultPosition, wxDefaultSize, wxTP_DEFAULT, wxDefaultValidator, _T("ID_TIMEPICKERCTRL"));
 	GridBagSizer1->Add(TPickerCtrl, wxGBPosition(0, 2), wxDefaultSpan, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-	
-    BearingChoice = new wxChoice(this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_STATICTEXT2"));
-    BearingChoice->Append(_("Compass bearing"));    
-    BearingChoice->Append(_("Righthand bearing"));
+	wxArrayString aSb;
+    aSb.Insert(_("Compass bearing"), devCOMPASBEARING);
+    aSb.Insert(_("Righthand bearing"), devRIGHTHANDBEARING);
+    BearingChoice = new wxChoice (this, ID_CHOICE, wxDefaultPosition, wxDefaultSize, aSb, 0, wxDefaultValidator, _T("ID_CHOICE"));
+    BearingChoice->SetSelection( 0);    
+	GridBagSizer1->Add(BearingChoice, wxGBPosition(2, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    
     StaticText2 = new wxStaticText(this, ID_STATICTEXT2, _("Compass Course"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT2"));
 	GridBagSizer1->Add(StaticText2, wxGBPosition(1, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
         // Allow floating point numbers from 0 to 360 with 1 decimal
@@ -135,19 +139,18 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
 	StaticText6 = new wxStaticText(this, ID_STATICTEXT6, _("True Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
 	GridBagSizer1->Add(StaticText6, wxGBPosition(3, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     
-    BearingChoice = new wxChoice(this, ID_STATICTEXT4, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_STATICTEXT4"));
-    BearingChoice->Append(_("Compass bearing"));    
-    BearingChoice->Append(_("Righthand bearing"));
-    BearingChoice->SetSelection( 0);
+    StaticText12 = new wxStaticText(this, ID_STATICTEXT6, _("Remarks"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT6"));
+	GridBagSizer1->Add(StaticText12, wxGBPosition(6, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     
-	//StaticText4 = new wxStaticText(this, ID_STATICTEXT4, _("Compass Bearing"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT4"));
-	GridBagSizer1->Add(BearingChoice, wxGBPosition(2, 0), wxDefaultSpan, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    RemarksCtr = new wxTextCtrl(this, ID_REMARKSCTRL, _("Text"), wxDefaultPosition, wxDefaultSize, wxTE_MULTILINE, wxTextValidator(wxFILTER_ALPHA, &Remarks_value), _T("ID_REMARKSCTRL"));
+    GridBagSizer1->Add(RemarksCtr, wxGBPosition(6, 1),  wxGBSpan(1, 2), wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    
 	StdDialogButtonSizer1 = new wxStdDialogButtonSizer();
 	StdDialogButtonSizer1->AddButton(new wxButton(this, wxID_OK, wxEmptyString));
 	StdDialogButtonSizer1->AddButton(new wxButton(this, wxID_CANCEL, wxEmptyString));
 	StdDialogButtonSizer1->Realize();
     
-        GridBagSizer1->Add(StdDialogButtonSizer1, wxGBPosition(6, 1), wxGBSpan(1, 2), wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
+        GridBagSizer1->Add(StdDialogButtonSizer1, wxGBPosition(7, 1), wxGBSpan(1, 2), wxALL|wxEXPAND|wxALIGN_RIGHT|wxALIGN_CENTER_VERTICAL, 5);
     
 	FlexGridSizer1->Add(GridBagSizer1, 1, wxALL|wxEXPAND|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
 	SetSizer(FlexGridSizer1);
@@ -157,7 +160,7 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
     CopyMessObjToDlg();
     GPS_UpdateTime = 0;
 
-    Connect(ID_CHOICE,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&BearingDlg::ChoiseSelect);
+    Connect(ID_CHOICE,wxEVT_COMMAND_CHOICE_SELECTED,(wxObjectEventFunction)&BearingDlg::OnChoiseSelect);
     //Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&BearingDlg::OnClose);
     Connect(wxID_ANY,wxEVT_COMMAND_TEXT_ENTER,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
     Connect(wxID_ANY,wxEVT_COMMAND_TEXT_UPDATED,(wxObjectEventFunction)&BearingDlg::OnTextCtrlEnter);
@@ -177,10 +180,11 @@ bool BearingDlg::Show(bool show)
 {
     bool temp = wxDialog::Show(show);
     UpdateFlag = true; //Set updateflag after Textctr's are updated
+    Dev_PI->DoRouteLegRequest();
     return temp;
 }
 
-void BearingDlg::ChoiseSelect(wxCommandEvent& event)
+void BearingDlg::OnChoiseSelect(wxCommandEvent& event)
 {
     SetSunBearing(GetDateTime());
 }
@@ -228,12 +232,11 @@ void BearingDlg::SetDateTime(wxDateTime dt)
     DT_value = dt;
     DPickerCtrl->SetValue(DT_value);
     TPickerCtrl->SetValue(DT_value);
-        if (Choice->GetSelection()==3) //SunBearing
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );
+        if (Choice->GetSelection()==devSUN_BEARING) //SunBearing
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%05.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );
         
-    if (Choice->GetSelection()==4) //SunBearing shadow   {
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
-    
+    if (Choice->GetSelection()==devSUN_SHADOW) //SunBearing shadow   {
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%05.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
 }
 
 wxDateTime BearingDlg::GetDateTime()
@@ -255,6 +258,7 @@ void BearingDlg::CopyDlgToMessObj ()
     localMesData->datetime = GetDateTime();
     localMesData->enabled = true;
     localMesData->methode = Choice->GetSelection();
+    localMesData->MeassurementRemarks = Remarks_value;
 }
 void BearingDlg::CopyMessObjToDlg() 
 {
@@ -265,6 +269,7 @@ void BearingDlg::CopyMessObjToDlg()
     DEV_value =localMesData->deviation;
     SetDateTime( localMesData->datetime );
     Choice->SetSelection(localMesData->methode);
+    Remarks_value = localMesData->MeassurementRemarks;
 }
 void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
 {
@@ -278,7 +283,7 @@ void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
     if ( UpdateFlag)        
     {
         GetMessageVariation(localMesData->lat, localMesData->lon);
-        VariationCtrl->SetValue(wxString::Format(_("%f"), pfix.Var));
+        Dev_PI->DoRouteLegRequest();
         
         if (GPS_UpdateTime <= 0) 
         {
@@ -306,7 +311,6 @@ void BearingDlg::SetNMEATimeFix(wxDateTime dt)
         SetSunBearing(GetDateTime());
             
         w->SetFocus(); // restore focus
-        wxPuts(_("BearingDlg::SetNMEATimeFix ") + dt.FormatISOTime());
     }
     UpdateFlag = TempFlag;
     
@@ -315,10 +319,10 @@ void BearingDlg::SetSunBearing(wxDateTime t)
 {
     bool TempFlag = UpdateFlag;
     wxWindow *w = FindFocus();
-    if (Choice->GetSelection()==3) //SunBearing
-            TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );        
-    if (Choice->GetSelection()==4) //SunBearing shadow   
-        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%03.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
+    if (Choice->GetSelection()==devSUN_BEARING) //SunBearing
+            TrueBearingCtrl->ChangeValue( (wxString::Format(_("%05.1f"), SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon) ) ) );        
+    if (Choice->GetSelection()==devSUN_SHADOW) //SunBearing shadow   
+        TrueBearingCtrl->ChangeValue( (wxString::Format(_("%05.1f"),  limit_degrees(SolarAzimuth( GetDateTime(), localMesData->lat, localMesData->lon )+180) ) ) );
     w->SetFocus(); // restore focus
     UpdateFlag = TempFlag;
 }
@@ -336,9 +340,6 @@ void BearingDlg::SetNMEAHeading(double hd)
         w->SetFocus(); // restore focus
     }
     UpdateFlag = TempFlag;
-    
-    
-    wxPuts(_("BearingDlg::SetNMEAHeading"));
 }
 
 void BearingDlg::SetMessageVariation(wxString &message_id, wxString &message_body)
@@ -350,13 +351,44 @@ void BearingDlg::SetMessageVariation(wxString &message_id, wxString &message_bod
         
         //TODO check lat/lon to make sure it is our requested message and not  an otherone.
         // get the DECL value from the JSON message
-        VariationCtrl->ChangeValue( v[_T("Decl")].AsString() );
-        wxPuts(_("VariationCtrl->ChangeValue Variation changed from messgae"));
+        VariationCtrl->ChangeValue(  wxString::Format( _T("%05.1f"), v[_T("Decl")].AsDouble()) );
     }
+}
+void BearingDlg::SetMessageRouteActiveLeg(wxString &message_id, wxString &message_body)
+{
+    if ( UpdateFlag){
+        wxJSONReader r;
+        wxJSONValue v;
+        r.Parse(message_body, &v);
+        
+        if ( v[_("error")].AsBool() )  // error means no active route avalable
+        {
+            if (Choice != NULL)          // then we remove the option from the choice control
+                if(Choice->GetCount() > devBEARING_FROM_ROUTE )
+                    Choice->Delete(devBEARING_FROM_ROUTE);
+        }
+        else // no error so there is an active route
+        {
+            if (Choice != NULL)
+            {
+                //If there was no active route choice available make it and select it.
+                if (Choice->GetCount() <= devBEARING_FROM_ROUTE )
+                {
+                    Choice->Insert(_("Bearing from Route"), devBEARING_FROM_ROUTE);
+                    Choice->SetSelection(devBEARING_FROM_ROUTE);
+                }
+
+                if ( Choice->GetSelection() == devBEARING_FROM_ROUTE )
+                {
+                    TrueBearingCtrl->ChangeValue( wxString::Format( _T("%05.1f"), v[_T("bearing")].AsDouble() ) );
+                }
+            }   
+        }
+    }   
 }
 void BearingDlg::GetMessageVariation(double lat, double lon)
 {
-    if ( (abs(lat) < 90.0) && (abs(lon) < 180.0)  ) //valid position
+    if ( (abs(lat) < 90.0) && (abs(lon) <= 180.0)  ) //valid position
     {        
         wxJSONValue v;
         v[_T("Lat")] = lat;
@@ -364,11 +396,7 @@ void BearingDlg::GetMessageVariation(double lat, double lon)
         v[_T("Year")] = GetDateTime().GetYear();
         v[_T("Month")] = GetDateTime().GetMonth();
         v[_T("Day")] = GetDateTime().GetDay();
-        Dev_PI->RequestPliginMessage( _T("WMM_VARIATION_REQUEST"), v);   
+        Dev_PI->RequestPluginMessage( _T("WMM_VARIATION_REQUEST"), v);   
     }
 }
-// void BearingDlg::UpdateContrs()
-// {
-//     
-// }
 

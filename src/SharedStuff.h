@@ -49,6 +49,7 @@ public:
     double lon;
     int methode;
     bool enabled;
+    wxString MeassurementRemarks;
     compass_data* c_data;
     wxString Choise1 = _("Relative bearing (Righthand bearing)");
 	wxString Choise2 = _("Bearing using \'Navigate to\'");

@@ -102,7 +102,6 @@ public:
 //    The required override PlugIn Methods
     void SetCursorLatLon(double lat, double lon);
     void SetPositionFixEx(PlugIn_Position_Fix_Ex &pfix);
-
     int GetToolbarToolCount(void);
     bool SaveConfig(void);
     bool LoadConfig(void);
@@ -113,28 +112,22 @@ public:
 
 //    Optional plugin overrides
     void SetColorScheme(PI_ColorScheme cs);
-    void SetPluginMessage(wxString &message_id, wxString &message_body);
+    void SetPluginMessage(wxString &message_id, wxString &message_body); 
+    void DoRouteLegRequest();
+    void SetNMEASentence(wxString &sentence);
+    void SendNMEASentence(wxString sentence);
+    
+//    Deviation Declarations
+    void DrawToolbarBtnNumber( float dev ); 
+    void RequestPluginMessage(wxString MessageID, wxJSONValue message);
+    wxString ComputeChecksum( wxString sentence );
     void SendTrueCourse(double CompasCourse);
     void SendDeviation();
     void SendDeviationAt(double CompasCourse);
-    void SetNMEASentence(wxString &sentence);
-
-//    Other public methods
-//     void SetWmmDialogX    (int x){ m_deviation_dialog_x = x;};
-//     void SetWmmDialogY    (int x){ m_deviation_dialog_y = x;}
-
-    void OnWmmDialogClose();
-    void ShowPlotSettings();
-    void DrawToolbarIconNumber( float dev );
-    void SendNMEASentence(wxString sentence);
-    void RequestPliginMessage(wxString MessageID, wxJSONValue message);
-    wxString ComputeChecksum( wxString sentence );
-//    Deviation Declarations
     
     wxString filename;
     Compass* aCompass;
     wxWindow       *m_parent_window;
-    //CompasDev1Dialog *m_CompasDevListDlg;
 
 private:
     wxFileConfig     *m_pconfig;
@@ -155,14 +148,6 @@ private:
     wxFont        *pFontSmall;
 };
 
-
-
-
-//#include "tinyxml2/tinyxml2.h"
-//#include "graphandprint.h"
-
-
-
 class CompasDev1Dialog: public wxFrame
 {
 	public:
@@ -182,7 +167,7 @@ class CompasDev1Dialog: public wxFrame
         wxButton* CancelBtn;
         wxButton* CloseBtn;
         
-        void OnCloseWindow(wxCloseEvent &event);
+        void OnClose(wxCloseEvent &event);
         void OnAddBtnClick(wxCommandEvent& event);
         void OnDeleteBtnClick(wxCommandEvent& event);
         void OnEditBtnClick(wxCommandEvent& event);
@@ -264,7 +249,7 @@ private:
 
     //(*Handlers(DevTableDialog)
     void OnQuit(wxCommandEvent& event);
-    void OnCloseWindow(wxCloseEvent &event);
+    void OnClose(wxCloseEvent &event);
     void OnPrintBtnClick(wxCommandEvent& event);
     void OnCloseBtnClick(wxCommandEvent& event);
     void OnPrintPreviewBtnClick(wxCommandEvent& event);
