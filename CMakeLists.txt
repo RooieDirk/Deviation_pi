@@ -40,7 +40,6 @@ SET(SRC_DEV
             src/bearingdlg.cpp
             src/icons.h
             src/icons.cpp
-            
 	)
 SET(SRC_NMEA0183
 		src/nmea0183/LatLong.hpp
