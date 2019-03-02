@@ -19,6 +19,8 @@ INCLUDE( VERSION.cmake )
 
 SET(PLUGIN_VERSION "${PLUGIN_VERSION_MAJOR}.${PLUGIN_VERSION_MINOR}.${PLUGIN_VERSION_PATCH}" )
 
+SET(VERSION_MAJOR "0")
+SET(VERSION_MINOR "1")
 #SET(CMAKE_BUILD_TYPE Debug)
 
 INCLUDE("cmake/PluginConfigure.cmake")
@@ -44,8 +46,6 @@ SET(SRC_DEV
             src/icons.cpp
 )
 
-# INCLUDE("cmake/PluginNMEA.cmake")
-# INCLUDE("cmake/PluginJSON.cmake")
 SET(SRC_NMEA0183
 		src/nmea0183/LatLong.hpp
 		src/nmea0183/latlong.cpp
@@ -70,7 +70,9 @@ SET(SRC_NMEA0183
 		src/nmea0183/gll.cpp
 		src/nmea0183/gga.hpp
 		src/nmea0183/gga.cpp
-	)
+)
+# INCLUDE("cmake/PluginNMEA.cmake")
+# INCLUDE("cmake/PluginJSON.cmake")
 INCLUDE_DIRECTORIES(nmea0183)
 IF(WIN32)
 SET(SRC_JSON
