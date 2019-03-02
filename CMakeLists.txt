@@ -44,9 +44,34 @@ SET(SRC_DEV
             src/icons.cpp
 )
 
-INCLUDE("cmake/PluginNMEA.cmake")
-INCLUDE("cmake/PluginJSON.cmake")
-
+# INCLUDE("cmake/PluginNMEA.cmake")
+# INCLUDE("cmake/PluginJSON.cmake")
+SET(SRC_NMEA0183
+		src/nmea0183/LatLong.hpp
+		src/nmea0183/latlong.cpp
+		src/nmea0183/long.cpp
+		src/nmea0183/nmea0183.cpp
+		src/nmea0183/nmea0183.hpp
+		src/nmea0183/Response.hpp
+		src/nmea0183/response.cpp
+		src/nmea0183/Sentence.hpp
+		src/nmea0183/sentence.cpp
+		src/nmea0183/talkerid.cpp
+		src/nmea0183/hexvalue.cpp
+		src/nmea0183/lat.cpp
+		src/nmea0183/expid.cpp
+		src/nmea0183/hdt.hpp
+		src/nmea0183/hdt.cpp
+		src/nmea0183/hdg.hpp
+		src/nmea0183/hdg.cpp
+		src/nmea0183/hdm.hpp
+		src/nmea0183/hdm.cpp
+		src/nmea0183/gll.hpp
+		src/nmea0183/gll.cpp
+		src/nmea0183/gga.hpp
+		src/nmea0183/gga.cpp
+	)
+INCLUDE_DIRECTORIES(nmea0183)
 IF(WIN32)
 SET(SRC_JSON
 	    src/json_defs.h
@@ -77,13 +102,13 @@ ELSE(TINYXML_FOUND)
             src/tinyxml/tinyxmlparser.cpp
             src/tinyxml/tinyxmlerror.cpp
  )
-# ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
+ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
 ENDIF(TINYXML_FOUND)
 ADD_DEFINITIONS(-DTIXML_USE_STL)
 
 #ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
 
-# TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} )
+TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} )
 
 IF (QT_ANDROID )
     TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${OCPN_Core_LIBRARIES} )
