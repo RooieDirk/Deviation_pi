@@ -7,15 +7,17 @@
 # define minimum cmake version
 CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
 
-PROJECT(deviation_pi_pi)
-
-SET(PACKAGE_NAME deviation_pi)
 SET(VERBOSE_NAME deviation)
 SET(TITLE_NAME deviation)
+PROJECT(deviation_pi_pi)
+SET(PACKAGE_NAME deviation_pi)
+SET(VERBOSE_NAME deviation)
+SET(TITLE_NAME DEVIATION)
 SET(CPACK_PACKAGE_CONTACT "Dirk Smits")
 
-SET(VERSION_MAJOR "0")
-SET(VERSION_MINOR "1")
+INCLUDE( VERSION.cmake )
+
+SET(PLUGIN_VERSION "${PLUGIN_VERSION_MAJOR}.${PLUGIN_VERSION_MINOR}.${PLUGIN_VERSION_PATCH}" )
 
 #SET(CMAKE_BUILD_TYPE Debug)
 
@@ -40,33 +42,10 @@ SET(SRC_DEV
             src/bearingdlg.cpp
             src/icons.h
             src/icons.cpp
-	)
-SET(SRC_NMEA0183
-		src/nmea0183/LatLong.hpp
-		src/nmea0183/latlong.cpp
-		src/nmea0183/long.cpp
-		src/nmea0183/nmea0183.cpp
-		src/nmea0183/nmea0183.hpp
-		src/nmea0183/Response.hpp
-		src/nmea0183/response.cpp
-		src/nmea0183/Sentence.hpp
-		src/nmea0183/sentence.cpp
-		src/nmea0183/talkerid.cpp
-		src/nmea0183/hexvalue.cpp
-		src/nmea0183/lat.cpp
-		src/nmea0183/expid.cpp
-		src/nmea0183/hdt.hpp
-		src/nmea0183/hdt.cpp
-		src/nmea0183/hdg.hpp
-		src/nmea0183/hdg.cpp
-		src/nmea0183/hdm.hpp
-		src/nmea0183/hdm.cpp
-		src/nmea0183/gll.hpp
-		src/nmea0183/gll.cpp
-		src/nmea0183/gga.hpp
-		src/nmea0183/gga.cpp
-	)
-INCLUDE_DIRECTORIES(nmea0183)
+)
+
+INCLUDE("cmake/PluginNMEA.cmake")
+INCLUDE("cmake/PluginJSON.cmake")
 
 IF(WIN32)
 SET(SRC_JSON
