@@ -13,12 +13,12 @@ Deviation_pi Repository]
 * Releases: https://github.com/RooieDirk/Deviation_pi/releases[Github
 RooieDirk Deviation_pi Releases]
 * Forum:
-http://www.cruisersforum.com/forums/f134/compass-deviation-plugin-future-requests-187912.html[Cruiser's
+https://www.cruisersforum.com/forums/f134/compass-deviation-plugin-future-requests-187912.html[Cruiser's
 Forum - Compass Deviation Thread]
 
 === Goals
 
-link:assets/deviation-compass.doc[Draft Functional Specifications by Ozwingle] 
+link:{attachmentsdir}/deviation-compass.doc[Draft Functional Specifications by Ozwingle (MS-word)] 
 
 (Coefficients are not mentioned only because I am not knowledgeable enough to clearly describe them.
 However, including coefficients appears to be a good idea, as you have already done.)
