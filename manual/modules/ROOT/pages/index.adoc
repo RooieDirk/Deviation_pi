@@ -233,9 +233,7 @@ tinned foods near the fluxgate compass.
 === 6. Resources & Sources
 
 http://www.capecompass.com/analysis_explained.php[Cape Compass:Compass
-Deviation Analysis Explained]
+Deviation Analysis Explained] +
 
-Far more detail here:
-
-http://msi.nga.mil/MSISiteContent/StaticFiles/HoMCA.pdf[Handbook of
-Magnetic Compass Adjustment]
+For more detail here download the Handbook of Magnetic Compass Adjustment
+https://msi.nga.mil/MiscProducts[here]
