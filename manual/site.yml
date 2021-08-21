@@ -1,7 +1,7 @@
 site:
   title: Deviation Plugin Manual
   url:  https://nowhere.net
-  start_page: deviation:ROOT:deviation.adoc
+  start_page: deviation:ROOT:index.adoc
 
 content:
   sources:
