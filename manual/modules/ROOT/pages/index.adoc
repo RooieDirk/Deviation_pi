@@ -1,12 +1,10 @@
-:imagesdir: ../images/
-
-== Deviation
+= Deviation
 
 image:deviation-4-table.png[]
 
 Typical Deviation Table for a Magnetic Compass
 
-=== Links
+== Links
 
 * Source: https://github.com/RooieDirk/Deviation_pi[Github RooieDirk
 Deviation_pi Repository]
@@ -16,7 +14,7 @@ RooieDirk Deviation_pi Releases]
 https://www.cruisersforum.com/forums/f134/compass-deviation-plugin-future-requests-187912.html[Cruiser's
 Forum - Compass Deviation Thread]
 
-=== Goals
+== Goals
 
 link:{attachmentsdir}/deviation-compass.doc[Draft Functional Specifications by Ozwingle (MS-word)] 
 
@@ -108,7 +106,7 @@ care of the calculation and drawing of the deviation table. Dirk
 Thanks for the specs. We are more or less on one line. As a point from
 your doc it will make it easier to add from an existing deviation table.
 
-==== Calculations
+=== Calculations
 
 About your remarks about curve fitting and sine wave, the deviation is
 always a result of the formula
@@ -123,7 +121,7 @@ I do curve fitting following above formula and calculate the A..E
 values. In the preview the Curve including original points are visible,
 so you can see how accurate your input is/was.
 
-==== Future OpenCPN Core Code?
+=== Future OpenCPN Core Code?
 
 Having the compass course in the route steering popup window is in the
 core code, and can't be changed from the plugin. But maybe in the future
@@ -131,9 +129,9 @@ it is possible to merge with the variation plugin. Then it would be a
 standard addon for OpenCPN and the core code setting for
 magnetic-readings could be changed in compass-readings.
 
-=== Requirements
+== Requirements
 
-=== Documentation
+== Documentation
 
 image:deviation-1.png[]
 
@@ -147,22 +145,22 @@ image:deviation-3.png[]
 
 Calculation of Deviation Table and Graph
 
-== User Guide
+= User Guide
 
-=== 1. What and Why
+== 1. What and Why
 
 A. What does the pi do B. Why can the pi be useful
 
-=== 2. Install
+== 2. Install
 
 A. Where to get the pi B. How to install the pi
 
-=== 3. Standard actions
+== 3. Standard actions
 
 What are basic (standard) actions you have to do to make the pi work
 Example: “how to set up a Watchdog Alarm”.
 
-=== 4. Options
+== 4. Options
 
 What options are there after performing the standard actions Examples:
 1. Choice for a specific type of Watchdog Alarm (anchor, boundary,
@@ -171,7 +169,7 @@ alarm-signal (pop-up message, sound, command) 3. Setting various
 parameters (range in meters, degrees, time in seconds or minutes, speed
 etc.)
 
-=== 5. FAQ
+== 5. FAQ
 
 Will this plugin help determine the deviation, or is it just for making
 the corrections? Will the compass indications include deviation with the
@@ -230,7 +228,7 @@ for navigation or piloting is required. Being careful with stowage can
 help reduce deviation and random changes in deviation, e.g. don't stow
 tinned foods near the fluxgate compass.
 
-=== 6. Resources & Sources
+== 6. Resources & Sources
 
 http://www.capecompass.com/analysis_explained.php[Cape Compass:Compass
 Deviation Analysis Explained] +
