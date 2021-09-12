@@ -145,22 +145,22 @@ image:deviation-3.png[]
 
 Calculation of Deviation Table and Graph
 
-= User Guide
+== User Guide
 
-== 1. What and Why
+=== 1. What and Why
 
 A. What does the pi do B. Why can the pi be useful
 
-== 2. Install
+=== 2. Install
 
 A. Where to get the pi B. How to install the pi
 
-== 3. Standard actions
+=== 3. Standard actions
 
 What are basic (standard) actions you have to do to make the pi work
 Example: “how to set up a Watchdog Alarm”.
 
-== 4. Options
+=== 4. Options
 
 What options are there after performing the standard actions Examples:
 1. Choice for a specific type of Watchdog Alarm (anchor, boundary,
@@ -169,7 +169,7 @@ alarm-signal (pop-up message, sound, command) 3. Setting various
 parameters (range in meters, degrees, time in seconds or minutes, speed
 etc.)
 
-== 5. FAQ
+=== 5. FAQ
 
 Will this plugin help determine the deviation, or is it just for making
 the corrections? Will the compass indications include deviation with the
@@ -179,7 +179,7 @@ assumption we are using a magnetic compass rather than a GPS compass?
 deviation table on paper. (in theory taking as less as 5 bearings should
 be enough) And for an electronic (nmea) compass it can, in cooperation
 with the variation PI, correct the magnetic course up to a true course.
-Mind you, an electronic compass with auto compensation doesn't mean that
+* Mind you, an electronic compass with auto compensation doesn't mean that
 the deviation is zero. It has, just as an ordinary compass has, a
 remaining deviation after compensation.
 * Need to be a little careful here or one could get a false sense of
@@ -212,7 +212,7 @@ if you have a movable compass you cant compensate it.
 
 What I try to do is allow to take bearings to a known point (is known
 bearing), and so find the misreading of the compass. The misreading is
-deviation + variation.
+deviation + variation
 
 * For a known bearing you could choose from a leading line(lights), a
 fixed point or a bearing of the sun.
