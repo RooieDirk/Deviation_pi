@@ -173,8 +173,7 @@ etc.)
 
 Will this plugin help determine the deviation, or is it just for making
 the corrections? Will the compass indications include deviation with the
-assumption we are using a magnetic compass rather than a GPS compass?
-
+assumption we are using a magnetic compass rather than a GPS compass?::
 * The plan is both. For a regular compass it will help to make a
 deviation table on paper. (in theory taking as less as 5 bearings should
 be enough) And for an electronic (nmea) compass it can, in cooperation
@@ -201,8 +200,7 @@ additional curves for each bearing with an offset of +-1 degree error.
 That should give a nice idea of the accuracy of the result.
 
 Wouldn't a cellphone be useful to calibrate a compass? Their Compass
-often requires calibration by twisting in 3 directions?
-
+often requires calibration by twisting in 3 directions?::
 * A cellphone will be of no help. Compass deviation is caused by the
 vessels own magnetism.
 * By compensating you try to add a few magnets that will be just as
@@ -212,8 +210,8 @@ if you have a movable compass you cant compensate it.
 
 What I try to do is allow to take bearings to a known point (is known
 bearing), and so find the misreading of the compass. The misreading is
-deviation + variation
 
+deviation + variation
 * For a known bearing you could choose from a leading line(lights), a
 fixed point or a bearing of the sun.
 * George Winthur our compass adjuster uses an electric gyroscope to
