@@ -190,12 +190,12 @@ bool deviation_pi::DeInit(void)
 
 int deviation_pi::GetAPIVersionMajor()
 {
-    return MY_API_VERSION_MAJOR;
+     return OCPN_API_VERSION_MAJOR;
 }
 
 int deviation_pi::GetAPIVersionMinor()
 {
-    return MY_API_VERSION_MINOR;
+    return OCPN_API_VERSION_MINOR;
 }
 
 int deviation_pi::GetPlugInVersionMajor()
@@ -215,22 +215,22 @@ wxBitmap *deviation_pi::GetPlugInBitmap()
 
 wxString deviation_pi::GetCommonName()
 {
-    return _("Deviation");
+    return _T(PLUGIN_COMMON_NAME);
+// return _("Deviation");
 }
 
 
 wxString deviation_pi::GetShortDescription()
 {
-    return _("Compass deviation PlugIn for OpenCPN");
+   return _(PLUGIN_SHORT_DESCRIPTION);
+//    return _("Compass deviation PlugIn for OpenCPN");
 }
 
 wxString deviation_pi::GetLongDescription()
 {
-    return _("Compass deviation PlugIn for OpenCPN\n\
-    With this plugin you can make a deviation table,\n\
-    and use it to correct incoming nmea compass course\n\
-    sentences to true course sentences. To get this working\n\
-    you will also need the wmm plugin activated.");
+ 
+   return _(PLUGIN_LONG_DESCRIPTION); 
+
 }
 
 void deviation_pi::SetCursorLatLon(double lat, double lon)
