@@ -41,9 +41,9 @@ set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass cours
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "1")
-set(VERSION_PATCH "0")
+set(VERSION_PATCH "5")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "09/08/2023") # DD/MM/YYYY format
+set(VERSION_DATE "13/08/2023") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -54,7 +54,7 @@ set(PARENT "opencpn")
 # The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
 #set(GIT_REPOSITORY_SERVER "github.com")
 
-# Specifies cloudsmith repository sufficies
+# Specifies cloudsmith repository sufficies   --ADD THESE NEXT
 set(PROD "prod")    # Standard Repos
 set(BETA "beta")    # Standard Repos
 set(ALPHA "alpha")  # Standard Repos
@@ -78,7 +78,7 @@ set(XML_DESCRIPTION ${LONG_DESCRIPTION})
 ## ----- Modify section below if there are special requirements for the plugin ----- ##
 ##
 
-option(PLUGIN_USE_SVG "Use SVG graphics" OFF)
+option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
@@ -138,67 +138,90 @@ include("PluginConfigure")
 #
 
 add_definitions(-DUSE_S57)
-# add_definitions(-DPLUGIN_USE_SVG)
+add_definitions(-DPLUGIN_USE_SVG)
 
 
 SET(SRCS
-            src/deviation_pi.h
             src/deviation_pi.cpp
-            src/spa.h
             src/spa.cpp
-            src/SharedStuff.h
             src/SharedStuff.cpp
-            src/readwritexml.h
             src/readwritexml.cpp
-            src/preferencedlg.h
             src/preferencedlg.cpp
-            src/compass.h
             src/compass.cpp
-            src/printing.h
             src/printing.cpp
-            src/bearingdlg.h
             src/bearingdlg.cpp
-            src/icons.h
             src/icons.cpp
 )
 
-SET(SRC_NMEA0183
-		libs/nmea0183/LatLong.hpp
-		libs/nmea0183/latlong.cpp
-		libs/nmea0183/long.cpp
-		libs/nmea0183/nmea0183.cpp
-		libs/nmea0183/nmea0183.hpp
-		libs/nmea0183/Response.hpp
-		libs/nmea0183/response.cpp
-		libs/nmea0183/Sentence.hpp
-		libs/nmea0183/sentence.cpp
-		libs/nmea0183/talkerid.cpp
-		libs/nmea0183/hexvalue.cpp
-		libs/nmea0183/lat.cpp
-		libs/nmea0183/expid.cpp
-		libs/nmea0183/hdt.hpp
-		libs/nmea0183/hdt.cpp
-		libs/nmea0183/hdg.hpp
-		libs/nmea0183/hdg.cpp
-		libs/nmea0183/hdm.hpp
-		libs/nmea0183/hdm.cpp
-		libs/nmea0183/gll.hpp
-		libs/nmea0183/gll.cpp
-		libs/nmea0183/gga.hpp
-		libs/nmea0183/gga.cpp
+SET (HDRS
+            src/deviation_pi.h
+            src/spa.h
+            src/SharedStuff.h			
+            src/readwritexml.h			
+            src/preferencedlg.h
+            src/compass.h
+            src/printing.h
+            src/bearingdlg.h
+            src/icons.h			
 )
 
-# IF(WIN32)
+SET(SRC_NMEA0183
+		src/old-nmea0183/LatLong.hpp
+		src/old-nmea0183/latlong.cpp
+		src/old-nmea0183/long.cpp
+		src/old-nmea0183/nmea0183.cpp
+		src/old-nmea0183/nmea0183.hpp
+		src/old-nmea0183/Response.hpp
+		src/old-nmea0183/response.cpp
+		src/old-nmea0183/Sentence.hpp
+		src/old-nmea0183/sentence.cpp
+		src/old-nmea0183/talkerid.cpp
+		src/old-nmea0183/hexvalue.cpp
+		src/old-nmea0183/lat.cpp
+		src/old-nmea0183/expid.cpp
+		src/old-nmea0183/hdt.hpp
+		src/old-nmea0183/hdt.cpp
+		src/old-nmea0183/hdg.hpp
+		src/old-nmea0183/hdg.cpp
+		src/old-nmea0183/hdm.hpp
+		src/old-nmea0183/hdm.cpp
+		src/old-nmea0183/gll.hpp
+		src/old-nmea0183/gll.cpp
+		src/old-nmea0183/gga.hpp
+		src/old-nmea0183/gga.cpp
+)
+
+
+set(EXTSRC
+)
+set(EXTINCLUDE     
+    extinclude/ODAPI.h     
+    extinclude/ODJSONSchemas.h
+)
+
+set(LIBSSRC libs/wxJSON/src/jsonreader.cpp libs/wxJSON/src/jsonval.cpp libs/wxJSON/src/jsonwriter.cpp)
+
+set(LIBHDRS
+    libs/GL/gl.h
+    libs/GL/gl_private.h
+    libs/GL/glext.h
+    libs/GL/glu.h
+    libs/wxJSON/include/json_defs.h
+    libs/wxJSON/include/jsonreader.h
+    libs/wxJSON/include/jsonval.h
+    libs/wxJSON/include/jsonwriter.h)
+
+#IF(WIN32)
 # SET(SRC_JSON
-# 	    src/json_defs.h
-# 	    src/jsonreader.h
-# 	    src/jsonval.h
-# 	    src/jsonwriter.h
-# 	    src/jsonreader.cpp
-# 	    src/jsonval.cpp
-# 	    src/jsonwriter.cpp
+# 	    src/old-json/json_defs.h
+# 	    src/old-json/jsonreader.h
+# 	    src/old-json/jsonval.h
+# 	    src/old-json/jsonwriter.h
+# 	    src/old-json/jsonreader.cpp
+# 	    src/old-json/jsonval.cpp
+# 	    src/old-json/jsonwriter.cpp
 #         )
-# ENDIF(WIN32)
+#ENDIF(WIN32)
 
 
 #
@@ -211,12 +234,12 @@ SET(SRC_NMEA0183
 # ----- If using JSON validation in plugin section above is needed ----- ##
 #
 
-# INCLUDE("cmake/PluginNMEA.cmake")
-# INCLUDE("cmake/PluginJSON.cmake")
+## INCLUDE("cmake/PluginNMEA.cmake")
+## INCLUDE("cmake/PluginJSON.cmake")
 # INCLUDE_DIRECTORIES(nmea0183)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
-# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
 
 #
 # ----- Change below to match project requirements for android build ----- ##
@@ -231,8 +254,8 @@ endif(QT_ANDROID)
 ##
 
 
-target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC} ${SRC_NMEA0183})
-## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
+target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${LIBSSRC} ${LIBHDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC} ${SRC_NMEA0183} )
+## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})     ${SRC_JSON}
 ## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
 
 if(NOT OCPN_FLATPAK_CONFIG)

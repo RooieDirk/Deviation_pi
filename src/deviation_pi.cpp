@@ -1,5 +1,3 @@
-#include "deviation_pi.h"
-#include "bearingdlg.h"
 /******************************************************************************
  * $Id: deviation_pi.cpp,v 1.0 2011/02/26 01:54:37 nohal Exp $
  *
@@ -40,7 +38,7 @@
     #include <GL/gl.h>
     #include <GL/glu.h>
 #else
-    #include "qopengl.h"                  // this gives us the qt runtime gles2.h
+    #include "qopengl.h"   // this gives us the qt runtime gles2.h
     #include "GL/gl_private.h"
 #endif
 #include <wx/filename.h>
@@ -129,7 +127,8 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //---------------------------------------------------------------------------------------------------------
 
 deviation_pi::deviation_pi(void *ppimgr)
-    : opencpn_plugin_114(ppimgr)
+    : opencpn_plugin_116(ppimgr)
+//    : opencpn_plugin_114(ppimgr)
 {
     // Create the PlugIn icons
     initialize_images();
@@ -188,50 +187,14 @@ bool deviation_pi::DeInit(void)
     return true;
 }
 
-int deviation_pi::GetAPIVersionMajor()
-{
-     return OCPN_API_VERSION_MAJOR;
-}
-
-int deviation_pi::GetAPIVersionMinor()
-{
-    return OCPN_API_VERSION_MINOR;
-}
-
-int deviation_pi::GetPlugInVersionMajor()
-{
-    return PLUGIN_VERSION_MAJOR;
-}
-
-int deviation_pi::GetPlugInVersionMinor()
-{
-    return PLUGIN_VERSION_MINOR;
-}
-
-wxBitmap *deviation_pi::GetPlugInBitmap()
-{
-    return _img_deviation_pi;
-}
-
-wxString deviation_pi::GetCommonName()
-{
-    return _T(PLUGIN_COMMON_NAME);
-// return _("Deviation");
-}
-
-
-wxString deviation_pi::GetShortDescription()
-{
-   return _(PLUGIN_SHORT_DESCRIPTION);
-//    return _("Compass deviation PlugIn for OpenCPN");
-}
-
-wxString deviation_pi::GetLongDescription()
-{
- 
-   return _(PLUGIN_LONG_DESCRIPTION); 
-
-}
+int deviation_pi::GetAPIVersionMajor() { return  OCPN_API_VERSION_MAJOR; }
+int deviation_pi::GetAPIVersionMinor() { return OCPN_API_VERSION_MINOR; }
+int deviation_pi::GetPlugInVersionMajor() { return PLUGIN_VERSION_MAJOR; }
+int deviation_pi::GetPlugInVersionMinor() { return PLUGIN_VERSION_MINOR; }
+wxBitmap *deviation_pi::GetPlugInBitmap() {  return _img_deviation_pi; }
+wxString deviation_pi::GetCommonName() { return _T(PLUGIN_COMMON_NAME); }
+wxString deviation_pi::GetShortDescription() { return _( PLUGIN_SHORT_DESCRIPTION); }
+wxString deviation_pi::GetLongDescription() { return _(PLUGIN_LONG_DESCRIPTION); }
 
 void deviation_pi::SetCursorLatLon(double lat, double lon)
 {
