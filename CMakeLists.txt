@@ -40,7 +40,7 @@ set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass cours
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "1")
-set(VERSION_PATCH "7")
+set(VERSION_PATCH "8")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE "16/08/2023") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
@@ -60,7 +60,7 @@ set(ALPHA "alpha")  # Standard Repos
 
 # set this if your cloudsmith repository name does not match your git repository name
 #set(CLOUDSMITH_BASE_REPOSITORY "testplugin_pi")
-set(CLOUDSMITH_BASE_REPOSITORY "testplugin")
+set(CLOUDSMITH_BASE_REPOSITORY "deviation")
 # Set the following to use OpenCPN cloudsmith repositories instead of own repositories
 set(CLOUDSMITH_USER "opencpn")
 #set(CLOUDSMITH_USER "rgleason")
