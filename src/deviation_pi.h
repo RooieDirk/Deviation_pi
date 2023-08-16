@@ -50,7 +50,7 @@
 #include "preferencedlg.h"
 #include "compass.h"
 
-#include "old-nmea0183/nmea0183.h"
+#include "nmea0183/nmea0183.h"
 #include <wx/datetime.h>
 #include <wx/listctrl.h>
 #include <wx/datectrl.h>
