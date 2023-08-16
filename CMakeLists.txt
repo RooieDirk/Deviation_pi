@@ -29,7 +29,6 @@ if(COMMAND cmake_policy)
     endif(POLICY CMP0077)
 endif(COMMAND cmake_policy)
 
-
 # define plugin name, owner and versions
 SET(VERBOSE_NAME "deviation")
 SET(COMMON_NAME  "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
@@ -41,9 +40,9 @@ set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass cours
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "1")
-set(VERSION_PATCH "5")
+set(VERSION_PATCH "6")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "13/08/2023") # DD/MM/YYYY format
+set(VERSION_DATE "15/08/2023") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
@@ -54,7 +53,7 @@ set(PARENT "opencpn")
 # The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
 #set(GIT_REPOSITORY_SERVER "github.com")
 
-# Specifies cloudsmith repository sufficies   --ADD THESE NEXT
+# Specifies cloudsmith repository sufficies 
 set(PROD "prod")    # Standard Repos
 set(BETA "beta")    # Standard Repos
 set(ALPHA "alpha")  # Standard Repos
@@ -165,37 +164,54 @@ SET (HDRS
             src/icons.h			
 )
 
+
 SET(SRC_NMEA0183
-		src/old-nmea0183/LatLong.hpp
-		src/old-nmea0183/latlong.cpp
-		src/old-nmea0183/long.cpp
-		src/old-nmea0183/nmea0183.cpp
-		src/old-nmea0183/nmea0183.hpp
-		src/old-nmea0183/Response.hpp
-		src/old-nmea0183/response.cpp
-		src/old-nmea0183/Sentence.hpp
-		src/old-nmea0183/sentence.cpp
-		src/old-nmea0183/talkerid.cpp
-		src/old-nmea0183/hexvalue.cpp
-		src/old-nmea0183/lat.cpp
-		src/old-nmea0183/expid.cpp
-		src/old-nmea0183/hdt.hpp
-		src/old-nmea0183/hdt.cpp
-		src/old-nmea0183/hdg.hpp
-		src/old-nmea0183/hdg.cpp
-		src/old-nmea0183/hdm.hpp
-		src/old-nmea0183/hdm.cpp
-		src/old-nmea0183/gll.hpp
-		src/old-nmea0183/gll.cpp
-		src/old-nmea0183/gga.hpp
-		src/old-nmea0183/gga.cpp
+		libs/nmea0183/LatLong.hpp
+		libs/nmea0183/latlong.cpp
+		libs/nmea0183/long.cpp
+		libs/nmea0183/nmea0183.cpp
+		libs/nmea0183/nmea0183.h	
+		libs/nmea0183/nmea0183.hpp
+		libs/nmea0183/Response.hpp
+		libs/nmea0183/response.cpp
+		libs/nmea0183/Sentence.hpp
+		libs/nmea0183/sentence.cpp
+		libs/nmea0183/talkerid.cpp
+		libs/nmea0183/hexvalue.cpp
+		libs/nmea0183/lat.cpp
+		libs/nmea0183/expid.cpp
+		libs/nmea0183/hdt.hpp
+		libs/nmea0183/hdt.cpp
+		libs/nmea0183/hdg.hpp
+		libs/nmea0183/hdg.cpp
+		libs/nmea0183/hdm.hpp
+		libs/nmea0183/hdm.cpp
+		libs/nmea0183/gll.hpp
+		libs/nmea0183/gll.cpp
+		libs/nmea0183/gga.hpp
+		libs/nmea0183/gga.cpp
+		libs/nmea0183/expid.cpp
 )
 
+
+set(OCPNSRC
+    ocpnsrc/cutil.cpp
+    ocpnsrc/TexFont.cpp
+)
+
+set(OCPNHDRS
+    ocpninclude/cutil.h
+    ocpninclude/pluginmanager.h
+    ocpninclude/shaders.h
+    ocpninclude/TexFont.h
+    ocpninclude/vector2D.h
+    libs/ocpn-api/ocpn_plugin.h
+)
 
 set(EXTSRC
 )
-set(EXTINCLUDE     
-    extinclude/ODAPI.h     
+set(EXTINCLUDE
+    extinclude/ODAPI.h
     extinclude/ODJSONSchemas.h
 )
 
@@ -211,18 +227,6 @@ set(LIBHDRS
     libs/wxJSON/include/jsonval.h
     libs/wxJSON/include/jsonwriter.h)
 
-#IF(WIN32)
-# SET(SRC_JSON
-# 	    src/old-json/json_defs.h
-# 	    src/old-json/jsonreader.h
-# 	    src/old-json/jsonval.h
-# 	    src/old-json/jsonwriter.h
-# 	    src/old-json/jsonreader.cpp
-# 	    src/old-json/jsonval.cpp
-# 	    src/old-json/jsonwriter.cpp
-#         )
-#ENDIF(WIN32)
-
 
 #
 # ----- If using JSON validation in plugin section below is needed ----- ##
@@ -236,9 +240,14 @@ set(LIBHDRS
 
 ## INCLUDE("cmake/PluginNMEA.cmake")
 ## INCLUDE("cmake/PluginJSON.cmake")
-# INCLUDE_DIRECTORIES(nmea0183)
+## INCLUDE_DIRECTORIES(nmea0183)
+
+# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
+# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
+include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
+# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183)
 include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
 
 #
@@ -254,8 +263,8 @@ endif(QT_ANDROID)
 ##
 
 
-target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${LIBSSRC} ${LIBHDRS} ${OCPNSRC} ${EXTSRC} ${LIBSSRC} ${SRC_NMEA0183} )
-## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})     ${SRC_JSON}
+target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${LIBSSRC} ${LIBHDRS} ${SRC_NMEA0183} )
+## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML}) ${EXTSRC}  ${OCPNSRC}  ${SRC_NMEA0183}   ${SRC_JSON}
 ## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
 
 if(NOT OCPN_FLATPAK_CONFIG)
