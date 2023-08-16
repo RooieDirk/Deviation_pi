@@ -127,7 +127,7 @@ BearingDlg::BearingDlg(wxWindow* parent, Meassurement* Mess, wxWindowID id,const
     wxFont StaticText11Font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     if ( !StaticText11Font.Ok() ) StaticText11Font = wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT);
     StaticText11Font.SetPointSize(15);
-    StaticText11Font.SetWeight(wxBOLD);
+    StaticText11Font.SetWeight(wxFONTWEIGHT_BOLD );
     StaticText11->SetFont(StaticText11Font);
     
 	StaticText7 = new wxStaticText(this, ID_STATICTEXT7, _("\u00B0"), wxDefaultPosition, wxDefaultSize, 0, _T("ID_STATICTEXT7"));

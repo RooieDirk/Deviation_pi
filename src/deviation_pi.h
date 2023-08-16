@@ -39,8 +39,8 @@
 
 #include "version.h"
 
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    14
+// #define     MY_API_VERSION_MAJOR    1
+// #define     MY_API_VERSION_MINOR    14
 
 #include "ocpn_plugin.h"
 
@@ -81,7 +81,7 @@ class DevTableDialog;
 class BasicDrawPane;
 class CompasDev1Dialog;
 
-class deviation_pi : public opencpn_plugin_114
+class deviation_pi : public opencpn_plugin_116
 {
 public:
     deviation_pi(void *ppimgr);
@@ -98,7 +98,8 @@ public:
     wxString GetCommonName();
     wxString GetShortDescription();
     wxString GetLongDescription();
-
+	  //from Shipdriver for definition of panel icon
+//	  wxBitmap m_panelBitmap;
 //    The required override PlugIn Methods
     void SetCursorLatLon(double lat, double lon);
     void SetPositionFixEx(PlugIn_Position_Fix_Ex &pfix);
