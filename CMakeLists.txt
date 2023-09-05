@@ -48,6 +48,7 @@ set(OCPN_API_VERSION_MAJOR "1")
 set(OCPN_API_VERSION_MINOR "16")
 set(TP_COMMENT "  * Release for O5 using CI")
 
+
 set(PARENT "opencpn")
 
 # The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
