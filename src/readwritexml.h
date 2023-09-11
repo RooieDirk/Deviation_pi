@@ -28,7 +28,7 @@
   #include "wx/wx.h"
 #endif //precompiled headers
 
-#include "tinyxml/tinyxml.h"
+#include "tinyxml/include/tinyxml.h"
 #include "SharedStuff.h"
 #include <vector> 
 
