@@ -39,9 +39,6 @@
 
 #include "version.h"
 
-// #define     MY_API_VERSION_MAJOR    1
-// #define     MY_API_VERSION_MINOR    14
-
 #include "ocpn_plugin.h"
 
 
@@ -50,7 +47,7 @@
 #include "preferencedlg.h"
 #include "compass.h"
 
-#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 #include <wx/datetime.h>
 #include <wx/listctrl.h>
 #include <wx/datectrl.h>

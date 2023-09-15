@@ -1,8 +1,0 @@
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/deviation_pi.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/deviation-po-update.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/deviation-pot-update.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/PACKAGE.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/deviation-i18n.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/INSTALL.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/ALL_BUILD.dir
-C:/Users/dirk/deviation/Deviation_pi/buildwin/CMakeFiles/ZERO_CHECK.dir
