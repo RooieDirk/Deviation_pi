@@ -104,7 +104,7 @@ void PreferenceDlg::OnShipsnameBoxTextUpdated(wxCommandEvent& event)
     CompassnameBox->Clear();
     CompassnameBox->Append(CompasArrayStr);
     if (CompasArrayStr.GetCount() == 0)  
-        CompassnameBox->SetValue(_("-----"));
+        CompassnameBox->SetValue(_T("-----"));
     else
         CompassnameBox->SetSelection(0);
     data->needsaving = true;

@@ -193,8 +193,8 @@ int deviation_pi::GetPlugInVersionMajor() { return PLUGIN_VERSION_MAJOR; }
 int deviation_pi::GetPlugInVersionMinor() { return PLUGIN_VERSION_MINOR; }
 wxBitmap *deviation_pi::GetPlugInBitmap() {  return _img_deviation_pi; }
 wxString deviation_pi::GetCommonName() { return _T(PLUGIN_COMMON_NAME); }
-wxString deviation_pi::GetShortDescription() { return _( PLUGIN_SHORT_DESCRIPTION); }
-wxString deviation_pi::GetLongDescription() { return _(PLUGIN_LONG_DESCRIPTION); }
+wxString deviation_pi::GetShortDescription() { return _T( PLUGIN_SHORT_DESCRIPTION); }
+wxString deviation_pi::GetLongDescription() { return _T(PLUGIN_LONG_DESCRIPTION); }
 
 void deviation_pi::SetCursorLatLon(double lat, double lon)
 {
@@ -239,7 +239,7 @@ void deviation_pi::OnToolbarToolCallback(int id)
     if(NULL == m_CompasDevListDlg)
     {
         m_CompasDevListDlg = new CompasDev1Dialog(m_parent_window, 
-            aCompass->data->shipsname + _("  ") + aCompass->data->compassname,
+            aCompass->data->shipsname + _T("  ") + aCompass->data->compassname,
             aCompass->data );
         m_CompasDevListDlg->Show();
     }
@@ -385,9 +385,9 @@ m_NMEA0183 << sentence;
                     i_ShowLiveIcon = 3;
                     DrawToolbarBtnNumber(mHdm);
                     double mHdt = mHdm + g_var + aCompass->data->getDeviation( mHdm );
-                    if( sentence.Left(6) != _("$XXHDG")){
-                        SendNMEASentence( _("$XXHDT,") + wxString::Format( _("%1.1f"), mHdt));                        
-                        //SendNMEASentence( _("$XXHDG,") + wxString::Format( _("%1.1f,%1.1f,E,%1.1f,E"), mHdm, g_var, aCompass->data->getDeviation( mHdm )));
+                    if( sentence.Left(6) != _T("$XXHDG")){
+                        SendNMEASentence( _T("$XXHDT,") + wxString::Format( _T("%1.1f"), mHdt));                        
+                        //SendNMEASentence( _T("$XXHDG,") + wxString::Format( _T("%1.1f,%1.1f,E,%1.1f,E"), mHdm, g_var, aCompass->data->getDeviation( mHdm )));
                         if ( B_Dlg != NULL ){
                             B_Dlg->SetNMEAHeading(mHdm);
                         }
@@ -552,7 +552,7 @@ wxString deviation_pi::ComputeChecksum( wxString sentence )
     for(wxString::const_iterator i = sentence.begin()+1; i != sentence.end() && *i != '*'; ++i)
         calculated_checksum ^= static_cast<unsigned char> (*i);
 
-   return( wxString::Format(_("%02X"), calculated_checksum) );
+   return( wxString::Format(_T("%02X"), calculated_checksum) );
 }
 
 
@@ -633,7 +633,7 @@ CompasDev1Dialog::CompasDev1Dialog( wxWindow *parent,
     Connect(wxEVT_SIZE,(wxObjectEventFunction)&CompasDev1Dialog::OnResize);
     Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&CompasDev1Dialog::OnClose);
     
-     wxString columns[] = {_("Do\nuse"),   _("Date/Time"), _("Compass\nCourse"),   _("Compass\nBearing"), _("True\nBearing"), _("Var."), _("Dev."), _("")};
+     wxString columns[] = {_("Do\nuse"),   _("Date/Time"), _("Compass\nCourse"),   _("Compass\nBearing"), _("True\nBearing"), _("Var."), _("Dev."), _T("")};
     for (int i = 0; i < 8; ++i) {
         wxListItem col;
         col.SetId(i);
@@ -845,7 +845,7 @@ void CompasDev1Dialog::FillSourceList(void)
         li.SetText(wxEmptyString);
         long itemIndex = DevListCtrl->InsertItem(li);
 
-        DevListCtrl->SetItem(itemIndex, 1,  data->vec[i]->datetime.Format(_("%x %H:%M") ));//, wxDateTime::UTC).c_str());
+        DevListCtrl->SetItem(itemIndex, 1,  data->vec[i]->datetime.Format(_T("%x %H:%M") ));//, wxDateTime::UTC).c_str());
         wxString tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->compasscourse );
         DevListCtrl->SetItem(itemIndex, 2, tmp);
         tmp =  wxString::Format(_T( "%05.1f" ), data->vec[i]->compassbearing );
