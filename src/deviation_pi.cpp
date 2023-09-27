@@ -128,7 +128,6 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 
 deviation_pi::deviation_pi(void *ppimgr)
     : opencpn_plugin_116(ppimgr)
-//    : opencpn_plugin_114(ppimgr)
 {
     // Create the PlugIn icons
     initialize_images();
