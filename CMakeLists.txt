@@ -229,7 +229,6 @@ add_definitions(-DTIXML_USE_STL)
 
 # Do not need Json Schema Validation
 
-
 ##------- Change below to match project requirements --------------------##
 
 # Needed for android builds
