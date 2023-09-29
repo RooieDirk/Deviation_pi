@@ -291,7 +291,8 @@ void BearingDlg::SetPositionFix(PlugIn_Position_Fix_Ex &pfix)
             
             SetDateTime(wxDateTime::Now());
             GPS_UpdateTime = 0;
-            w->SetFocus(); // restore focus
+            if (w)
+              w->SetFocus(); // restore focus
         }
         else
             GPS_UpdateTime -= 1;
