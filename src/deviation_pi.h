@@ -78,7 +78,7 @@ class DevTableDialog;
 class BasicDrawPane;
 class CompasDev1Dialog;
 
-class deviation_pi : public opencpn_plugin_116
+class deviation_pi : public opencpn_plugin_117
 {
 public:
     deviation_pi(void *ppimgr);
@@ -91,6 +91,9 @@ public:
     int GetAPIVersionMinor();
     int GetPlugInVersionMajor();
     int GetPlugInVersionMinor();
+    int GetPlugInVersionPatch();
+    int GetPlugInVersionPost();
+
     wxBitmap *GetPlugInBitmap();
     wxString GetCommonName();
     wxString GetShortDescription();

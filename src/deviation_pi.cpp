@@ -127,7 +127,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //---------------------------------------------------------------------------------------------------------
 
 deviation_pi::deviation_pi(void *ppimgr)
-    : opencpn_plugin_116(ppimgr)
+    : opencpn_plugin_117(ppimgr)
 {
     // Create the PlugIn icons
     initialize_images();
@@ -190,6 +190,9 @@ int deviation_pi::GetAPIVersionMajor() { return  OCPN_API_VERSION_MAJOR; }
 int deviation_pi::GetAPIVersionMinor() { return OCPN_API_VERSION_MINOR; }
 int deviation_pi::GetPlugInVersionMajor() { return PLUGIN_VERSION_MAJOR; }
 int deviation_pi::GetPlugInVersionMinor() { return PLUGIN_VERSION_MINOR; }
+int deviation_pi::GetPlugInVersionPatch() { return PLUGIN_VERSION_PATCH; }
+int deviation_pi::GetPlugInVersionPost() { return PLUGIN_VERSION_TWEAK; }
+
 wxBitmap *deviation_pi::GetPlugInBitmap() {  return _img_deviation_pi; }
 wxString deviation_pi::GetCommonName() { return _T(PLUGIN_COMMON_NAME); }
 wxString deviation_pi::GetShortDescription() { return _T( PLUGIN_SHORT_DESCRIPTION); }
