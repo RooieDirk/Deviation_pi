@@ -57,7 +57,7 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
         data->needsaving = true; //doc.SaveFile( data->filename.mb_str() ); 
     }
     
-    if (data->shipsname == _(""))
+    if (data->shipsname == _T(""))
     {
         p_shipnode = NULL;
         p_compassnode = NULL;
@@ -83,7 +83,7 @@ ReadWriteXML::ReadWriteXML(compass_data* Data)
         data->needsaving = true;
     }
     
-    if (data->compassname == _(""))
+    if (data->compassname == _T(""))
     {
         p_compassnode = NULL;
         data->needsaving = true; 

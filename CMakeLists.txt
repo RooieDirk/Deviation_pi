@@ -1,17 +1,32 @@
+##---------------------------------------------------------------------------
+## Author:      Pavel Kalin  Copyright: License:     wxWidgets License
+##***************************************************************************
+## *   Copyright (C) 2010 by Sean d'Epagnier                              *
+## *   License:     GPLv3+
+## *   This program is free software; you can redistribute it and/or modify  *
+## *   it under the terms of the GNU General Public License as published by  *
+## *   the Free Software Foundation; either version 2 of the License, or     *
+## *   (at your option) any later version.                                   *
+## *                                                                         *
+## *   This program is distributed in the hope that it will be useful,       *
+## *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+## *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+## *   GNU General Public License for more details.                          *
+## *                                                                         *
+## *   You should have received a copy of the GNU General Public License     *
+## *   along with this program; if not, write to the                         *
+## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
+## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
+#-----------------------------------------------------------------------------
+# Frontend2 Author: Jon Gough 
+# Testplugin(TP) v1.0.259.0 01/10/2023 DD/MM/YYYY format
+# buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
-#Author:      Pavel Kalin  Copyright: License:     wxWidgets License
-# ---------------------------------------------------------------------------
-## ----- When changing this file do NOT change the order in which sections occur        ----- ##
-## ----- Changes should only be made between the section blocks that identify where     ----- ##
-## ----- these changes should be. The whole configuration process relies on this        ----- ##
-## ----- sequence to be successful                                                      ----- ##
+## -- When changing this file do NOT change the order of the sections.    -- ##
+## -- Make changes only between the section blocks identified             -- ##
+## -- The whole configuration process relies on this sequence for success.-- ##
 ##
-##
-## ----- Modify section below to include all the details for your plugin ----- ##
-##
-## ------------------------------------------------------------------------------
-##  Frontend TP1.0.253.0 07/08/2023  Author Jon Gough 
-## ------------------------------------------------------------------------------
+## -- Modify section below to include all the details for your plugin.    -- ##
 
 set(CMLOC "CMakeLists: ")
 
@@ -40,43 +55,42 @@ set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass cours
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "1")
-set(VERSION_PATCH "8")
+set(VERSION_PATCH "13")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE "16/08/2023") # DD/MM/YYYY format
+set(VERSION_DATE  "02/10/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
+
 set(OCPN_API_VERSION_MAJOR "1")
-set(OCPN_API_VERSION_MINOR "16")
-set(TP_COMMENT "  * Release for O5 using CI")
+set(OCPN_API_VERSION_MINOR "17")
+set(TP_COMMENT "  * Release using CI")
 
 
 set(PARENT "opencpn")
 
-# The next line allows for setting up your own local webserver with git on it for testing purposes, the default is github.com
+#Use to set up a local webserver with git installed.
+#Default is github.com. Now set in pluginconfigure.cmake
 #set(GIT_REPOSITORY_SERVER "github.com")
 
-# Specifies cloudsmith repository sufficies 
-set(PROD "prod")    # Standard Repos
-set(BETA "beta")    # Standard Repos
-set(ALPHA "alpha")  # Standard Repos
+## Specifies Cloudsmith upload repository suffix for each catalog
+set(PROD "prod")   #Standard Repos
+set(BETA "beta")   #Standard Repos
+set(ALPHA "alpha") #Standard Repos
 
-# set this if your cloudsmith repository name does not match your git repository name
+# Set if  Cloudsmith Base Repository name does not match your Git Repository name.
 #set(CLOUDSMITH_BASE_REPOSITORY "testplugin_pi")
-set(CLOUDSMITH_BASE_REPOSITORY "deviation")
+set(CLOUDSMITH_BASE_REPOSITORY "deviation")  #without the pi
+
+
 # Set the following to use OpenCPN cloudsmith repositories instead of own repositories
 set(CLOUDSMITH_USER "opencpn")
-#set(CLOUDSMITH_USER "rgleason")
+# set(CLOUDSMITH_USER "rick-gleason")
 
 set(XML_INFO_URL "https://opencpn-manuals.github.io/main/deviation/index.html")
 set(XML_SUMMARY ${SHORT_DESCRIPTION})
 set(XML_DESCRIPTION ${LONG_DESCRIPTION})
 
-##
-## ----- Modify section above to include all the details for your plugin ----- ##
-##
-
-##
-## ----- Modify section below if there are special requirements for the plugin ----- ##
-##
+## ----- Modify section above to include all the details for your plugin ------- ##
+## ----- Modify section below if there are special requirements for the plugin --##
 
 option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
@@ -86,7 +100,7 @@ set(CMAKE_CXX_STANDARD 11)
 # requires libs/glu directory
 set(USE_LOCAL_GLU FALSE)
 # Prefer libGL.so to libOpenGL.so, see CMP0072
-set(OpenGL_GL_PREFERENCE "LEGACY")
+set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
 
 option(USE_GL "Enable OpenGL support" OFF)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
@@ -97,49 +111,37 @@ endif("${CMAKE_BUILD_TYPE}" STREQUAL "")
 set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "" "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 message(STATUS "${CMLOC}Build type: ${CMAKE_BUILD_TYPE}")
 
-##
-## ----- The statements below are used to setup standard variables that are required by the CMAKE process - do not remove ----- ##
-##
+## ----- Statements below used to setup standard variables required by the CMAKE process -- Do not remove - ##
 
 project(${PACKAGE})
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+##========================================================
+
 include("PluginSetup")
 
-##
-## ----- The above is used to setup standard variables that are required by the CMAKE process - do not remove ----- ##
-##
-
-##
-## ----- Modify section below if there are special requirements for the plugin ----- ##
-##
+##========================================================
+## ----- Above sets up standard variables required by CMAKE - Do not remove -----##
+## ----- Modify section below if there are special requirements for the plugin --##
 
 set(CMAKE_VERBOSE_MAKEFILE "Activate verbose mode for make files" ON)
 
 option(Plugin_CXX11 "Use c++11" OFF)
 
-##
-## ----- Modify section above if there are special requirements for the plugin ----- ##
-##
-
-##
-## ----- do not change next section - needed to configure build process ----- ##
-##
+## ----- Modify section above if there are special requirements for the plugin --##
+## ----- Do not change next section - needed to configure build process ---------##
+##===========================================================
 
 include("PluginConfigure")
 
-##
-## ----- do not change section above - needed to configure build process ----- ##
-##
-
-#
-# ----- Change below to match project requirements for source, headers, etc. ----- ##
-#
+##===========================================================
+## ----- Do not change section above - needed to configure build process --------##
+## ----- Change below to match project requirements for source, headers, etc. ---##
 
 add_definitions(-DUSE_S57)
-add_definitions(-DPLUGIN_USE_SVG)
 
+## ---- Section Below - Add your project SET(SRCS and SET(HDRS  etc..
 
 SET(SRCS
             src/deviation_pi.cpp
@@ -166,158 +168,91 @@ SET (HDRS
 )
 
 
-SET(SRC_NMEA0183
-		libs/nmea0183/LatLong.hpp
-		libs/nmea0183/latlong.cpp
-		libs/nmea0183/long.cpp
-		libs/nmea0183/nmea0183.cpp
-		libs/nmea0183/nmea0183.h	
-		libs/nmea0183/nmea0183.hpp
-		libs/nmea0183/Response.hpp
-		libs/nmea0183/response.cpp
-		libs/nmea0183/Sentence.hpp
-		libs/nmea0183/sentence.cpp
-		libs/nmea0183/talkerid.cpp
-		libs/nmea0183/hexvalue.cpp
-		libs/nmea0183/lat.cpp
-		libs/nmea0183/expid.cpp
-		libs/nmea0183/hdt.hpp
-		libs/nmea0183/hdt.cpp
-		libs/nmea0183/hdg.hpp
-		libs/nmea0183/hdg.cpp
-		libs/nmea0183/hdm.hpp
-		libs/nmea0183/hdm.cpp
-		libs/nmea0183/gll.hpp
-		libs/nmea0183/gll.cpp
-		libs/nmea0183/gga.hpp
-		libs/nmea0183/gga.cpp
-		libs/nmea0183/expid.cpp
-)
+add_definitions(-DPLUGIN_USE_SVG)
+
+## ----- Section above - Add your project SET(SRCS and SET(HDRS  etc.-------##
+## ----- If using JSON validation in plugin section below is needed --------##
+
+# Do not need Json Schema Validation
+
+## ----- If using JSON validation in plugin section above is needed --------##
 
 
-set(OCPNSRC
-    ocpnsrc/cutil.cpp
-    ocpnsrc/TexFont.cpp
-)
+##=============================================================
+## Change as required to collect all the set( headers and SRCS
+## This add_library  can be used in conditionals below.
+##=============================================================
 
-set(OCPNHDRS
-    ocpninclude/cutil.h
-    ocpninclude/pluginmanager.h
-    ocpninclude/shaders.h
-    ocpninclude/TexFont.h
-    ocpninclude/vector2D.h
-    libs/ocpn-api/ocpn_plugin.h
-)
+SET(SRC ${SRCS} ${HDRS} )
 
-set(EXTSRC
-)
-set(EXTINCLUDE
-    extinclude/ODAPI.h
-    extinclude/ODJSONSchemas.h
-)
-
-set(LIBSSRC libs/wxJSON/src/jsonreader.cpp libs/wxJSON/src/jsonval.cpp libs/wxJSON/src/jsonwriter.cpp)
-
-set(LIBHDRS
-    libs/GL/gl.h
-    libs/GL/gl_private.h
-    libs/GL/glext.h
-    libs/GL/glu.h
-    libs/wxJSON/include/json_defs.h
-    libs/wxJSON/include/jsonreader.h
-    libs/wxJSON/include/jsonval.h
-    libs/wxJSON/include/jsonwriter.h)
+##=============================================================
+## Modify/configure 'Include' Directories below for the Plugin
+##=============================================================
 
 
-#
-# ----- If using JSON validation in plugin section below is needed ----- ##
-#
+## Change target_sources to match your project needs.
+##==============================================================
 
-# Json not used
+target_sources(${PACKAGE_NAME} PUBLIC ${SRC} )
 
-#
-# ----- If using JSON validation in plugin section above is needed ----- ##
-#
-
-## INCLUDE("cmake/PluginNMEA.cmake")
-## INCLUDE("cmake/PluginJSON.cmake")
-## INCLUDE_DIRECTORIES(nmea0183)
-
-# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/ocpninclude)
-# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/${EXTINCLUDE_DIR})
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/GL)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/ocpn-api)
-# include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/nmea0183)
-include_directories(BEFORE ${PROJECT_SOURCE_DIR}/libs/wxJSON/include)
-
-#
-# ----- Change below to match project requirements for android build ----- ##
-#
-
-if(QT_ANDROID)
-    include_directories( ${PROJECT_SOURCE_DIR}/extinclude/GLES2)
-endif(QT_ANDROID)
-
-##
-## ----- Change above to match project requirements for android build ----- ##
-##
-
-
-target_sources(${PACKAGE_NAME} PUBLIC ${SRCS} ${HDRS} ${LIBSSRC} ${LIBHDRS} ${SRC_NMEA0183} )
-## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML}) ${EXTSRC}  ${OCPNSRC}  ${SRC_NMEA0183}   ${SRC_JSON}
-## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
+##==============================================================
 
 if(NOT OCPN_FLATPAK_CONFIG)
-    # Build environment not available when flatpak is being configured so following statements will not work
+    # Build environment not available when flatpak is being configured 
+	# so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
-    add_subdirectory(libs/tinyxml)
+    add_subdirectory(opencpn-libs/WindowsHeaders)
+    target_link_libraries(${PACKAGE_NAME} windows::headers)
+
+    add_subdirectory(opencpn-libs/api-17)
+    target_link_libraries(${PACKAGE_NAME} ocpn::api)
+
+    add_subdirectory(opencpn-libs/tinyxml)
     target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+
+    add_subdirectory(opencpn-libs/wxJSON)
+    target_link_libraries(${PACKAGE_NAME} ocpn::wxjson)
+
+    add_subdirectory(opencpn-libs/plugingl)
+    target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
+
+    add_subdirectory(opencpn-libs/nmea0183)
+    target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
+
+    add_subdirectory(opencpn-libs/glu)
+    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+    
 endif(NOT OCPN_FLATPAK_CONFIG)
 
 add_definitions(-DTIXML_USE_STL)
 
-#
-# ----- If using JSON validation in plugin section below is needed ----- ##
-#
-
-#  JSON not used
-
-#
-# ----- If using JSON validation in plugin section above is needed ----- ##
-#
-
 ##
-## ----- Change above to match project requirements ----- ##
+## ----- If using JSON validation section below is needed ---------------##
 ##
 
-##
-## ----- do not change next section - needed to configure build process ----- ##
-##
+# Do not need Json Schema Validation
+
+
+##------- Change below to match project requirements --------------------##
 
 # Needed for android builds
 if(QT_ANDROID)
     include_directories(BEFORE ${qt_android_include})
 endif(QT_ANDROID)
 
-# Needed for all builds
+## Needed for all builds Do not change - needed to build app -------------##
+##===============================================================
+
 include("PluginInstall")
 include("PluginLocalization")
 include("PluginPackage")
 
-##
-## ----- do not change section above - needed to configure build process ----- ##
-##
+##================================================================
+## ----- Do not change section above - needed to configure build process --##
+
 message(STATUS "${CMLOC}include directories: ")
 get_property(dirs DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY INCLUDE_DIRECTORIES)
 foreach(dir ${dirs})
     message(STATUS "${CMLOC}dir='${dir}'")
 endforeach()
-
-
-
-## PROJECT(deviation_pi)
-##  SET(PACKAGE_NAME deviation_pi)
-## ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_DEV} ${SRC_NMEA0183} ${SRC_JSON} ${SRC_LTINYXML})
-

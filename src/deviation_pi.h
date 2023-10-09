@@ -39,9 +39,6 @@
 
 #include "version.h"
 
-// #define     MY_API_VERSION_MAJOR    1
-// #define     MY_API_VERSION_MINOR    14
-
 #include "ocpn_plugin.h"
 
 
@@ -50,7 +47,7 @@
 #include "preferencedlg.h"
 #include "compass.h"
 
-#include "nmea0183/nmea0183.h"
+#include "nmea0183.h"
 #include <wx/datetime.h>
 #include <wx/listctrl.h>
 #include <wx/datectrl.h>
@@ -81,7 +78,7 @@ class DevTableDialog;
 class BasicDrawPane;
 class CompasDev1Dialog;
 
-class deviation_pi : public opencpn_plugin_116
+class deviation_pi : public opencpn_plugin_117
 {
 public:
     deviation_pi(void *ppimgr);
@@ -94,6 +91,9 @@ public:
     int GetAPIVersionMinor();
     int GetPlugInVersionMajor();
     int GetPlugInVersionMinor();
+    int GetPlugInVersionPatch();
+    int GetPlugInVersionPost();
+
     wxBitmap *GetPlugInBitmap();
     wxString GetCommonName();
     wxString GetShortDescription();

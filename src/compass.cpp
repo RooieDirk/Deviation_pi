@@ -32,7 +32,7 @@ Compass::~Compass()
 
 void Compass::ShowDlg()
 {
-    wxString name = data->shipsname + _(" ") + data->compassname;
+    wxString name = data->shipsname + _T(" ") + data->compassname;
     CompasDev1Dialog* Dlg = new CompasDev1Dialog( (wxWindow*)0, name, data);
     Dlg->Show();
 }
