@@ -55,9 +55,9 @@ set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass cours
 
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "1")
-set(VERSION_PATCH "30")
+set(VERSION_PATCH "40")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "09/10/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "10/10/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -217,8 +217,8 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/nmea0183)
     target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
 
-    add_subdirectory(opencpn-libs/glu)
-    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+#    add_subdirectory(opencpn-libs/glu)
+#    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
     
 endif(NOT OCPN_FLATPAK_CONFIG)
 
