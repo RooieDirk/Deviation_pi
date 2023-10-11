@@ -56,7 +56,7 @@ set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass cours
 SET(VERSION_MAJOR "0")
 SET(VERSION_MINOR "1")
 set(VERSION_PATCH "40")
-set(VERSION_TWEAK "0")
+set(VERSION_TWEAK "1")
 set(VERSION_DATE  "10/10/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
