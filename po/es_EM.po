@@ -3,181 +3,181 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-08 20:19\n"
+"PO-Revision-Date: 2023-10-19 09:18\n"
 "Last-Translator: \n"
-"Language-Team: Finnish\n"
-"Language: fi_FI\n"
+"Language-Team: Spanish (Modern)\n"
+"Language: es_EM\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Project-ID: 49843\n"
-"X-Crowdin-Language: fi\n"
+"X-Crowdin-Language: es-EM\n"
 "X-Crowdin-File: /plugins/deviation_pi/po/deviation_pi.pot\n"
 "X-Crowdin-File-ID: 429\n"
 
 #: src/SharedStuff.cpp:161 src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Course"
-msgstr "Kompassi kurssi"
+msgstr "crwdns27767:0crwdne27767:0"
 
 #: src/SharedStuff.cpp:162 src/bearingdlg.cpp:122 src/deviation_pi.cpp:172
 msgid "Deviation"
-msgstr "Poikkeama"
+msgstr "crwdns27769:0crwdne27769:0"
 
 #: src/SharedStuff.h:54
 msgid "Relative bearing (Righthand bearing)"
-msgstr "Suhteellinen suunta (Oikeanpuoleinen suunta)"
+msgstr "crwdns27771:0crwdne27771:0"
 
 #: src/SharedStuff.h:55
 msgid "Bearing using 'Navigate to'"
-msgstr "Suunta käyttäen 'Navigoi '"
+msgstr "crwdns27773:0crwdne27773:0"
 
 #: src/SharedStuff.h:56
 msgid "Steaming into leading line"
-msgstr "Johtavan linjan ohjaaminen"
+msgstr "crwdns27775:0crwdne27775:0"
 
 #: src/SharedStuff.h:57 src/bearingdlg.cpp:71
 msgid "Sun bearing"
-msgstr "Auringon suunta"
+msgstr "crwdns27777:0crwdne27777:0"
 
 #: src/SharedStuff.h:58 src/bearingdlg.cpp:72
 msgid "Sun bearing shadowline"
-msgstr "Aurinkosuunnan varjoviiva"
+msgstr "crwdns27779:0crwdne27779:0"
 
 #: src/bearingdlg.cpp:68
 msgid "Methode"
-msgstr "Menetelmä"
+msgstr "crwdns27781:0crwdne27781:0"
 
 #: src/bearingdlg.cpp:70
 msgid "Bearing"
-msgstr "Suunta"
+msgstr "crwdns27783:0crwdne27783:0"
 
 #: src/bearingdlg.cpp:82 src/deviation_pi.cpp:636
 msgid "Date/Time"
-msgstr "Päivämäärä/aika"
+msgstr "crwdns27785:0crwdne27785:0"
 
 #: src/bearingdlg.cpp:89
 msgid "Compass bearing"
-msgstr "Kompassi suunta"
+msgstr "crwdns27787:0crwdne27787:0"
 
 #: src/bearingdlg.cpp:90
 msgid "Righthand bearing"
-msgstr "Oikea suunta"
+msgstr "crwdns27789:0crwdne27789:0"
 
 #: src/bearingdlg.cpp:95
 msgid "Compass Course"
-msgstr "Kompassi kurssi"
+msgstr "crwdns27791:0crwdne27791:0"
 
 #: src/bearingdlg.cpp:114
 msgid "Variation"
-msgstr "Vaihtelu"
+msgstr "crwdns27793:0crwdne27793:0"
 
 #: src/bearingdlg.cpp:139
 msgid "True Bearing"
-msgstr "Tosisuunta"
+msgstr "crwdns27795:0crwdne27795:0"
 
 #: src/bearingdlg.cpp:142
 msgid "Remarks"
-msgstr "Huomautukset"
+msgstr "crwdns27797:0crwdne27797:0"
 
 #: src/bearingdlg.cpp:145
 msgid "Text"
-msgstr "Teksti"
+msgstr "crwdns27799:0crwdne27799:0"
 
 #: src/bearingdlg.cpp:227
 msgid "Error Values entered are not valid"
-msgstr "Syötetyt virhearvot eivät kelpaa"
+msgstr "crwdns27801:0crwdne27801:0"
 
 #: src/bearingdlg.cpp:364
 msgid "error"
-msgstr "virhe"
+msgstr "crwdns27803:0crwdne27803:0"
 
 #: src/bearingdlg.cpp:377
 msgid "Bearing from Route"
-msgstr "Suunta reitiltä"
+msgstr "crwdns27805:0crwdne27805:0"
 
 #: src/deviation_pi.cpp:304
 msgid "test"
-msgstr "testi"
+msgstr "crwdns27807:0crwdne27807:0"
 
 #: src/deviation_pi.cpp:600
 msgid "Add"
-msgstr "Lisää"
+msgstr "crwdns27809:0crwdne27809:0"
 
 #: src/deviation_pi.cpp:602
 msgid "Delete"
-msgstr "Poista"
+msgstr "crwdns27811:0crwdne27811:0"
 
 #: src/deviation_pi.cpp:605
 msgid "Edit"
-msgstr "Muokkaa"
+msgstr "crwdns27813:0crwdne27813:0"
 
 #: src/deviation_pi.cpp:608
 msgid "Show"
-msgstr "Näytä"
+msgstr "crwdns27815:0crwdne27815:0"
 
 #: src/deviation_pi.cpp:611
 msgid "Cancel"
-msgstr "Peruuta"
+msgstr "crwdns27817:0crwdne27817:0"
 
 #: src/deviation_pi.cpp:614
 msgid "OK"
-msgstr "OK"
+msgstr "crwdns27819:0crwdne27819:0"
 
 #: src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Bearing"
-msgstr "Kompassi suunta"
+msgstr "crwdns27821:0crwdne27821:0"
 
 #: src/deviation_pi.cpp:636
 msgid "Dev."
-msgstr "Dev."
+msgstr "crwdns27823:0crwdne27823:0"
 
 #: src/deviation_pi.cpp:636
 msgid "Do\n"
 "use"
-msgstr "Käytä"
+msgstr "crwdns27825:0crwdne27825:0"
 
 #: src/deviation_pi.cpp:636
 msgid "True\n"
 "Bearing"
-msgstr "Tosisuunta"
+msgstr "crwdns27827:0crwdne27827:0"
 
 #: src/deviation_pi.cpp:636
 msgid "Var."
-msgstr "Var."
+msgstr "crwdns27829:0crwdne27829:0"
 
 #: src/deviation_pi.cpp:946
 msgid "Deviation Table"
-msgstr "Poikkeaman Taulukko"
+msgstr "crwdns27831:0crwdne27831:0"
 
 #: src/deviation_pi.cpp:955
 msgid "Close"
-msgstr "Sulje"
+msgstr "crwdns27833:0crwdne27833:0"
 
 #: src/deviation_pi.cpp:956
 msgid "Print"
-msgstr "Tulosta"
+msgstr "crwdns27835:0crwdne27835:0"
 
 #: src/deviation_pi.cpp:957
 msgid "Print Preview"
-msgstr "Tulostuksen esikatselu"
+msgstr "crwdns27837:0crwdne27837:0"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr "Tulostusonglema. Kirjoittimesi asetukset saattavat olla vialliset?"
+msgstr "crwdns27839:0crwdne27839:0"
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"
-msgstr "Peruutit tulostuksen"
+msgstr "crwdns27841:0crwdne27841:0"
 
 #: src/deviation_pi.cpp:1014
 msgid "Compass Deviation Table Print Preview"
-msgstr "Kompassin Poikkeaman Taulun Tulostuksen Esikatselu"
+msgstr "crwdns27843:0crwdne27843:0"
 
 #: src/preferencedlg.cpp:47
 msgid "Deviation Preference Dialog"
-msgstr "Poikkeaman asetusikkuna"
+msgstr "crwdns27845:0crwdne27845:0"
 
