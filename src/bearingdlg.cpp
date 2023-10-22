@@ -19,8 +19,8 @@
 
 #include "bearingdlg.h"
 #include "deviation_pi.h"
-#include "jsonreader.h"
-#include "jsonwriter.h"
+#include "wx/jsonreader.h"
+#include "wx/jsonwriter.h"
 
 BearingDlg* B_Dlg;
 extern deviation_pi* Dev_PI;

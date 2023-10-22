@@ -19,7 +19,7 @@
 ## *   xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 #-----------------------------------------------------------------------------
 # Frontend2 Author: Jon Gough 
-# Testplugin(TP) v1.0.259.0 01/10/2023 DD/MM/YYYY format
+# Testplugin(TP) v1.0.260 07/10/2023 DD/MM/YYYY format
 # buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
@@ -45,19 +45,19 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 # define plugin name, owner and versions
-SET(VERBOSE_NAME "deviation")
-SET(COMMON_NAME  "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
-SET(TITLE_NAME "DEVIATION")
+set(VERBOSE_NAME "deviation")
+set(COMMON_NAME  "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
+set(TITLE_NAME "DEVIATION")
 set(PACKAGE_CONTACT "Dirk Smits")
 set(PACKAGE "deviation")
 set(SHORT_DESCRIPTION "Compass deviation PlugIn for OpenCPN")
 set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass course to true course sentences, also activate wmm.")
 
-SET(VERSION_MAJOR "0")
-SET(VERSION_MINOR "1")
-set(VERSION_PATCH "13")
+set(VERSION_MAJOR "0")
+set(VERSION_MINOR "1")
+set(VERSION_PATCH "50")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "02/10/2023")#DD/MM/YYYY format
+set(VERSION_DATE  "10/10/2023")#DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -96,14 +96,12 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
-# Use local version of GLU library
-# requires libs/glu directory
-set(USE_LOCAL_GLU FALSE)
-# Prefer libGL.so to libOpenGL.so, see CMP0072
-set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
 
+set(USE_LOCAL_GLU TRUE)  # Use local GLU library opencpn-libs/glu
+set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
 option(USE_GL "Enable OpenGL support" OFF)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
+
 
 if("${CMAKE_BUILD_TYPE}" STREQUAL "")
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build" FORCE)
@@ -202,8 +200,8 @@ if(NOT OCPN_FLATPAK_CONFIG)
 	# so following statements will not work
     message(STATUS "${CMLOC}Adding target link libraries to ${PACKAGE_NAME}")
 
-    add_subdirectory(opencpn-libs/WindowsHeaders)
-    target_link_libraries(${PACKAGE_NAME} windows::headers)
+#    add_subdirectory(opencpn-libs/WindowsHeaders)
+#    target_link_libraries(${PACKAGE_NAME} windows::headers)
 
     add_subdirectory(opencpn-libs/api-17)
     target_link_libraries(${PACKAGE_NAME} ocpn::api)
@@ -220,8 +218,8 @@ if(NOT OCPN_FLATPAK_CONFIG)
     add_subdirectory(opencpn-libs/nmea0183)
     target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
 
-    add_subdirectory(opencpn-libs/glu)
-    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
+#    add_subdirectory(opencpn-libs/glu)
+#    target_link_libraries(${PACKAGE_NAME} ocpn::glu_static)
     
 endif(NOT OCPN_FLATPAK_CONFIG)
 
