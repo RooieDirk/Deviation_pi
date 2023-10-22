@@ -45,16 +45,16 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 # define plugin name, owner and versions
-SET(VERBOSE_NAME "deviation")
-SET(COMMON_NAME  "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
-SET(TITLE_NAME "DEVIATION")
+set(VERBOSE_NAME "deviation")
+set(COMMON_NAME  "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
+set(TITLE_NAME "DEVIATION")
 set(PACKAGE_CONTACT "Dirk Smits")
 set(PACKAGE "deviation")
 set(SHORT_DESCRIPTION "Compass deviation PlugIn for OpenCPN")
 set(LONG_DESCRIPTION "Set deviation table to correct incoming nmea compass course to true course sentences, also activate wmm.")
 
-SET(VERSION_MAJOR "0")
-SET(VERSION_MINOR "1")
+set(VERSION_MAJOR "0")
+set(VERSION_MINOR "1")
 set(VERSION_PATCH "50")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE  "10/10/2023")#DD/MM/YYYY format
