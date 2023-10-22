@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-04 18:33\n"
+"PO-Revision-Date: 2023-10-19 09:18\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -20,7 +20,8 @@ msgstr ""
 #: src/SharedStuff.cpp:161 src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Course"
-msgstr "Rumbo de aguja"
+msgstr "Rumbo de\n"
+"Aguja"
 
 #: src/SharedStuff.cpp:162 src/bearingdlg.cpp:122 src/deviation_pi.cpp:172
 msgid "Deviation"
@@ -129,7 +130,8 @@ msgstr "Aceptar"
 #: src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Bearing"
-msgstr "Demora de aguja"
+msgstr "Demora de\n"
+"Aguja"
 
 #: src/deviation_pi.cpp:636
 msgid "Dev."
@@ -143,7 +145,8 @@ msgstr "Usar"
 #: src/deviation_pi.cpp:636
 msgid "True\n"
 "Bearing"
-msgstr "Demora Verdadera"
+msgstr "Demora\n"
+"Verdadera"
 
 #: src/deviation_pi.cpp:636
 msgid "Var."
@@ -163,11 +166,11 @@ msgstr "Imprimir"
 
 #: src/deviation_pi.cpp:957
 msgid "Print Preview"
-msgstr "Previsualización de la impresión"
+msgstr "Previsualizar impresión"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr "Hubo un problema imprimiendo. ¿Puede que tu impresora no esté correctamente configurada?"
+msgstr "Hubo un problema imprimiendo. ¿Puede que la impresora no esté bien configurada?"
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-04 18:33\n"
+"PO-Revision-Date: 2023-10-19 09:17\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -32,7 +32,7 @@ msgstr ""
 
 #: src/SharedStuff.h:55
 msgid "Bearing using 'Navigate to'"
-msgstr ""
+msgstr "CAP : 'Naviguer vers'"
 
 #: src/SharedStuff.h:56
 msgid "Steaming into leading line"
@@ -167,7 +167,7 @@ msgstr "Pre-impression"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr ""
+msgstr "Problème d'impression.Votre imprimante actuelle est elle bien configurée ?"
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"
@@ -179,5 +179,5 @@ msgstr ""
 
 #: src/preferencedlg.cpp:47
 msgid "Deviation Preference Dialog"
-msgstr ""
+msgstr "Préférences de déviation : Dialogue "
 
