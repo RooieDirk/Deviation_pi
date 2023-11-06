@@ -34,13 +34,7 @@
 #endif //precompiled headers
 
 #include <wx/stdpaths.h>
-#ifndef __OCPN__ANDROID__
-    #include <GL/gl.h>
-    #include <GL/glu.h>
-#else
-    #include "qopengl.h"   // this gives us the qt runtime gles2.h
-    #include "GL/gl_private.h"
-#endif
+
 #include <wx/filename.h>
 #include <wx/intl.h>
 #include <wx/imaglist.h>
