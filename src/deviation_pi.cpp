@@ -34,13 +34,7 @@
 #endif //precompiled headers
 
 #include <wx/stdpaths.h>
-#ifndef __OCPN__ANDROID__
-    #include <GL/gl.h>
-    #include <GL/glu.h>
-#else
-    #include "qopengl.h"   // this gives us the qt runtime gles2.h
-    #include "GL/gl_private.h"
-#endif
+
 #include <wx/filename.h>
 #include <wx/intl.h>
 #include <wx/imaglist.h>
@@ -127,7 +121,7 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //---------------------------------------------------------------------------------------------------------
 
 deviation_pi::deviation_pi(void *ppimgr)
-    : opencpn_plugin_117(ppimgr)
+    : opencpn_plugin_118(ppimgr)
 {
     // Create the PlugIn icons
     initialize_images();

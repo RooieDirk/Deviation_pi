@@ -78,7 +78,7 @@ class DevTableDialog;
 class BasicDrawPane;
 class CompasDev1Dialog;
 
-class deviation_pi : public opencpn_plugin_117
+class deviation_pi : public opencpn_plugin_118
 {
 public:
     deviation_pi(void *ppimgr);
