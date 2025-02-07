@@ -2,7 +2,7 @@
 # Author:      Pavel Kalin  Copyright: 
 # License: GPL v3+   License:  wxWidgets
 # ---------------------------------------------------------------------------
-# - Copyright (C) 2010 by Sean d'Epagnier                              *
+# - Copyright (C) 2010 by Dirk Smits                           *
 # - License:     GPLv3+
 # - This program is free software; you can redistribute it and/or modify  *
 # - it under the terms of the GNU General Public License as published by  *
@@ -20,7 +20,7 @@
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 # -----------------------------------------------------------------------------
 # Frontend2 Author: Jon Gough Testplugin(TP) v1.0.328.0 05/02/2025 DD/MM/YYYY
-# buildCI:yes useODAPI:no validateJSON:no
+# format buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
 ## -- Make changes only between the section blocks identified             -- ##
@@ -46,11 +46,9 @@ if(COMMAND cmake_policy)
 endif (COMMAND cmake_policy)
 
 
-
-
 # define plugin name, owner and versions
 set(VERBOSE_NAME "deviation")
-set(COMMON_NAME "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
+set(COMMON_NAME "Deviation")
 set(TITLE_NAME "DEVIATION")
 set(PACKAGE_CONTACT "Dirk Smits")
 set(PACKAGE "deviation")
@@ -61,7 +59,7 @@ set(LONG_DESCRIPTION
 
 set(VERSION_MAJOR "0")
 set(VERSION_MINOR "1")
-set(VERSION_PATCH "67")
+set(VERSION_PATCH "68")
 set(VERSION_TWEAK "0")
 set(VERSION_DATE  "06/02/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
@@ -104,9 +102,11 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
-
-set(USE_LOCAL_GLU TRUE)  # Use local GLU library opencpn-libs/glu
+# Use local version of GLU library requires libs/glu directory
+set(USE_LOCAL_GLU TRUE)
+# Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
+
 option(USE_GL "Enable OpenGL support" OFF)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
 
@@ -207,8 +207,6 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRC} )
 
-## Change target_sources to match your project needs.
-##==============================================================
 
 if (NOT OCPN_FLATPAK_CONFIG)
   # Build environment not available when flatpak is being configured so
