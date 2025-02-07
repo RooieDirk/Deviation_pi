@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-04 18:33\n"
+"PO-Revision-Date: 2025-01-28 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -24,7 +24,7 @@ msgstr ""
 
 #: src/SharedStuff.cpp:162 src/bearingdlg.cpp:122 src/deviation_pi.cpp:172
 msgid "Deviation"
-msgstr ""
+msgstr "Deviazione"
 
 #: src/SharedStuff.h:54
 msgid "Relative bearing (Righthand bearing)"
@@ -48,15 +48,15 @@ msgstr ""
 
 #: src/bearingdlg.cpp:68
 msgid "Methode"
-msgstr ""
+msgstr "Metodo:"
 
 #: src/bearingdlg.cpp:70
 msgid "Bearing"
-msgstr ""
+msgstr "Rilevamento"
 
 #: src/bearingdlg.cpp:82 src/deviation_pi.cpp:636
 msgid "Date/Time"
-msgstr ""
+msgstr "Data/Ora"
 
 #: src/bearingdlg.cpp:89
 msgid "Compass bearing"
@@ -72,7 +72,7 @@ msgstr ""
 
 #: src/bearingdlg.cpp:114
 msgid "Variation"
-msgstr ""
+msgstr "Variazione"
 
 #: src/bearingdlg.cpp:139
 msgid "True Bearing"
@@ -80,19 +80,19 @@ msgstr ""
 
 #: src/bearingdlg.cpp:142
 msgid "Remarks"
-msgstr ""
+msgstr "Osservazioni"
 
 #: src/bearingdlg.cpp:145
 msgid "Text"
-msgstr ""
+msgstr "Testo"
 
 #: src/bearingdlg.cpp:227
 msgid "Error Values entered are not valid"
-msgstr ""
+msgstr "I valori di errore inseriti non sono validi"
 
 #: src/bearingdlg.cpp:364
 msgid "error"
-msgstr ""
+msgstr "errore"
 
 #: src/bearingdlg.cpp:377
 msgid "Bearing from Route"
@@ -100,31 +100,31 @@ msgstr ""
 
 #: src/deviation_pi.cpp:304
 msgid "test"
-msgstr ""
+msgstr "test"
 
 #: src/deviation_pi.cpp:600
 msgid "Add"
-msgstr ""
+msgstr "Aggiungi"
 
 #: src/deviation_pi.cpp:602
 msgid "Delete"
-msgstr ""
+msgstr "Cancella"
 
 #: src/deviation_pi.cpp:605
 msgid "Edit"
-msgstr ""
+msgstr "Modifica"
 
 #: src/deviation_pi.cpp:608
 msgid "Show"
-msgstr ""
+msgstr "Visualizza"
 
 #: src/deviation_pi.cpp:611
 msgid "Cancel"
-msgstr ""
+msgstr "Annulla"
 
 #: src/deviation_pi.cpp:614
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #: src/deviation_pi.cpp:636
 msgid "Compass\n"
@@ -138,7 +138,7 @@ msgstr ""
 #: src/deviation_pi.cpp:636
 msgid "Do\n"
 "use"
-msgstr ""
+msgstr "Usare"
 
 #: src/deviation_pi.cpp:636
 msgid "True\n"
@@ -147,37 +147,37 @@ msgstr ""
 
 #: src/deviation_pi.cpp:636
 msgid "Var."
-msgstr ""
+msgstr "Var."
 
 #: src/deviation_pi.cpp:946
 msgid "Deviation Table"
-msgstr ""
+msgstr "Tabella di deviazione"
 
 #: src/deviation_pi.cpp:955
 msgid "Close"
-msgstr ""
+msgstr "Chiudere"
 
 #: src/deviation_pi.cpp:956
 msgid "Print"
-msgstr ""
+msgstr "Stampa"
 
 #: src/deviation_pi.cpp:957
 msgid "Print Preview"
-msgstr ""
+msgstr "Anteprima di stampa"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr ""
+msgstr "C'è stato un problema di stampa.Controllare la configurazione della stampante."
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"
-msgstr ""
+msgstr "Hai annullato la stampa"
 
 #: src/deviation_pi.cpp:1014
 msgid "Compass Deviation Table Print Preview"
-msgstr ""
+msgstr "Anteprima Di Stampa Tavola Di Deviazione Bussola"
 
 #: src/preferencedlg.cpp:47
 msgid "Deviation Preference Dialog"
-msgstr ""
+msgstr "Preferenze di Deviazione"
 

@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-04 18:33\n"
+"PO-Revision-Date: 2025-01-28 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -20,11 +20,11 @@ msgstr ""
 #: src/SharedStuff.cpp:161 src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Course"
-msgstr ""
+msgstr "Kurs kompasowy"
 
 #: src/SharedStuff.cpp:162 src/bearingdlg.cpp:122 src/deviation_pi.cpp:172
 msgid "Deviation"
-msgstr ""
+msgstr "Dewiacja"
 
 #: src/SharedStuff.h:54
 msgid "Relative bearing (Righthand bearing)"

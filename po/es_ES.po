@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-19 09:18\n"
+"PO-Revision-Date: 2025-01-28 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Spanish\n"
 "Language: es_ES\n"
@@ -154,7 +154,7 @@ msgstr "Dec."
 
 #: src/deviation_pi.cpp:946
 msgid "Deviation Table"
-msgstr "Tablilla de Desvíos "
+msgstr "Tablilla de Desvíos"
 
 #: src/deviation_pi.cpp:955
 msgid "Close"
@@ -170,7 +170,7 @@ msgstr "Previsualizar impresión"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr "Hubo un problema imprimiendo. ¿Puede que la impresora no esté bien configurada?"
+msgstr "Hubo un problema imprimiendo. ¿Quizás la impresora no esté bien configurada?"
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"
