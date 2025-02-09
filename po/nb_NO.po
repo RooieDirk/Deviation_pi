@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-04 18:33\n"
+"PO-Revision-Date: 2025-01-28 18:02\n"
 "Last-Translator: \n"
 "Language-Team: Norwegian Bokmal\n"
 "Language: nb_NO\n"
@@ -20,164 +20,166 @@ msgstr ""
 #: src/SharedStuff.cpp:161 src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Course"
-msgstr ""
+msgstr "Kompass\n"
+"kurs"
 
 #: src/SharedStuff.cpp:162 src/bearingdlg.cpp:122 src/deviation_pi.cpp:172
 msgid "Deviation"
-msgstr ""
+msgstr "Deviasjon"
 
 #: src/SharedStuff.h:54
 msgid "Relative bearing (Righthand bearing)"
-msgstr ""
+msgstr "Relativ retning (Høyrehånds kurs)"
 
 #: src/SharedStuff.h:55
 msgid "Bearing using 'Navigate to'"
-msgstr ""
+msgstr "Kurs bruker 'Naviger til'"
 
 #: src/SharedStuff.h:56
 msgid "Steaming into leading line"
-msgstr ""
+msgstr "Seiler inn i ledelinje"
 
 #: src/SharedStuff.h:57 src/bearingdlg.cpp:71
 msgid "Sun bearing"
-msgstr ""
+msgstr "Solretning"
 
 #: src/SharedStuff.h:58 src/bearingdlg.cpp:72
 msgid "Sun bearing shadowline"
-msgstr ""
+msgstr "Solretningens skyggelinje"
 
 #: src/bearingdlg.cpp:68
 msgid "Methode"
-msgstr ""
+msgstr "Metode"
 
 #: src/bearingdlg.cpp:70
 msgid "Bearing"
-msgstr ""
+msgstr "Retning"
 
 #: src/bearingdlg.cpp:82 src/deviation_pi.cpp:636
 msgid "Date/Time"
-msgstr ""
+msgstr "Dato/Tid"
 
 #: src/bearingdlg.cpp:89
 msgid "Compass bearing"
-msgstr ""
+msgstr "Kompassretning"
 
 #: src/bearingdlg.cpp:90
 msgid "Righthand bearing"
-msgstr ""
+msgstr "Høyrehåndsretning"
 
 #: src/bearingdlg.cpp:95
 msgid "Compass Course"
-msgstr ""
+msgstr "Kompasskurs"
 
 #: src/bearingdlg.cpp:114
 msgid "Variation"
-msgstr ""
+msgstr "Variasjon"
 
 #: src/bearingdlg.cpp:139
 msgid "True Bearing"
-msgstr ""
+msgstr "Sann retning"
 
 #: src/bearingdlg.cpp:142
 msgid "Remarks"
-msgstr ""
+msgstr "Merknader"
 
 #: src/bearingdlg.cpp:145
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 #: src/bearingdlg.cpp:227
 msgid "Error Values entered are not valid"
-msgstr ""
+msgstr "Feilverdier som er skrevet inn er ikke gyldig"
 
 #: src/bearingdlg.cpp:364
 msgid "error"
-msgstr ""
+msgstr "feil"
 
 #: src/bearingdlg.cpp:377
 msgid "Bearing from Route"
-msgstr ""
+msgstr "Retning fra rute"
 
 #: src/deviation_pi.cpp:304
 msgid "test"
-msgstr ""
+msgstr "test"
 
 #: src/deviation_pi.cpp:600
 msgid "Add"
-msgstr ""
+msgstr "Legg til"
 
 #: src/deviation_pi.cpp:602
 msgid "Delete"
-msgstr ""
+msgstr "Slett"
 
 #: src/deviation_pi.cpp:605
 msgid "Edit"
-msgstr ""
+msgstr "Endre"
 
 #: src/deviation_pi.cpp:608
 msgid "Show"
-msgstr ""
+msgstr "Vis"
 
 #: src/deviation_pi.cpp:611
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: src/deviation_pi.cpp:614
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: src/deviation_pi.cpp:636
 msgid "Compass\n"
 "Bearing"
-msgstr ""
+msgstr "Kompassretning"
 
 #: src/deviation_pi.cpp:636
 msgid "Dev."
-msgstr ""
+msgstr "Dev."
 
 #: src/deviation_pi.cpp:636
 msgid "Do\n"
 "use"
-msgstr ""
+msgstr "Bruk"
 
 #: src/deviation_pi.cpp:636
 msgid "True\n"
 "Bearing"
-msgstr ""
+msgstr "Sann\n"
+"retning"
 
 #: src/deviation_pi.cpp:636
 msgid "Var."
-msgstr ""
+msgstr "Var."
 
 #: src/deviation_pi.cpp:946
 msgid "Deviation Table"
-msgstr ""
+msgstr "Deviasjonstabell"
 
 #: src/deviation_pi.cpp:955
 msgid "Close"
-msgstr ""
+msgstr "Lukk"
 
 #: src/deviation_pi.cpp:956
 msgid "Print"
-msgstr ""
+msgstr "Skriv ut"
 
 #: src/deviation_pi.cpp:957
 msgid "Print Preview"
-msgstr ""
+msgstr "Forhåndsvis utskrift"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr ""
+msgstr "Et problem oppstod ved utskrift. Kanskje din skriver ikke er satt opp korrekt?"
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"
-msgstr ""
+msgstr "Du avbrøt utskrift"
 
 #: src/deviation_pi.cpp:1014
 msgid "Compass Deviation Table Print Preview"
-msgstr ""
+msgstr "Forhåndsvis kompass deviasjonstabell utskrift"
 
 #: src/preferencedlg.cpp:47
 msgid "Deviation Preference Dialog"
-msgstr ""
+msgstr "Deviasjon preferansedialog"
 

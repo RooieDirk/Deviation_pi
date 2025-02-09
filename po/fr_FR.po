@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-16 14:52+0200\n"
-"PO-Revision-Date: 2023-10-19 09:17\n"
+"PO-Revision-Date: 2025-01-28 18:01\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -28,7 +28,7 @@ msgstr "Deviation"
 
 #: src/SharedStuff.h:54
 msgid "Relative bearing (Righthand bearing)"
-msgstr ""
+msgstr "Gisement"
 
 #: src/SharedStuff.h:55
 msgid "Bearing using 'Navigate to'"
@@ -36,15 +36,15 @@ msgstr "CAP : 'Naviguer vers'"
 
 #: src/SharedStuff.h:56
 msgid "Steaming into leading line"
-msgstr ""
+msgstr "Navigation par alignement"
 
 #: src/SharedStuff.h:57 src/bearingdlg.cpp:71
 msgid "Sun bearing"
-msgstr ""
+msgstr "Cap Solaire"
 
 #: src/SharedStuff.h:58 src/bearingdlg.cpp:72
 msgid "Sun bearing shadowline"
-msgstr ""
+msgstr "Cap du compas solaire"
 
 #: src/bearingdlg.cpp:68
 msgid "Methode"
@@ -56,7 +56,7 @@ msgstr "Cap"
 
 #: src/bearingdlg.cpp:82 src/deviation_pi.cpp:636
 msgid "Date/Time"
-msgstr "DAte/heure"
+msgstr "Date/Heure"
 
 #: src/bearingdlg.cpp:89
 msgid "Compass bearing"
@@ -64,7 +64,7 @@ msgstr "Cap Compas"
 
 #: src/bearingdlg.cpp:90
 msgid "Righthand bearing"
-msgstr ""
+msgstr "Gisement"
 
 #: src/bearingdlg.cpp:95
 msgid "Compass Course"
@@ -96,31 +96,31 @@ msgstr "erreur"
 
 #: src/bearingdlg.cpp:377
 msgid "Bearing from Route"
-msgstr ""
+msgstr "Cap de la route"
 
 #: src/deviation_pi.cpp:304
 msgid "test"
-msgstr "Test"
+msgstr "test"
 
 #: src/deviation_pi.cpp:600
 msgid "Add"
-msgstr "Plus"
+msgstr "Ajouter"
 
 #: src/deviation_pi.cpp:602
 msgid "Delete"
-msgstr "Moins"
+msgstr "Supprimer"
 
 #: src/deviation_pi.cpp:605
 msgid "Edit"
-msgstr "Edition"
+msgstr "Éditer"
 
 #: src/deviation_pi.cpp:608
 msgid "Show"
-msgstr "Affichage"
+msgstr "Afficher"
 
 #: src/deviation_pi.cpp:611
 msgid "Cancel"
-msgstr "Annulation"
+msgstr "Annuler"
 
 #: src/deviation_pi.cpp:614
 msgid "OK"
@@ -155,27 +155,27 @@ msgstr "Table de déviation"
 
 #: src/deviation_pi.cpp:955
 msgid "Close"
-msgstr "Fermez"
+msgstr "Fermer"
 
 #: src/deviation_pi.cpp:956
 msgid "Print"
-msgstr "Imprimez"
+msgstr "Imprimer"
 
 #: src/deviation_pi.cpp:957
 msgid "Print Preview"
-msgstr "Pre-impression"
+msgstr "Aperçu avant impression"
 
 #: src/deviation_pi.cpp:990
 msgid "There was a problem printing. Perhaps your current printer is not set correctly?"
-msgstr "Problème d'impression.Votre imprimante actuelle est elle bien configurée ?"
+msgstr "Problème d'impression.Votre imprimante est-elle configurée correctement ?"
 
 #: src/deviation_pi.cpp:994
 msgid "You canceled printing"
-msgstr "Edition supprimée par vous"
+msgstr "Impression arrêtée"
 
 #: src/deviation_pi.cpp:1014
 msgid "Compass Deviation Table Print Preview"
-msgstr ""
+msgstr "Prévisualisation de la Table de deviation "
 
 #: src/preferencedlg.cpp:47
 msgid "Deviation Preference Dialog"

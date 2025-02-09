@@ -2,7 +2,7 @@
 # Author:      Pavel Kalin  Copyright: 
 # License: GPL v3+   License:  wxWidgets
 # ---------------------------------------------------------------------------
-# - Copyright (C) 2010 by Sean d'Epagnier                              *
+# - Copyright (C) 2010 by Dirk Smits                           *
 # - License:     GPLv3+
 # - This program is free software; you can redistribute it and/or modify  *
 # - it under the terms of the GNU General Public License as published by  *
@@ -19,8 +19,8 @@
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx,                                       *
 # - xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx                                       *
 # -----------------------------------------------------------------------------
-# Frontend2 Author: Jon Gough Testplugin(TP) v1.0.326.0 18/01/2025 DD/MM/YYYY
-# buildCI:yes useODAPI:no validateJSON:no
+# Frontend2 Author: Jon Gough Testplugin(TP) v1.0.328.0 05/02/2025 DD/MM/YYYY
+# format buildCI:yes useODAPI:no validateJSON:no
 # ---------------------------------------------------------------------------
 ## -- When changing this file do NOT change the order of the sections.    -- ##
 ## -- Make changes only between the section blocks identified             -- ##
@@ -46,11 +46,9 @@ if(COMMAND cmake_policy)
 endif (COMMAND cmake_policy)
 
 
-
-
 # define plugin name, owner and versions
 set(VERBOSE_NAME "deviation")
-set(COMMON_NAME "Deviation")   # Search "getcommonname"in <plugin_pi>.cpp
+set(COMMON_NAME "Deviation")
 set(TITLE_NAME "DEVIATION")
 set(PACKAGE_CONTACT "Dirk Smits")
 set(PACKAGE "deviation")
@@ -61,9 +59,9 @@ set(LONG_DESCRIPTION
 
 set(VERSION_MAJOR "0")
 set(VERSION_MINOR "1")
-set(VERSION_PATCH "62")
+set(VERSION_PATCH "68")
 set(VERSION_TWEAK "0")
-set(VERSION_DATE  "234/01/2025")#DD/MM/YYYY format
+set(VERSION_DATE  "06/02/2025") # DD/MM/YYYY format
 set(OCPN_MIN_VERSION "ov58")
 
 set(OCPN_API_VERSION_MAJOR "1")
@@ -82,14 +80,14 @@ set(BETA "beta")   #Standard Repos
 set(ALPHA "alpha") #Standard Repos
 
 # Set if  Cloudsmith Base Repository name does not match your Git Repository name.
-#set(CLOUDSMITH_BASE_REPOSITORY "testplugin_pi")
+#set (CLOUDSMITH_BASE_REPOSITORY "testplugin_pi")
 #set (CLOUDSMITH_BASE_REPOSITORY "opencpn-plugins")  #Ricks's customization
-set(CLOUDSMITH_BASE_REPOSITORY "deviation") # without the pi
+set (CLOUDSMITH_BASE_REPOSITORY "deviation") # without the pi
 
 
 # Set the following to use OpenCPN cloudsmith repositories instead of own repositories
 set(CLOUDSMITH_USER "opencpn")
-# set(CLOUDSMITH_USER "rick-gleason")
+# set (CLOUDSMITH_USER "rick-gleason")
 
 set(XML_INFO_URL 
 	"https://opencpn-manuals.github.io/main/deviation/index.html"
@@ -104,9 +102,11 @@ option(PLUGIN_USE_SVG "Use SVG graphics" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 
-
-set(USE_LOCAL_GLU TRUE)  # Use local GLU library opencpn-libs/glu
+# Use local version of GLU library requires libs/glu directory
+set(USE_LOCAL_GLU TRUE)
+# Prefer libGL.so to libOpenGL.so, see CMP0072
 set(OpenGL_GL_PREFERENCE "LEGACY")   #not operational
+
 option(USE_GL "Enable OpenGL support" OFF)
 message(STATUS "${CMLOC}USE_GL: ${USE_GL}")
 
@@ -207,8 +207,6 @@ include_directories(BEFORE ${PROJECT_SOURCE_DIR}/include)
 
 target_sources(${PACKAGE_NAME} PUBLIC ${SRC} )
 
-## Change target_sources to match your project needs.
-##==============================================================
 
 if (NOT OCPN_FLATPAK_CONFIG)
   # Build environment not available when flatpak is being configured so
